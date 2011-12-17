@@ -1,5 +1,7 @@
 package game.entity;
 
+import java.awt.event.KeyEvent;
+
 import game.event.LeaveScreenEvent;
 import game.event.LeaveScreenEvent.LeaveScreen;
 import game.motion.Body;
@@ -64,7 +66,7 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 	@Override
 	public void update() {
 		// TODO: can only jump when on object
-		if (this.ctrl.isAction(0)) {
+		if (this.ctrl.isAction(0) && this.body.getVelocityY() == 0) {
 			this.body.setVelocity(0, JUMP_POWER);
 			this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 		}
@@ -72,13 +74,14 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 		this.body.setVelocity(WALK_SPEED * this.ctrl.getHorizontalPosition(), 
 				this.body.getVelocityY());
 		
+		if(this.ctrl.isAction(1)){
+			
+		}
 		Screen screen = SceneManager.getInstance(getCore()).getScreen();
 		if(this.body.getPositionX() > screen.getWidth()/2){
 			EventManager.getInstance(getCore()).enqueueEvent(new LeaveScreenEvent(LeaveScreen.RIGHT));
-			LoggingService.getInstance(getCore()).logDebug("ALERT", "a: " + screen.getWidth());
 		}else if(this.body.getPositionX() < -screen.getWidth()/2){
 			EventManager.getInstance(getCore()).enqueueEvent(new LeaveScreenEvent(LeaveScreen.LEFT));
-			LoggingService.getInstance(getCore()).logDebug("ALERT", "b: " + this.body.getPositionX());
 		}
 	}
 

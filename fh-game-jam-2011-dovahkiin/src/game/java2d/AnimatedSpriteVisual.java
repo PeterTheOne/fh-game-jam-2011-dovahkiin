@@ -27,6 +27,7 @@ public class AnimatedSpriteVisual extends Visual implements Cloneable {
 	protected Core core;
 	protected double elapsedTime = 0.0;
 	protected double updateRate = 0.1;
+	protected boolean stopAfterPlay = false;
 	
 	public AnimatedSpriteVisual(Core core, Image image, int numFrames, double width, double height) {
 		this.core = core;
@@ -65,6 +66,9 @@ public class AnimatedSpriteVisual extends Visual implements Cloneable {
 			currentFrame++;
 			if(currentFrame == compImages.size()) {
 				currentFrame = 0;
+				if(stopAfterPlay){
+					stop();
+				}
 			}
 		}
 	}
@@ -95,6 +99,12 @@ public class AnimatedSpriteVisual extends Visual implements Cloneable {
 	
 	public void play() {
 		isPlaying = true;
+		stopAfterPlay = false;
+	}
+	
+	public void playNStop() {
+		isPlaying = true;
+		stopAfterPlay = true;
 	}
 	
 	public void stop() {
