@@ -12,13 +12,18 @@ import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.input.KeyPressedEvent;
+import org.cogaen.java2d.ImageHandle;
+import org.cogaen.java2d.Overlay;
 import org.cogaen.java2d.SceneManager;
+import org.cogaen.java2d.SpriteHandle;
+import org.cogaen.java2d.SpriteVisual;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.view.AbstractView;
 
 public class MenuView extends AbstractView implements EventListener{
 
 	private int selectedItem = 0;
+	private Overlay door;
 	
 	public MenuView(Core core) {
 		super(core);
@@ -26,6 +31,12 @@ public class MenuView extends AbstractView implements EventListener{
 	
 	public void registerResources(String group) {
 		ResourceManager resMngr = ResourceManager.getInstance(this.getCore());
+		
+		resMngr.addResource(new ImageHandle( "menu_background_img", "menu-background.png") );
+		resMngr.addResource(new SpriteHandle( "menu_background_spr", "menu_background_img", 1024, 768) );
+		
+		resMngr.addResource(new ImageHandle( "menu_door_img", "menu-open_door.png") );
+		resMngr.addResource(new SpriteHandle( "menu_door_spr", "menu_door_img", 173, 313) );
 		
 	}
 
@@ -35,6 +46,16 @@ public class MenuView extends AbstractView implements EventListener{
 		
 		SceneManager scnMngr = SceneManager.getInstance(this.getCore());
 		scnMngr.setClearBackground(true);
+		
+		Overlay bg = scnMngr.createOverlay("background");
+		SpriteVisual bgSpr = scnMngr.createSpriteVisual("menu_background_spr");
+		bg.addVisual(bgSpr);
+		bg.setPosition(512, 384);
+		
+		door = scnMngr.createOverlay("door");
+		SpriteVisual doorSpr = scnMngr.createSpriteVisual("menu_door_spr");
+		door.addVisual(doorSpr);
+		door.setPosition(207, 477);
 	}
 
 	public void disengage() {
@@ -48,7 +69,7 @@ public class MenuView extends AbstractView implements EventListener{
 			handleKeyPressed((KeyPressedEvent)event);
 		} else if(event.isOfType(MenuStateEvent.TYPE)){
 			this.selectedItem = ((MenuStateEvent)event).getSelectedItem();
-			//TODO change arrow position
+			door.setPosition(207 + 300 * this.selectedItem, 477);
 		}
 	}
 	

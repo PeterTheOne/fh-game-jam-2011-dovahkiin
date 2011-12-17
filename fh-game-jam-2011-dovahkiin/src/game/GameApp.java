@@ -8,6 +8,7 @@ import game.state.SplashState;
 import org.cogaen.core.Core;
 import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
+import org.cogaen.event.EventManager;
 import org.cogaen.event.EventType;
 import org.cogaen.input.InputManager;
 import org.cogaen.java2d.SceneManager;
@@ -30,6 +31,8 @@ public class GameApp implements EventListener{
 		this.core.installService(new InputManager(screen.getComponent()));
 		this.core.installService(new ResourceManager());
 		this.core.installService(new MotionManager());
+		
+		EventManager.getInstance(this.core).addListener(this, QUIT_GAME);
 		
 		initializeGameStates();
 	}
