@@ -1,6 +1,7 @@
 package game.view;
 
 import game.entity.HochiEntity;
+import game.motion.EntityMovedEvent;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -16,7 +17,6 @@ import org.cogaen.java2d.Camera;
 import org.cogaen.java2d.CircleVisual;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SceneNode;
-import org.cogaen.logging.LoggingService;
 import org.cogaen.view.AbstractView;
 
 public class PlayView extends AbstractView implements EventListener {
@@ -43,6 +43,7 @@ public class PlayView extends AbstractView implements EventListener {
 		EventManager evtMngr = EventManager.getInstance(getCore());
 		evtMngr.addListener(this, EntityCreatedEvent.TYPE);
 		evtMngr.addListener(this, EntityDestroyedEvent.TYPE);
+		evtMngr.addListener(this, EntityMovedEvent.TYPE);
 		
 		this.keyboardSrc.engage();
 	}
@@ -69,6 +70,8 @@ public class PlayView extends AbstractView implements EventListener {
 			handleEntityCreated((EntityCreatedEvent) event);
 		} else if (event.isOfType(EntityDestroyedEvent.TYPE)) {
 			handleEntityDestroyedEvent((EntityDestroyedEvent) event);
+		} else if (event.isOfType(EntityMovedEvent.TYPE)) {
+			handleEntityMovedEvent((EntityMovedEvent) event);
 		}
 	}
 
@@ -88,6 +91,13 @@ public class PlayView extends AbstractView implements EventListener {
 
 	private void handleEntityDestroyedEvent(EntityDestroyedEvent event) {
 		this.scnMngr.destroySceneNode(event.getEntityName());
+	}
+
+	private void handleEntityMovedEvent(EntityMovedEvent event) {
+		SceneNode node = this.scnMngr.getSceneNode(event.getEntityName());
+		if (node != null) {
+			node.setPose(event.getX(), event.getY(), event.getAngle());
+		}
 	}
 
 }

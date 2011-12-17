@@ -1,18 +1,24 @@
 package game.entity;
 
+import game.motion.Body;
+import game.motion.MotionManager;
+import game.motion.Rectangle;
+
 import org.cogaen.core.Core;
 import org.cogaen.entity.EntityManager;
 import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.input.TwoAxisController;
-import org.cogaen.motion.Body;
-import org.cogaen.motion.MotionManager;
-import org.cogaen.motion.Rectangle;
+import org.cogaen.logging.LoggingService;
 
 public class HochiEntity extends PlayerEntity implements EventListener {
 	
 	public static final String TYPE = "Hochi";
+
+	private static final double JUMP_POWER = 20;
+	//TODO: jump hold power and jump init power
+	private static final int GRAVITY_STRENGTH = 30;
 	
 	private EventManager evtMngr;
 	private EntityManager entMngr;
@@ -23,8 +29,9 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 		super(core, name);
 		this.evtMngr = EventManager.getInstance(getCore());
 		this.entMngr = EntityManager.getInstance(getCore());
-		this.ctrl = new TwoAxisController(core, name, 2);
+		this.ctrl = new TwoAxisController(core, "PlayerOne", 2);
 		this.body = new Rectangle(name, 1, 1);
+		this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 	}
 
 	@Override
@@ -47,8 +54,9 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-
+		if (this.ctrl.isAction(0)) {
+			this.body.setVelocity(0, JUMP_POWER);
+		}
 	}
 
 	@Override

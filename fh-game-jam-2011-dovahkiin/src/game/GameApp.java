@@ -1,5 +1,6 @@
 package game;
 
+import game.motion.MotionManager;
 import game.state.IntroState;
 import game.state.MenuState;
 import game.state.PlayState;
@@ -14,7 +15,6 @@ import org.cogaen.input.InputManager;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
 import org.cogaen.logging.LoggingService;
-import org.cogaen.motion.MotionManager;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.state.GameStateManager;
 import org.cogaen.time.Clock;
