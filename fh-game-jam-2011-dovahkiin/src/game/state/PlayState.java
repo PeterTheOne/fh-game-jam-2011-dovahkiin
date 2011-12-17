@@ -17,7 +17,7 @@ public class PlayState implements GameState {
 	
 	public PlayState(Core core) {
 		this.core = core;
-		this.view = new PlayView();
+		this.view = new PlayView(core);
 	}
 
 	@Override
