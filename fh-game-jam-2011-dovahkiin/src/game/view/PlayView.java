@@ -1,6 +1,7 @@
 package game.view;
 
 import game.entity.HochiEntity;
+import game.event.LoadLevelEvent;
 import game.java2d.AnimatedSpriteHandle;
 import game.java2d.AnimatedSpriteVisual;
 import game.motion.EntityMovedEvent;
@@ -28,6 +29,7 @@ public class PlayView extends AbstractView implements EventListener {
 	private SceneManager scnMngr;
 	private KeyboardControllerSource keyboardSrc;
 	private ResourceManager resMngr;
+	AnimatedSpriteVisual playerVisual;
 	
 	public PlayView(Core core) {
 		super(core);
@@ -50,6 +52,7 @@ public class PlayView extends AbstractView implements EventListener {
 		evtMngr.addListener(this, EntityCreatedEvent.TYPE);
 		evtMngr.addListener(this, EntityDestroyedEvent.TYPE);
 		evtMngr.addListener(this, EntityMovedEvent.TYPE);
+		evtMngr.addListener(this, LoadLevelEvent.TYPE);
 		
 		this.keyboardSrc.engage();
 	}
@@ -66,8 +69,10 @@ public class PlayView extends AbstractView implements EventListener {
 
 	@Override
 	public void registerResources(String group) {
-		this.resMngr.addResource(new ImageHandle( "hochi-walk_img", "hochi-walk.png") );
-		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr", "hochi-walk_img", 8, 250, 548) );
+		this.resMngr.addResource(new ImageHandle( "hochi-walk_img_right", "hochi-walk_right.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr_right", "hochi-walk_img_right", 8, 250, 548) );
+		this.resMngr.addResource(new ImageHandle( "hochi-walk_img_left", "hochi-walk_left.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr_left", "hochi-walk_img_left", 8, 250, 548) );
 	}
 
 	@Override
@@ -78,6 +83,8 @@ public class PlayView extends AbstractView implements EventListener {
 			handleEntityDestroyedEvent((EntityDestroyedEvent) event);
 		} else if (event.isOfType(EntityMovedEvent.TYPE)) {
 			handleEntityMovedEvent((EntityMovedEvent) event);
+		}else if(event.isOfType(LoadLevelEvent.TYPE)){
+			
 		}
 	}
 
@@ -89,9 +96,9 @@ public class PlayView extends AbstractView implements EventListener {
 
 	private void createHochi(String entityName) {
 		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
-		AnimatedSpriteVisual hochiVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr");
-		hochiVisual.play();
-		scnNode.addVisual(hochiVisual);
+		this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_right");
+		this.playerVisual.play();
+		scnNode.addVisual(this.playerVisual);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
 	}
 
@@ -103,6 +110,17 @@ public class PlayView extends AbstractView implements EventListener {
 		SceneNode node = this.scnMngr.getSceneNode(event.getEntityName());
 		if (node != null) {
 			node.setPose(event.getX(), event.getY(), event.getAngle());
+		}
+		if(event.getVelocityX() > 0){
+			node.removeVisual(playerVisual);
+			this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_right");
+			this.playerVisual.play();
+			node.addVisual(playerVisual);
+		}else if(event.getVelocityX() < 0){
+			node.removeVisual(playerVisual);
+			this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_left");
+			node.addVisual(playerVisual);
+			this.playerVisual.play();
 		}
 	}
 

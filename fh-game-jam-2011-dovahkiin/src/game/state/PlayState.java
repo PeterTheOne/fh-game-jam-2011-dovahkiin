@@ -10,6 +10,7 @@ import game.view.PlayView;
 
 import org.cogaen.core.Core;
 import org.cogaen.entity.EntityManager;
+import org.cogaen.event.EventManager;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.state.GameState;
 import org.cogaen.view.View;
@@ -41,7 +42,6 @@ public class PlayState implements GameState {
 		EntityManager entMngr = EntityManager.getInstance(this.core);
 		entMngr.addEntity(new HochiEntity(core, "Hochi"));
 		LevelManager lvlMngr = new LevelManager(core);
-		lvlMngr.setCurrentLevel(new Level(core, "startLevel"));
 		/*Body body = new Rectangle("plaform", 1000, 100);
 		body.setCollisionFlag(0x0001);
 		body.setCollisionMask(0x0001);
