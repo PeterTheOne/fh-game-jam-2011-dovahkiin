@@ -21,10 +21,10 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 	
 	public static final String TYPE = "Hochi";
 
-	private static final double JUMP_POWER = 250;
+	private static final double JUMP_POWER = 500;
 	//TODO: jump hold power and jump init power
-	private static final int GRAVITY_STRENGTH = 200;
-	private static final double WALK_SPEED = 200;
+	private static final int GRAVITY_STRENGTH = 1000;
+	private static final double WALK_SPEED = 400;
 	
 	private EventManager evtMngr;
 	private EntityManager entMngr;

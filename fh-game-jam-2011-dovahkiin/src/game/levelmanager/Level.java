@@ -59,6 +59,7 @@ public class Level {
 	
 	public void addStructure(Rectangle structure){
 		structures.add(structure);
+		MotionManager.getInstance(this.core).addBody(structure);
 	}
 	
 	public void addEnemy(EnemyEntity enemy){

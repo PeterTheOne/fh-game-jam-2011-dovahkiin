@@ -3,6 +3,7 @@ package game.state;
 import game.entity.HochiEntity;
 import game.levelmanager.Level;
 import game.levelmanager.LevelManager;
+import game.motion.Rectangle;
 import game.view.PlayView;
 
 import org.cogaen.core.Core;
@@ -39,14 +40,10 @@ public class PlayState implements GameState {
 		entMngr.addEntity(new HochiEntity(core, "Hochi"));
 		
 		LevelManager lvlMngr = new LevelManager(core);
-		lvlMngr.addLevel(new Level(core, "startLevel"));
-		lvlMngr.setCurrentLevel("startLevel");
-		
-		//platforms:
-		/*Body body = new Rectangle("plaform", 1000, 100);
-		body.setCollisionFlag(0x0001);
-		body.setCollisionMask(0x0001);
-		MotionManager.getInstance(this.core).addBody(body);*/
+		Level startLevel = new Level(core, "startLevel");
+		startLevel.addStructure(new Rectangle("plaform", 1024, 50, 0, -400));
+		lvlMngr.addLevel(startLevel);
+		lvlMngr.setCurrentLevel(startLevel.getName());
 	}
 
 	@Override

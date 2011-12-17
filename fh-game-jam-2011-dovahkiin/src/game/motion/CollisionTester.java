@@ -32,7 +32,7 @@ public class CollisionTester {
 		
 		// Calculate half sizes.
         double halfWidthA = rectA.getWidth() / 2.0;
-        double halfHeightA = rectA.getWidth() / 2.0;
+        double halfHeightA = rectA.getHeight() / 2.0;
         double halfWidthB = rectB.getWidth() / 2.0;
         double halfHeightB = rectB.getHeight() / 2.0;
 
