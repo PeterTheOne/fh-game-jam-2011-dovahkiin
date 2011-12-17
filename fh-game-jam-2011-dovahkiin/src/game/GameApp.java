@@ -1,5 +1,7 @@
 package game;
 
+import game.state.PlayState;
+
 import org.cogaen.core.Core;
 import org.cogaen.input.InputManager;
 import org.cogaen.java2d.SceneManager;
@@ -29,8 +31,8 @@ public class GameApp {
 
 		//TODO: gamestates
 		
-		//stateManager.addState(new PlayState(this.core));
-		//stateManager.setCurrentState(PlayState.NAME);
+		stateManager.addState(new PlayState(this.core));
+		stateManager.setCurrentState(PlayState.NAME);
 	}
 
 	public void runGameLoop() throws InterruptedException {
