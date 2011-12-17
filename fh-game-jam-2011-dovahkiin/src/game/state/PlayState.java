@@ -1,6 +1,7 @@
 package game.state;
 
 import game.entity.HochiEntity;
+import game.levelmanager.Level;
 import game.levelmanager.LevelManager;
 import game.motion.Body;
 import game.motion.MotionManager;
@@ -39,7 +40,8 @@ public class PlayState implements GameState {
 		//TODO: do stuff here
 		EntityManager entMngr = EntityManager.getInstance(this.core);
 		entMngr.addEntity(new HochiEntity(core, "Hochi"));
-
+		LevelManager lvlMngr = new LevelManager(core);
+		lvlMngr.setCurrentLevel(new Level(core, "startLevel"));
 		/*Body body = new Rectangle("plaform", 1000, 100);
 		body.setCollisionFlag(0x0001);
 		body.setCollisionMask(0x0001);

@@ -18,6 +18,8 @@ public class LevelManager implements EventListener{
 	public LevelManager(Core core){
 		this.core = core;
 		EventManager.getInstance(this.core).addListener(this, LoadLevelEvent.TYPE);
+		Level lvl = new Level(core, "startLevel");
+		EventManager.getInstance(this.core).enqueueEvent(new LoadLevelEvent(lvl.getLevelName()));
 	}
 	
 	public void addLevel(Level lvl){
