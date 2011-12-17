@@ -19,7 +19,6 @@ import org.cogaen.event.EventManager;
 import org.cogaen.input.KeyboardControllerSource;
 import org.cogaen.java2d.Camera;
 import org.cogaen.java2d.ImageHandle;
-import org.cogaen.java2d.Overlay;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SceneNode;
 import org.cogaen.java2d.SpriteHandle;
@@ -121,18 +120,21 @@ public class PlayView extends AbstractView implements EventListener {
 		if (node != null) {
 			node.setPose(event.getX(), event.getY(), event.getAngle());
 		}
-		if(event.getVelocityX() > 0){
-			node.removeVisual(playerVisual);
-			this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_right");
-			this.playerVisual.play();
-			node.addVisual(playerVisual);
-		}else if(event.getVelocityX() < 0){
-			node.removeVisual(playerVisual);
-			this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_left");
-			node.addVisual(playerVisual);
-			this.playerVisual.play();
-		}else{
-			this.playerVisual.stop();
+		//TODO: change this to HochiEntity state changes
+		if (event.getEntityName().equals("Hochi")) {
+			if(event.getVelocityX() > 0){
+				node.removeVisual(playerVisual);
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_right");
+				this.playerVisual.play();
+				node.addVisual(playerVisual);
+			}else if(event.getVelocityX() < 0){
+				node.removeVisual(playerVisual);
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_left");
+				node.addVisual(playerVisual);
+				this.playerVisual.play();
+			}else{
+				this.playerVisual.stop();
+			}
 		}
 	}
 
