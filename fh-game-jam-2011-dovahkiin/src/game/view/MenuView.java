@@ -27,7 +27,6 @@ public class MenuView extends AbstractView implements EventListener{
 
 	private int selectedItem = 0;
 	private Overlay door;
-	private AnimatedSpriteVisual hochiSpr;
 	
 	public MenuView(Core core) {
 		super(core);
@@ -41,10 +40,6 @@ public class MenuView extends AbstractView implements EventListener{
 		
 		resMngr.addResource(new ImageHandle( "menu_door_img", "menu-open_door.png") );
 		resMngr.addResource(new SpriteHandle( "menu_door_spr", "menu_door_img", 173, 313) );
-		
-		resMngr.addResource(new ImageHandle( "hochi-walk_img", "hochi-walk.png") );
-		resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr", "hochi-walk_img", 8, 250, 538) );
-		
 	}
 
 	public void engage() {
@@ -63,12 +58,6 @@ public class MenuView extends AbstractView implements EventListener{
 		SpriteVisual doorSpr = scnMngr.createSpriteVisual("menu_door_spr");
 		door.addVisual(doorSpr);
 		door.setPosition(207 + 300 * this.selectedItem, 477);
-		
-		Overlay hochi = scnMngr.createOverlay("hochi");
-		hochiSpr = (AnimatedSpriteVisual) ResourceManager.getInstance(this.getCore()).getResource("hochi-walk_spr");
-		hochi.addVisual(hochiSpr);
-		hochi.setPosition(512, 384);
-		hochiSpr.play();
 	}
 
 	public void disengage() {

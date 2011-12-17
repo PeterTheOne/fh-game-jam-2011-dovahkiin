@@ -34,19 +34,19 @@ public class Rectangle extends Body {
 		this.height = height;
 	}
 	
-	double getLeft() {
+	public double getLeft() {
 		return getPositionX() - this.width / 2.0;
 	}
 	
-	double getRight() {
+	public double getRight() {
 		return getPositionX() + this.width / 2.0;
 	}
 	
-	double getTop() {
+	public double getTop() {
 		return getPositionY() + this.height / 2.0;
 	}
 	
-	double getBottom() {
+	public double getBottom() {
 		return getPositionY() - this.height / 2.0;
 	}
 

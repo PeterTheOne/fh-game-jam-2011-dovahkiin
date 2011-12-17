@@ -9,10 +9,12 @@ public class CollisionEvent extends Event {
 
 	private String firstEntity;
 	private String secondEntity;
+	private boolean yDepthSmallerXDepth;
 	
-	public CollisionEvent(String first, String second) {
+	public CollisionEvent(String first, String second, boolean yDepthSmallerXDepth) {
 		this.firstEntity = first;
 		this.secondEntity = second;
+		this.yDepthSmallerXDepth = yDepthSmallerXDepth;
 	}
 	
 	public String getFirstEntity() {
@@ -21,6 +23,10 @@ public class CollisionEvent extends Event {
 	
 	public String getSecondEntity() {
 		return this.secondEntity;
+	}
+	
+	public boolean getYDepthSmallerXDepth() {
+		return this.yDepthSmallerXDepth;
 	}
 
 	public boolean isInvolve(String entityName) {

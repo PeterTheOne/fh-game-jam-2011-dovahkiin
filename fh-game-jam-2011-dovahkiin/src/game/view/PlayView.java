@@ -1,6 +1,8 @@
 package game.view;
 
 import game.entity.HochiEntity;
+import game.java2d.AnimatedSpriteHandle;
+import game.java2d.AnimatedSpriteVisual;
 import game.motion.EntityMovedEvent;
 
 import java.awt.Color;
@@ -15,14 +17,17 @@ import org.cogaen.event.EventManager;
 import org.cogaen.input.KeyboardControllerSource;
 import org.cogaen.java2d.Camera;
 import org.cogaen.java2d.CircleVisual;
+import org.cogaen.java2d.ImageHandle;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SceneNode;
+import org.cogaen.resource.ResourceManager;
 import org.cogaen.view.AbstractView;
 
 public class PlayView extends AbstractView implements EventListener {
 
 	private SceneManager scnMngr;
 	private KeyboardControllerSource keyboardSrc;
+	private ResourceManager resMngr;
 	
 	public PlayView(Core core) {
 		super(core);
@@ -30,6 +35,7 @@ public class PlayView extends AbstractView implements EventListener {
 		this.keyboardSrc = new KeyboardControllerSource(core, "PlayerOne");
 		this.keyboardSrc.setAxisKeys(KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, -1);
 		this.keyboardSrc.addAction(KeyEvent.VK_SPACE);
+		this.resMngr = ResourceManager.getInstance(this.getCore());
 	}
 
 	@Override
@@ -38,7 +44,7 @@ public class PlayView extends AbstractView implements EventListener {
 		this.scnMngr.setBackgroundColor(Color.black);
 
 		Camera cam = this.scnMngr.createCamera();
-		cam.setZoom(this.scnMngr.getScreen().getWidth() / 27.5);
+		//cam.setZoom(this.scnMngr.getScreen().getWidth() / 500d);
 		
 		EventManager evtMngr = EventManager.getInstance(getCore());
 		evtMngr.addListener(this, EntityCreatedEvent.TYPE);
@@ -60,8 +66,8 @@ public class PlayView extends AbstractView implements EventListener {
 
 	@Override
 	public void registerResources(String group) {
-		// TODO Auto-generated method stub
-
+		this.resMngr.addResource(new ImageHandle( "hochi-walk_img", "hochi-walk.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr", "hochi-walk_img", 8, 250, 548) );
 	}
 
 	@Override
@@ -83,9 +89,9 @@ public class PlayView extends AbstractView implements EventListener {
 
 	private void createHochi(String entityName) {
 		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
-		CircleVisual circle = this.scnMngr.createCircleVisual(2);
-		circle.setColor(Color.red);
-		scnNode.addVisual(circle);
+		AnimatedSpriteVisual hochiVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr");
+		hochiVisual.play();
+		scnNode.addVisual(hochiVisual);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
 	}
 
