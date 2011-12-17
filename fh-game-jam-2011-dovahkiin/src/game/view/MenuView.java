@@ -58,9 +58,11 @@ public class MenuView extends AbstractView implements EventListener{
 		case KeyEvent.VK_ENTER:
 			EventManager.getInstance(this.getCore()).enqueueEvent(new SelectItemEvent(selectedItem));
 			break;
+		case KeyEvent.VK_LEFT:
 		case KeyEvent.VK_UP:
 			EventManager.getInstance(this.getCore()).enqueueEvent(new ChangeItemEvent(ChangeDirection.UP));
 			break;
+		case KeyEvent.VK_RIGHT:
 		case KeyEvent.VK_DOWN:
 			EventManager.getInstance(this.getCore()).enqueueEvent(new ChangeItemEvent(ChangeDirection.DOWN));
 			break;
