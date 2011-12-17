@@ -8,7 +8,7 @@ public class LeaveScreenEvent extends Event{
 public static final EventType TYPE = new EventType("LeaveScreenEvent");
 	
 	public enum LeaveScreen{
-		UP, DOWN
+		LEFT, RIGHT
 	}
 	
 	private LeaveScreen side;

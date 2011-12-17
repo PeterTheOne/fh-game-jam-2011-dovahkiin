@@ -1,6 +1,7 @@
 package game.state;
 
 import game.entity.HochiEntity;
+import game.levelmanager.LevelManager;
 import game.view.PlayView;
 
 import org.cogaen.core.Core;
@@ -32,6 +33,7 @@ public class PlayState implements GameState {
 		this.view.engage();
 		
 		//TODO: do stuff here
+		
 		EntityManager entMngr = EntityManager.getInstance(this.core);
 		entMngr.addEntity(new HochiEntity(core, "Hochi"));
 	}
