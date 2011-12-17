@@ -7,6 +7,7 @@ import game.view.PlayView;
 
 import org.cogaen.core.Core;
 import org.cogaen.entity.EntityManager;
+import org.cogaen.event.EventManager;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.state.GameState;
 import org.cogaen.view.View;
