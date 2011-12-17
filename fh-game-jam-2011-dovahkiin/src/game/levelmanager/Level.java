@@ -2,16 +2,15 @@ package game.levelmanager;
 
 import game.entity.EnemyEntity;
 import game.event.LeaveScreenEvent;
+import game.event.LevelEngagedEvent;
 import game.event.LoadLevelEvent;
 import game.event.LeaveScreenEvent.LeaveScreen;
-import game.event.MenuStateEvent;
 import game.motion.MotionManager;
 import game.motion.Rectangle;
 
 import java.util.Vector;
 
 import org.cogaen.core.Core;
-import org.cogaen.entity.Entity;
 import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
@@ -19,22 +18,22 @@ import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SceneNode;
 
 
-public class Level implements EventListener{
+public class Level {
 
 	private Vector<Rectangle> structures = new Vector<Rectangle>();
 	private Vector<EnemyEntity> enemies = new Vector<EnemyEntity>();
 	private Core core;
-	private String levelName;
+	private String name;
 	private String prevLevel;
 	private String nextLevel;
 	
-	public Level(Core core, String levelName){
+	public Level(Core core, String name){
 		this.core = core;
-		this.levelName = levelName;
-		EventManager.getInstance(this.core).addListener(this, LoadLevelEvent.TYPE);
+		this.name = name;
+		//EventManager.getInstance(this.core).addListener(this, LoadLevelEvent.TYPE);
 	}
 	
-	public void drawLevel(){
+	/*public void drawLevel(){
 		SceneManager scnMngr = SceneManager.getInstance(core);
 		SceneNode node = scnMngr.createSceneNode(levelName);
 		EventManager.getInstance(this.core).addListener(this, LeaveScreenEvent.TYPE);
@@ -44,11 +43,15 @@ public class Level implements EventListener{
 		for(EnemyEntity enemy : enemies){
 			//TODO: Gegner in node einfügen (neue child-Node pro Gegner)
 		}
+	}*/
+	
+	public void engage() {
+		EventManager.getInstance(this.core).enqueueEvent(new LevelEngagedEvent(this.name));
 	}
 	
-	public void destroyLevel(){
-		SceneManager scnMngr = SceneManager.getInstance(core);
-		scnMngr.destroySceneNode(levelName);
+	public void disenage(){
+		/*SceneManager scnMngr = SceneManager.getInstance(core);
+		scnMngr.destroySceneNode(levelName);*/
 		for(Rectangle struct : structures){
 			MotionManager.getInstance(core).removeBody(struct);
 		}
@@ -62,7 +65,6 @@ public class Level implements EventListener{
 		enemies.add(enemy);
 	}
 	
-	
 	public void setPrevLevel(String prevLevel){
 		this.prevLevel = prevLevel;
 	}
@@ -71,12 +73,11 @@ public class Level implements EventListener{
 		this.nextLevel = nextLevel;
 	}
 	
-	public String getLevelName(){
-		return this.levelName;
+	public String getName(){
+		return this.name;
 	}
 
-	public void handleEvent(Event event) {
-		// TODO Auto-generated method stub
+	/*public void handleEvent(Event event) {
 		if(event.isOfType(LeaveScreenEvent.TYPE)){
 			LeaveScreenEvent leave = (LeaveScreenEvent)(event);
 			LeaveScreen side = leave.getSide();
@@ -97,7 +98,7 @@ public class Level implements EventListener{
 				drawLevel();
 			}
 		}
-	}
+	}*/
 	
 	
 }

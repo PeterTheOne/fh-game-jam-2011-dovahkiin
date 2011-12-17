@@ -1,6 +1,7 @@
 package game.view;
 
 import game.entity.HochiEntity;
+import game.event.LevelEngagedEvent;
 import game.java2d.AnimatedSpriteHandle;
 import game.java2d.AnimatedSpriteVisual;
 import game.motion.EntityMovedEvent;
@@ -16,10 +17,12 @@ import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.input.KeyboardControllerSource;
 import org.cogaen.java2d.Camera;
-import org.cogaen.java2d.CircleVisual;
 import org.cogaen.java2d.ImageHandle;
+import org.cogaen.java2d.Overlay;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SceneNode;
+import org.cogaen.java2d.SpriteHandle;
+import org.cogaen.java2d.SpriteVisual;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.view.AbstractView;
 
@@ -50,6 +53,7 @@ public class PlayView extends AbstractView implements EventListener {
 		evtMngr.addListener(this, EntityCreatedEvent.TYPE);
 		evtMngr.addListener(this, EntityDestroyedEvent.TYPE);
 		evtMngr.addListener(this, EntityMovedEvent.TYPE);
+		evtMngr.addListener(this, LevelEngagedEvent.TYPE);
 		
 		this.keyboardSrc.engage();
 	}
@@ -57,7 +61,6 @@ public class PlayView extends AbstractView implements EventListener {
 	@Override
 	public void disengage() {
 
-		
 		EventManager.getInstance(getCore()).removeListener(this);
 		this.scnMngr.destroyAll();
 		
@@ -66,8 +69,13 @@ public class PlayView extends AbstractView implements EventListener {
 
 	@Override
 	public void registerResources(String group) {
+		// character
 		this.resMngr.addResource(new ImageHandle( "hochi-walk_img", "hochi-walk.png") );
-		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr", "hochi-walk_img", 8, 250, 548) );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr", "hochi-walk_img", 8, 186, 400));
+		
+		// level backgrounds
+		this.resMngr.addResource(new ImageHandle("level1_1_img", "level1_1.png"));
+		this.resMngr.addResource(new SpriteHandle( "level1_1_spr", "level1_1_img", 1024, 768));
 	}
 
 	@Override
@@ -78,6 +86,8 @@ public class PlayView extends AbstractView implements EventListener {
 			handleEntityDestroyedEvent((EntityDestroyedEvent) event);
 		} else if (event.isOfType(EntityMovedEvent.TYPE)) {
 			handleEntityMovedEvent((EntityMovedEvent) event);
+		} else if (event.isOfType(LevelEngagedEvent.TYPE)) {
+			handleLevelEngagedEvent((LevelEngagedEvent) event);
 		}
 	}
 
@@ -104,6 +114,13 @@ public class PlayView extends AbstractView implements EventListener {
 		if (node != null) {
 			node.setPose(event.getX(), event.getY(), event.getAngle());
 		}
+	}
+
+	private void handleLevelEngagedEvent(LevelEngagedEvent event) {
+		SceneNode scnNode = this.scnMngr.createSceneNode(event.getLevelName());
+		SpriteVisual bgVisual = this.scnMngr.createSpriteVisual("level1_1_spr");
+		scnNode.addVisual(bgVisual);
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
 	}
 
 }

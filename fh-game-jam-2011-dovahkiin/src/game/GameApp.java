@@ -39,17 +39,12 @@ public class GameApp implements EventListener{
 	
 	private void initializeGameStates() {
 		GameStateManager stateManager = GameStateManager.getInstance(this.core);
-
-		//TODO: gamestates
 		
 		stateManager.addState(new SplashState(this.core));
 		stateManager.addState(new MenuState(this.core));
 		stateManager.addState(new IntroState(this.core));
 		stateManager.addState(new PlayState(this.core));
 		stateManager.setCurrentState(SplashState.NAME);
-		
-		
-		//TODO: transitions
 		
 		stateManager.addTransition(SplashState.NAME, MenuState.NAME, SplashState.END_OF_SPLASH);
 		stateManager.addTransition(MenuState.NAME, SplashState.NAME, MenuState.MENU_TO_CREDITS);
