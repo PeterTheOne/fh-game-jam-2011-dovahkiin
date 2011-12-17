@@ -69,9 +69,9 @@ public class PlayView extends AbstractView implements EventListener {
 
 	@Override
 	public void registerResources(String group) {
-		this.resMngr.addResource(new ImageHandle( "hochi-walk_img_right", "hochi-walk_right.png") );
+		this.resMngr.addResource(new ImageHandle( "hochi-walk_img_right", "hochi-walk_spr_right.png") );
 		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr_right", "hochi-walk_img_right", 8, 250, 548) );
-		this.resMngr.addResource(new ImageHandle( "hochi-walk_img_left", "hochi-walk_left.png") );
+		this.resMngr.addResource(new ImageHandle( "hochi-walk_img_left", "hochi-walk_spr_left.png") );
 		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr_left", "hochi-walk_img_left", 8, 250, 548) );
 	}
 
@@ -121,6 +121,8 @@ public class PlayView extends AbstractView implements EventListener {
 			this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_left");
 			node.addVisual(playerVisual);
 			this.playerVisual.play();
+		}else{
+			this.playerVisual.stop();
 		}
 	}
 

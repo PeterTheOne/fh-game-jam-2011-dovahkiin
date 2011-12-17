@@ -1,5 +1,7 @@
 package game.entity;
 
+import game.event.LeaveScreenEvent;
+import game.event.LeaveScreenEvent.LeaveScreen;
 import game.motion.Body;
 import game.motion.CollisionEvent;
 import game.motion.MotionManager;
@@ -11,6 +13,8 @@ import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.input.TwoAxisController;
+import org.cogaen.java2d.SceneManager;
+import org.cogaen.java2d.Screen;
 import org.cogaen.logging.LoggingService;
 
 public class HochiEntity extends PlayerEntity implements EventListener {
@@ -47,6 +51,7 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 		MotionManager.getInstance(getCore()).addBody(this.body);
 		this.ctrl.engage();
 		this.evtMngr.addListener(this, CollisionEvent.TYPE);
+		this.evtMngr.addListener(this, LeaveScreenEvent.TYPE);
 	}
 
 	@Override
@@ -66,13 +71,34 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 		
 		this.body.setVelocity(WALK_SPEED * this.ctrl.getHorizontalPosition(), 
 				this.body.getVelocityY());
+		
+		Screen screen = SceneManager.getInstance(getCore()).getScreen();
+		if(this.body.getPositionX() > screen.getWidth()/2){
+			EventManager.getInstance(getCore()).enqueueEvent(new LeaveScreenEvent(LeaveScreen.RIGHT));
+			LoggingService.getInstance(getCore()).logDebug("ALERT", "a: " + screen.getWidth());
+		}else if(this.body.getPositionX() < -screen.getWidth()/2){
+			EventManager.getInstance(getCore()).enqueueEvent(new LeaveScreenEvent(LeaveScreen.LEFT));
+			LoggingService.getInstance(getCore()).logDebug("ALERT", "b: " + this.body.getPositionX());
+		}
 	}
 
 	@Override
 	public void handleEvent(Event event) {
 		if (event.isOfType(CollisionEvent.TYPE)) {
 			handleCollision((CollisionEvent) event);
+		}else if(event.isOfType(LeaveScreenEvent.TYPE)){
+			handleLeaveScreenEvent((LeaveScreenEvent)(event));
 		}
+	}
+
+	private void handleLeaveScreenEvent(LeaveScreenEvent leaveScreenEvent) {
+		Screen screen = SceneManager.getInstance(getCore()).getScreen();
+		if(leaveScreenEvent.getSide().equals(LeaveScreen.LEFT)){
+			this.body.setPositionX(screen.getWidth()/2);
+		}else if(leaveScreenEvent.getSide().equals(LeaveScreen.RIGHT)){
+			this.body.setPositionX(-screen.getWidth()/2);
+		}
+		
 	}
 
 	private void handleCollision(CollisionEvent event) {
