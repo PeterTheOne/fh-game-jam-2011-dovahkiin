@@ -1,6 +1,7 @@
 package game;
 
 import game.state.PlayState;
+import game.state.SplashState;
 
 import org.cogaen.core.Core;
 import org.cogaen.input.InputManager;
@@ -31,8 +32,9 @@ public class GameApp {
 
 		//TODO: gamestates
 		
+		stateManager.addState(new SplashState(this.core));
 		stateManager.addState(new PlayState(this.core));
-		stateManager.setCurrentState(PlayState.NAME);
+		stateManager.setCurrentState(SplashState.NAME);
 	}
 
 	public void runGameLoop() throws InterruptedException {
