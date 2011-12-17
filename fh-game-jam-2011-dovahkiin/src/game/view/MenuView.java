@@ -6,7 +6,6 @@ import game.event.ChangeItemEvent;
 import game.event.ChangeItemEvent.ChangeDirection;
 import game.event.MenuStateEvent;
 import game.event.SelectItemEvent;
-import game.java2d.ContinuousAnimatedSpriteVisual;
 
 import org.cogaen.core.Core;
 import org.cogaen.event.Event;
@@ -27,7 +26,7 @@ public class MenuView extends AbstractView implements EventListener{
 
 	private int selectedItem = 0;
 	private Overlay door;
-	private ContinuousAnimatedSpriteVisual hochiSpr;
+	private AnimatedSpriteVisual hochiSpr;
 	
 	public MenuView(Core core) {
 		super(core);
@@ -65,7 +64,7 @@ public class MenuView extends AbstractView implements EventListener{
 		door.setPosition(207 + 300 * this.selectedItem, 477);
 		
 		Overlay hochi = scnMngr.createOverlay("hochi");
-		hochiSpr = (ContinuousAnimatedSpriteVisual)scnMngr.createAnimatedVisual("hochi-walk_spr");
+		hochiSpr = scnMngr.createAnimatedVisual("menu_door_spr");
 		hochi.addVisual(hochiSpr);
 		hochi.setPosition(512, 384);
 		hochiSpr.play();
