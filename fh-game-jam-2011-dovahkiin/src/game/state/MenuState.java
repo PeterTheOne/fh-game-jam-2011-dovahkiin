@@ -39,6 +39,7 @@ public class MenuState implements GameState, EventListener {
 		this.view.engage();
 		EventManager.getInstance(this.core).addListener(this, ChangeItemEvent.TYPE);
 		EventManager.getInstance(this.core).addListener(this, SelectItemEvent.TYPE);
+		
 	}
 
 	public void onExit() {

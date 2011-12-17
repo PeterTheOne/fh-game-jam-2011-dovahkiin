@@ -55,7 +55,7 @@ public class MenuView extends AbstractView implements EventListener{
 		door = scnMngr.createOverlay("door");
 		SpriteVisual doorSpr = scnMngr.createSpriteVisual("menu_door_spr");
 		door.addVisual(doorSpr);
-		door.setPosition(207, 477);
+		door.setPosition(207 + 300 * this.selectedItem, 477);
 	}
 
 	public void disengage() {
