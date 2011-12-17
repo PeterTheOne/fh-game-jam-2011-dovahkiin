@@ -1,11 +1,14 @@
 package game.motion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.LogManager;
 
 import org.cogaen.core.Core;
 import org.cogaen.core.UpdateableService;
 import org.cogaen.event.EventManager;
+import org.cogaen.logging.LoggingService;
 import org.cogaen.time.TimeService;
 import org.cogaen.time.Timer;
 
@@ -38,6 +41,15 @@ public class MotionManager implements UpdateableService {
 	public void removeBody(Body body) {
 		this.bodies.remove(body);
 	}
+	
+	public Body getBody(String name) {
+		for (Body body : this.bodies) {
+			if (body.getName().equals(name)) {
+				return body;
+			}
+		}
+		return null;
+	}
 		
 	@Override
 	public void update() {
@@ -56,11 +68,15 @@ public class MotionManager implements UpdateableService {
 				Body b2 = this.bodies.get(j);
 				
 				if (b1.isCollisionAllowed(b2) && b1.isColliding(b2)) {
-					this.evtMngr.enqueueEvent( new CollisionEvent((String) b1.getName(), (String) b2.getName()) );					
+					CollisionEvent cEvent = new CollisionEvent(
+							(String) b1.getName(), 
+							(String) b2.getName(), 
+							CollisionTester.collisionDirection(b1, b2));
+					this.evtMngr.enqueueEvent(cEvent);					
 				}
 				
 			}
-		}		
+		}	
 	}
 		
 	@Override

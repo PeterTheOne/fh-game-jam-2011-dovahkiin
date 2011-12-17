@@ -1,6 +1,9 @@
 package game.state;
 
 import game.entity.HochiEntity;
+import game.motion.Body;
+import game.motion.MotionManager;
+import game.motion.Rectangle;
 import game.view.PlayView;
 
 import org.cogaen.core.Core;
@@ -31,9 +34,13 @@ public class PlayState implements GameState {
 		ResourceManager.getInstance(this.core).loadGroup(NAME);
 		this.view.engage();
 		
-		//TODO: do stuff here
 		EntityManager entMngr = EntityManager.getInstance(this.core);
 		entMngr.addEntity(new HochiEntity(core, "Hochi"));
+
+		Body body = new Rectangle("plaform", 10, 10);
+		body.setCollisionFlag(0x0001);
+		body.setCollisionMask(0x0001);
+		MotionManager.getInstance(this.core).addBody(body);
 	}
 
 	@Override

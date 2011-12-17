@@ -1,6 +1,7 @@
 package game.entity;
 
 import game.motion.Body;
+import game.motion.CollisionEvent;
 import game.motion.MotionManager;
 import game.motion.Rectangle;
 
@@ -19,6 +20,7 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 	private static final double JUMP_POWER = 20;
 	//TODO: jump hold power and jump init power
 	private static final int GRAVITY_STRENGTH = 30;
+	private static final double WALK_SPEED = 10;
 	
 	private EventManager evtMngr;
 	private EntityManager entMngr;
@@ -31,6 +33,7 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 		this.entMngr = EntityManager.getInstance(getCore());
 		this.ctrl = new TwoAxisController(core, "PlayerOne", 2);
 		this.body = new Rectangle(name, 1, 1);
+		this.body.setCollisionFlag(0x0001);
 		this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 	}
 
@@ -43,6 +46,7 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 	protected void setUp() {
 		MotionManager.getInstance(getCore()).addBody(this.body);
 		this.ctrl.engage();
+		this.evtMngr.addListener(this, CollisionEvent.TYPE);
 	}
 
 	@Override
@@ -54,15 +58,50 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 
 	@Override
 	public void update() {
+		// TODO: can only jump when on object
 		if (this.ctrl.isAction(0)) {
 			this.body.setVelocity(0, JUMP_POWER);
+			this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 		}
+		
+		this.body.setVelocity(WALK_SPEED * this.ctrl.getHorizontalPosition(), 
+				this.body.getVelocityY());
 	}
 
 	@Override
 	public void handleEvent(Event event) {
-		// TODO Auto-generated method stub
-		
+		if (event.isOfType(CollisionEvent.TYPE)) {
+			handleCollision((CollisionEvent) event);
+		}
+	}
+
+	private void handleCollision(CollisionEvent event) {
+		if (event.getOpponent(getName()) == null) {
+			return;
+		}
+		Rectangle opponent = (Rectangle) MotionManager.getInstance(getCore()).getBody(event.getOpponent(getName()));
+		if (event.getYDepthSmallerXDepth()) { // is on top or bottom
+			double newY;
+			if (this.body.getVelocityY() < 0) { //top
+				newY = opponent.getTop() + ((Rectangle) this.body).getHeight() / 2d;
+			} else { //bottom
+				newY = opponent.getBottom() - ((Rectangle) this.body).getHeight() / 2d;
+			}
+			this.body.setVelocity(this.body.getVelocityX(), 0);
+			if (Math.abs(this.body.getPositionY() - newY) < 1) { // anti crazy positions
+				this.body.setPositionY(newY);
+			}
+		} else { // is on side
+			double newX;
+			if (this.body.getVelocityX() < 0) {
+				newX = opponent.getRight() + ((Rectangle) this.body).getWidth() / 2d;
+			} else {
+				newX = opponent.getLeft() - ((Rectangle) this.body).getWidth() / 2d;
+			}
+			if (Math.abs(this.body.getPositionX() - newX) < 1) { // anti crazy positions
+				this.body.setPositionX(newX);
+			}
+		}
 	}
 
 }

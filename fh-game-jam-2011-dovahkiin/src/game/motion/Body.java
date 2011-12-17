@@ -51,6 +51,14 @@ public abstract class Body {
 		this.position[1] = y;
 	}
 	
+	public void setPositionX(double x) {
+		this.position[0] = x;
+	}
+	
+	public void setPositionY(double y) {
+		this.position[1] = y;
+	}
+	
 	public void setAngularPosition(double phi) {
 		this.position[2] = phi;
 	}
