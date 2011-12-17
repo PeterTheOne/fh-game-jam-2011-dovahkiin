@@ -1,15 +1,22 @@
 package game.view;
 
+import game.entity.HochiEntity;
+
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
 import org.cogaen.core.Core;
+import org.cogaen.entity.EntityCreatedEvent;
+import org.cogaen.entity.EntityDestroyedEvent;
 import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.input.KeyboardControllerSource;
 import org.cogaen.java2d.Camera;
+import org.cogaen.java2d.CircleVisual;
 import org.cogaen.java2d.SceneManager;
+import org.cogaen.java2d.SceneNode;
+import org.cogaen.logging.LoggingService;
 import org.cogaen.view.AbstractView;
 
 public class PlayView extends AbstractView implements EventListener {
@@ -34,7 +41,8 @@ public class PlayView extends AbstractView implements EventListener {
 		cam.setZoom(this.scnMngr.getScreen().getWidth() / 27.5);
 		
 		EventManager evtMngr = EventManager.getInstance(getCore());
-		//TODO: add Events here
+		evtMngr.addListener(this, EntityCreatedEvent.TYPE);
+		evtMngr.addListener(this, EntityDestroyedEvent.TYPE);
 		
 		this.keyboardSrc.engage();
 	}
@@ -57,8 +65,29 @@ public class PlayView extends AbstractView implements EventListener {
 
 	@Override
 	public void handleEvent(Event event) {
-		// TODO Auto-generated method stub
-		
+		if (event.isOfType(EntityCreatedEvent.TYPE)) {
+			handleEntityCreated((EntityCreatedEvent) event);
+		} else if (event.isOfType(EntityDestroyedEvent.TYPE)) {
+			handleEntityDestroyedEvent((EntityDestroyedEvent) event);
+		}
+	}
+
+	private void handleEntityCreated(EntityCreatedEvent event) {
+		if (event.getEntityType().equals(HochiEntity.TYPE)) {
+			createHochi(event.getEntityName());
+		}
+	}
+
+	private void createHochi(String entityName) {
+		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
+		CircleVisual circle = this.scnMngr.createCircleVisual(2);
+		circle.setColor(Color.red);
+		scnNode.addVisual(circle);
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
+	private void handleEntityDestroyedEvent(EntityDestroyedEvent event) {
+		this.scnMngr.destroySceneNode(event.getEntityName());
 	}
 
 }
