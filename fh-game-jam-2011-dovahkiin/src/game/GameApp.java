@@ -1,5 +1,6 @@
 package game;
 
+import game.state.IntroState;
 import game.state.MenuState;
 import game.state.PlayState;
 import game.state.SplashState;
@@ -39,6 +40,8 @@ public class GameApp implements EventListener{
 		//TODO: gamestates
 		
 		stateManager.addState(new SplashState(this.core));
+		stateManager.addState(new MenuState(this.core));
+		stateManager.addState(new IntroState(this.core));
 		stateManager.addState(new PlayState(this.core));
 		stateManager.setCurrentState(SplashState.NAME);
 		
@@ -47,6 +50,8 @@ public class GameApp implements EventListener{
 		
 		stateManager.addTransition(SplashState.NAME, MenuState.NAME, SplashState.END_OF_SPLASH);
 		stateManager.addTransition(MenuState.NAME, SplashState.NAME, MenuState.MENU_TO_CREDITS);
+		stateManager.addTransition(MenuState.NAME, IntroState.NAME, MenuState.MENU_TO_INTRO);
+		stateManager.addTransition(IntroState.NAME, PlayState.NAME, IntroState.INTRO_TO_PLAY);
 	}
 
 	public void runGameLoop() throws InterruptedException {
