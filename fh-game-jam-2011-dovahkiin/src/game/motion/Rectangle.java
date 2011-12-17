@@ -11,6 +11,13 @@ public class Rectangle extends Body {
 		this.height = height;
 	}
 	
+	public Rectangle(String name, double width, double height, double centerX, double centerY) {
+		super(name);
+		this.width = width;
+		this.height = height;
+		this.setPosition(centerX, centerY);
+	}
+	
 	public double getWidth() {
 		return width;
 	}

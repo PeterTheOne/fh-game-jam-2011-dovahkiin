@@ -1,5 +1,6 @@
 package game.view;
 
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 
 import game.event.ChangeItemEvent;
@@ -12,8 +13,8 @@ import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.input.KeyPressedEvent;
-import org.cogaen.java2d.AnimatedSpriteHandle;
-import org.cogaen.java2d.AnimatedSpriteVisual;
+import game.java2d.AnimatedSpriteHandle;
+import game.java2d.AnimatedSpriteVisual;
 import org.cogaen.java2d.ImageHandle;
 import org.cogaen.java2d.Overlay;
 import org.cogaen.java2d.SceneManager;
@@ -64,7 +65,7 @@ public class MenuView extends AbstractView implements EventListener{
 		door.setPosition(207 + 300 * this.selectedItem, 477);
 		
 		Overlay hochi = scnMngr.createOverlay("hochi");
-		hochiSpr = scnMngr.createAnimatedVisual("menu_door_spr");
+		hochiSpr = (AnimatedSpriteVisual) ResourceManager.getInstance(this.getCore()).getResource("hochi-walk_spr");
 		hochi.addVisual(hochiSpr);
 		hochi.setPosition(512, 384);
 		hochiSpr.play();
