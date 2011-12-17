@@ -1,9 +1,13 @@
 package game;
 
+import game.state.MenuState;
 import game.state.PlayState;
 import game.state.SplashState;
 
 import org.cogaen.core.Core;
+import org.cogaen.event.Event;
+import org.cogaen.event.EventListener;
+import org.cogaen.event.EventType;
 import org.cogaen.input.InputManager;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
@@ -13,9 +17,11 @@ import org.cogaen.resource.ResourceManager;
 import org.cogaen.state.GameStateManager;
 import org.cogaen.time.Clock;
 
-public class GameApp {		
+public class GameApp implements EventListener{		
 	
 	private Core core;
+	private boolean running = true;
+	public static final EventType QUIT_GAME = new EventType("QuitGame");
 	
 	public GameApp(Screen screen) {
 		this.core = Core.createCoreWithStandardServices(LoggingService.DEBUG);
@@ -36,18 +42,32 @@ public class GameApp {
 		stateManager.addState(new PlayState(this.core));
 		stateManager.setCurrentState(SplashState.NAME);
 		
-		stateManager.addTransition(SplashState.NAME, PlayState.NAME, SplashState.END_OF_SPLASH);
+		
+		//TODO: transitions
+		
+		stateManager.addTransition(SplashState.NAME, MenuState.NAME, SplashState.END_OF_SPLASH);
+		stateManager.addTransition(MenuState.NAME, SplashState.NAME, MenuState.MENU_TO_CREDITS);
 	}
 
 	public void runGameLoop() throws InterruptedException {
 		Clock clock = new Clock();
 		SceneManager scnMngr = SceneManager.getInstance(this.core);
 		
-		while (true) {
+		while (running) {
 			clock.tick();
 			this.core.update(clock.getDelta());
 			scnMngr.renderScene();
 			Thread.sleep(1);
+		}
+		
+		System.exit(0);
+	}
+
+	public void handleEvent(Event event) {
+		if (event.isOfType(QUIT_GAME)){
+			if (event.isOfType(QUIT_GAME)){
+				running = false;
+			}
 		}
 	}
 
