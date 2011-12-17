@@ -8,7 +8,7 @@ import org.cogaen.java2d.WindowedScreen;
 
 public class Main {
 	public static void main(String[] args) throws InterruptedException {
-		Screen screen = new WindowedScreen(800, 600);
+		Screen screen = new WindowedScreen(1024, 768);
 		JFrame frame = new JFrame("FH Game Jam 2011 Dovahkiin");
 		frame.add(screen.getComponent());
 		frame.setResizable(false);

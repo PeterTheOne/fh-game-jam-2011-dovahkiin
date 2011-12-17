@@ -35,6 +35,8 @@ public class GameApp {
 		stateManager.addState(new SplashState(this.core));
 		stateManager.addState(new PlayState(this.core));
 		stateManager.setCurrentState(SplashState.NAME);
+		
+		stateManager.addTransition(SplashState.NAME, PlayState.NAME, SplashState.END_OF_SPLASH);
 	}
 
 	public void runGameLoop() throws InterruptedException {
