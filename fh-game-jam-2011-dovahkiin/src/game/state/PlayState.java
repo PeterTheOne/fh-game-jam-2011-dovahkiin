@@ -22,6 +22,7 @@ public class PlayState implements GameState {
 	public PlayState(Core core) {
 		this.core = core;
 		this.view = new PlayView(core);
+		this.view.registerResources(NAME);
 	}
 
 	@Override
@@ -37,10 +38,10 @@ public class PlayState implements GameState {
 		EntityManager entMngr = EntityManager.getInstance(this.core);
 		entMngr.addEntity(new HochiEntity(core, "Hochi"));
 
-		Body body = new Rectangle("plaform", 10, 10);
+		/*Body body = new Rectangle("plaform", 1000, 100);
 		body.setCollisionFlag(0x0001);
 		body.setCollisionMask(0x0001);
-		MotionManager.getInstance(this.core).addBody(body);
+		MotionManager.getInstance(this.core).addBody(body);*/
 	}
 
 	@Override

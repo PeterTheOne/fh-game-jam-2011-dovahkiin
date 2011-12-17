@@ -17,10 +17,10 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 	
 	public static final String TYPE = "Hochi";
 
-	private static final double JUMP_POWER = 20;
+	private static final double JUMP_POWER = 250;
 	//TODO: jump hold power and jump init power
-	private static final int GRAVITY_STRENGTH = 30;
-	private static final double WALK_SPEED = 10;
+	private static final int GRAVITY_STRENGTH = 200;
+	private static final double WALK_SPEED = 200;
 	
 	private EventManager evtMngr;
 	private EntityManager entMngr;
@@ -32,7 +32,7 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 		this.evtMngr = EventManager.getInstance(getCore());
 		this.entMngr = EntityManager.getInstance(getCore());
 		this.ctrl = new TwoAxisController(core, "PlayerOne", 2);
-		this.body = new Rectangle(name, 1, 1);
+		this.body = new Rectangle(name, 250, 548);
 		this.body.setCollisionFlag(0x0001);
 		this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 	}
@@ -80,25 +80,27 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 			return;
 		}
 		Rectangle opponent = (Rectangle) MotionManager.getInstance(getCore()).getBody(event.getOpponent(getName()));
+		double halfBodyWidth = ((Rectangle) this.body).getWidth() / 2d;
+		double halfBodyHeight = ((Rectangle) this.body).getHeight() / 2d;
 		if (event.getYDepthSmallerXDepth()) { // is on top or bottom
 			double newY;
 			if (this.body.getVelocityY() < 0) { //top
-				newY = opponent.getTop() + ((Rectangle) this.body).getHeight() / 2d;
+				newY = opponent.getTop() + halfBodyHeight;
 			} else { //bottom
-				newY = opponent.getBottom() - ((Rectangle) this.body).getHeight() / 2d;
+				newY = opponent.getBottom() - halfBodyHeight;
 			}
 			this.body.setVelocity(this.body.getVelocityX(), 0);
-			if (Math.abs(this.body.getPositionY() - newY) < 1) { // anti crazy positions
+			if (Math.abs(this.body.getPositionY() - newY) < halfBodyHeight) { // anti crazy positions
 				this.body.setPositionY(newY);
 			}
 		} else { // is on side
 			double newX;
 			if (this.body.getVelocityX() < 0) {
-				newX = opponent.getRight() + ((Rectangle) this.body).getWidth() / 2d;
+				newX = opponent.getRight() + halfBodyWidth;
 			} else {
-				newX = opponent.getLeft() - ((Rectangle) this.body).getWidth() / 2d;
+				newX = opponent.getLeft() - halfBodyWidth;
 			}
-			if (Math.abs(this.body.getPositionX() - newX) < 1) { // anti crazy positions
+			if (Math.abs(this.body.getPositionX() - newX) < halfBodyHeight) { // anti crazy positions
 				this.body.setPositionX(newX);
 			}
 		}
