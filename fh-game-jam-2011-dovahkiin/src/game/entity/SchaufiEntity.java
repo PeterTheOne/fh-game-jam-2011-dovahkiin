@@ -88,7 +88,7 @@ public class SchaufiEntity extends PlayerEntity implements EventListener{
 				soundHandle.load(this.getCore());
 				SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 			}
-			this.body.setVelocity(this.body.getVelocityX(), this.body.getVelocityY() + JUMP_HOLD);
+			//this.body.setVelocity(this.body.getVelocityX(), this.body.getVelocityY() + JUMP_HOLD);
 		}
 		
 		//leaveScreen
@@ -147,7 +147,7 @@ public class SchaufiEntity extends PlayerEntity implements EventListener{
 	private void handleLeaveScreenEvent(LeaveScreenEvent leaveScreenEvent) {
 		Screen screen = SceneManager.getInstance(getCore()).getScreen();
 		if(leaveScreenEvent.getSide().equals(LeaveScreen.LEFT)){
-			this.body.setPositionX(screen.getWidth()/2);
+			this.body.setPositionX(-screen.getWidth()/2);
 		}else if(leaveScreenEvent.getSide().equals(LeaveScreen.RIGHT)){
 			this.body.setPositionX(-screen.getWidth()/2);
 		}
