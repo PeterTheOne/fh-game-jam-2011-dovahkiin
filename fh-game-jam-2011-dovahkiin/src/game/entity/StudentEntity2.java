@@ -13,7 +13,7 @@ import org.cogaen.event.EventManager;
 
 public class StudentEntity2 extends StudentEntity implements EventListener{
 	
-	public static final String TYPE = "Student3";
+	public static final String TYPE = "Student2";
 	private EventManager evtMngr;
 	
 	public StudentEntity2(Core core, String name, StudentState state, double x, double y) {

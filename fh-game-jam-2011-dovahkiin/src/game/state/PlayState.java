@@ -21,6 +21,7 @@ import org.cogaen.entity.EntityManager;
 import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
+import org.cogaen.logging.LoggingService;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.state.GameState;
 import org.cogaen.view.View;
@@ -54,7 +55,8 @@ public class PlayState implements GameState, EventListener{
 		EntityManager entMngr = EntityManager.getInstance(this.core);
 		//entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
 		//entMngr.addEntity(new RudiEntity(this.core, "Rudi"));
-		entMngr.addEntity(new StudentEntity1(this.core, "Student01", StudentState.MIDDLE, 300, -50));
+		this.createStudent(StudentState.MIDDLE, -200, 0);
+		
 		
 		LevelManager lvlMngr = new LevelManager(core);
 		
@@ -80,13 +82,13 @@ public class PlayState implements GameState, EventListener{
 		String name = org.cogaen.name.NameService.getInstance(core).generateName();
 		int rand = (int)(Math.random() * IntroState.getCharacters());
 		switch(rand){
-		case 1:
+		case 0:
 			createStudent1(state, name, positionX, positionY);
 			break;
-		case 2:
+		case 1:
 			createStudent2(state, name, positionX, positionY);
 			break;
-		case 3:
+		case 2:
 			createStudent3(state, name, positionX, positionY);
 			break;
 		}

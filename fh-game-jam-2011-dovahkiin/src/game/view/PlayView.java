@@ -126,14 +126,14 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new SpriteHandle( "student1_right_spr", "student1_right_img", 96, 350));
 		//this.resMngr.addResource(new SpriteHandle( "student1_left_spr", "student1_left_img", 96, 350));
 		
-		this.resMngr.addResource(new ImageHandle("student2__img", "student2.png"));
+		this.resMngr.addResource(new ImageHandle("student2_img", "student2.png"));
 		this.resMngr.addResource(new ImageHandle("student2_right_img", "student2_right.png"));
 		//this.resMngr.addResource(new ImageHandle("student2_left_img", "student2_left.png"));
 		this.resMngr.addResource(new SpriteHandle( "student2_spr", "student2_img", 96, 350));
 		this.resMngr.addResource(new SpriteHandle( "student2_right_spr", "student2_right_img", 96, 350));
 		//this.resMngr.addResource(new SpriteHandle( "student1_left_spr", "student1_left_img", 96, 350));
 		
-		this.resMngr.addResource(new ImageHandle("student3__img", "student3.png"));
+		this.resMngr.addResource(new ImageHandle("student3_img", "student3.png"));
 		this.resMngr.addResource(new ImageHandle("student3_right_img", "student3_right.png"));
 		//this.resMngr.addResource(new ImageHandle("student3_left_img", "student3_left.png"));
 		this.resMngr.addResource(new SpriteHandle( "student3_spr", "student3_img", 96, 350));
@@ -273,9 +273,9 @@ public class PlayView extends AbstractView implements EventListener {
 		} else if (event.getEntityType().equals(StudentEntity1.TYPE)) {
 			createStudent1(event.getEntityName(), (StudentEntity)(EntityManager.getInstance(getCore()).getEntity(event.getEntityName())));
 		}else if (event.getEntityType().equals(StudentEntity2.TYPE)) {
-			createStudent1(event.getEntityName(), (StudentEntity)(EntityManager.getInstance(getCore()).getEntity(event.getEntityName())));
+			createStudent2(event.getEntityName(), (StudentEntity)(EntityManager.getInstance(getCore()).getEntity(event.getEntityName())));
 		}else if (event.getEntityType().equals(StudentEntity3.TYPE)) {
-			createStudent1(event.getEntityName(), (StudentEntity)(EntityManager.getInstance(getCore()).getEntity(event.getEntityName())));
+			createStudent3(event.getEntityName(), (StudentEntity)(EntityManager.getInstance(getCore()).getEntity(event.getEntityName())));
 		} else if (event.getEntityType().equals(ExEntity.TYPE)) {
 			createEx(event.getEntityName());
 		}
@@ -315,6 +315,7 @@ public class PlayView extends AbstractView implements EventListener {
 			vis = this.scnMngr.createSpriteVisual("student1_right_spr");
 		}else{
 			vis = this.scnMngr.createSpriteVisual("student1_spr");
+			LoggingService.getInstance(getCore()).logDebug("ALERT", "one");
 		}
 		scnNode.addVisual(vis);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
@@ -330,6 +331,7 @@ public class PlayView extends AbstractView implements EventListener {
 			vis = this.scnMngr.createSpriteVisual("student2_right_spr");
 		}else{
 			vis = this.scnMngr.createSpriteVisual("student2_spr");
+			LoggingService.getInstance(getCore()).logDebug("ALERT", "zwei");
 		}
 		scnNode.addVisual(vis);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
@@ -344,6 +346,7 @@ public class PlayView extends AbstractView implements EventListener {
 			vis = this.scnMngr.createSpriteVisual("student3_right_spr");
 		}else{
 			vis = this.scnMngr.createSpriteVisual("student3_spr");
+			LoggingService.getInstance(getCore()).logDebug("ALERT", "three");
 		}
 		scnNode.addVisual(vis);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
