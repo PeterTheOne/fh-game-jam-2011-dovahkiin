@@ -119,17 +119,26 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new AnimatedSpriteHandle("rudi-walk_left_spr", "rudi-walk_left_img", 8, 186, 400));
 		
 		// students
-		this.resMngr.addResource(new ImageHandle("student1__img", "student1.png"));
+		this.resMngr.addResource(new ImageHandle("student1_img", "student1.png"));
 		this.resMngr.addResource(new ImageHandle("student1_right_img", "student1_right.png"));
 		//this.resMngr.addResource(new ImageHandle("student1_left_img", "student1_left.png"));
+		this.resMngr.addResource(new SpriteHandle( "student1_spr", "student1_img", 96, 350));
+		this.resMngr.addResource(new SpriteHandle( "student1_right_spr", "student1_right_img", 96, 350));
+		//this.resMngr.addResource(new SpriteHandle( "student1_left_spr", "student1_left_img", 96, 350));
 		
 		this.resMngr.addResource(new ImageHandle("student2__img", "student2.png"));
 		this.resMngr.addResource(new ImageHandle("student2_right_img", "student2_right.png"));
 		//this.resMngr.addResource(new ImageHandle("student2_left_img", "student2_left.png"));
+		this.resMngr.addResource(new SpriteHandle( "student2_spr", "student2_img", 96, 350));
+		this.resMngr.addResource(new SpriteHandle( "student2_right_spr", "student2_right_img", 96, 350));
+		//this.resMngr.addResource(new SpriteHandle( "student1_left_spr", "student1_left_img", 96, 350));
 		
 		this.resMngr.addResource(new ImageHandle("student3__img", "student3.png"));
 		this.resMngr.addResource(new ImageHandle("student3_right_img", "student3_right.png"));
 		//this.resMngr.addResource(new ImageHandle("student3_left_img", "student3_left.png"));
+		this.resMngr.addResource(new SpriteHandle( "student3_spr", "student3_img", 96, 350));
+		this.resMngr.addResource(new SpriteHandle( "student3_right_spr", "student3_right_img", 96, 350));
+		//this.resMngr.addResource(new SpriteHandle( "student1_left_spr", "student1_left_img", 96, 350));
 		
 		// bullets
 		this.resMngr.addResource(new ImageHandle("x_img", "x.png"));

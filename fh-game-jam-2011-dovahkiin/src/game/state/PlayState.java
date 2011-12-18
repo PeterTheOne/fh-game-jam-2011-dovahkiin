@@ -8,6 +8,7 @@ import game.entity.StudentEntity.StudentState;
 import game.entity.StudentEntity1;
 import game.entity.StudentEntity2;
 import game.entity.StudentEntity3;
+import game.event.DestroyEntityEvent;
 import game.event.LoadMenueEvent;
 import game.levelmanager.Level;
 import game.levelmanager.LevelManager;
@@ -38,7 +39,6 @@ public class PlayState implements GameState, EventListener{
 		this.core = core;
 		this.view = new PlayView(core);
 		this.view.registerResources(NAME);
-		EventManager.getInstance(core).addListener(this, LoadMenueEvent.TYPE);
 	}
 
 	@Override
@@ -51,6 +51,10 @@ public class PlayState implements GameState, EventListener{
 		ResourceManager.getInstance(this.core).loadGroup(NAME);
 		this.view.engage();
 		this.entMngr = EntityManager.getInstance(this.core);
+		EntityManager entMngr = EntityManager.getInstance(this.core);
+		//entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
+		//entMngr.addEntity(new RudiEntity(this.core, "Rudi"));
+		entMngr.addEntity(new StudentEntity1(this.core, "Student01", StudentState.MIDDLE, 300, -50));
 		
 		LevelManager lvlMngr = new LevelManager(core);
 		
@@ -66,6 +70,9 @@ public class PlayState implements GameState, EventListener{
 		startLevel.setNextLevel(secondLevel.getName());
 		
 		lvlMngr.setCurrentLevel(startLevel.getName());
+
+		EventManager.getInstance(core).addListener(this, LoadMenueEvent.TYPE);
+		EventManager.getInstance(core).addListener(this, DestroyEntityEvent.TYPE);
 	}
 
 	private void createStudent(StudentState state, int positionX, int positionY) {
@@ -112,9 +119,11 @@ public class PlayState implements GameState, EventListener{
 		// TODO Auto-generated method stub
 		if(event.isOfType(LoadMenueEvent.TYPE)){
 			handleLoadEvent((LoadMenueEvent) event);
+		} else if (event.isOfType(DestroyEntityEvent.TYPE)) {
+			handleDestroyEntityEvent((DestroyEntityEvent) event);
 		}
 	}
-	
+
 	private void handleLoadEvent(LoadMenueEvent event) {
 		EntityManager entMngr = EntityManager.getInstance(this.core);
 		if(event.getSelected().equals(MainEntity.HOCHI)){
@@ -123,6 +132,13 @@ public class PlayState implements GameState, EventListener{
 			entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
 		}else if(event.getSelected().equals(MainEntity.RUDI)){
 			entMngr.addEntity(new RudiEntity(core, "Rudi"));
+		}
+	}
+	
+	private void handleDestroyEntityEvent(DestroyEntityEvent event) {
+		EntityManager entMngr = EntityManager.getInstance(this.core);
+		if (entMngr.hasEntity(event.getEntityName())) {
+			entMngr.removeEntity(event.getEntityName());
 		}
 	}
 
