@@ -74,6 +74,14 @@ public class Level {
 		this.nextLevel = nextLevel;
 	}
 	
+	public String getPrevLevel() {
+		return this.prevLevel;
+	}
+	
+	public String getNextLevel() {
+		return this.nextLevel;
+	}
+	
 	public String getName(){
 		return this.name;
 	}

@@ -105,10 +105,11 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 	}
 
 	private void handleCollision(CollisionEvent event) {
-		if (event.getOpponent(getName()) == null) {
+		MotionManager moMngr = MotionManager.getInstance(getCore());
+		Rectangle opponent = (Rectangle) moMngr.getBody(event.getOpponent(getName()));
+		if (opponent == null || !(opponent instanceof Rectangle)) {
 			return;
 		}
-		Rectangle opponent = (Rectangle) MotionManager.getInstance(getCore()).getBody(event.getOpponent(getName()));
 		double halfBodyWidth = ((Rectangle) this.body).getWidth() / 2d;
 		double halfBodyHeight = ((Rectangle) this.body).getHeight() / 2d;
 		if (event.getYDepthSmallerXDepth()) { // is on top or bottom
