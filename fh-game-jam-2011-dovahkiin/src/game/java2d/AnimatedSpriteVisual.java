@@ -16,6 +16,9 @@ import org.cogaen.core.Core;
 import org.cogaen.event.EventManager;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Visual;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 
 
 public class AnimatedSpriteVisual extends Visual implements Cloneable {
@@ -65,7 +68,11 @@ public class AnimatedSpriteVisual extends Visual implements Cloneable {
 		
 		if(elapsedTime >= updateRate) {
 			elapsedTime -= updateRate;
-			
+			if(currentFrame == 0 && !stopAfterPlay){
+				SoundHandle soundHandle = new SoundHandle("walk_handle", "walk.wav");
+				soundHandle.load(this.core);
+				SoundService.getInstance(this.core).play((SoundEffect)soundHandle.getResource());
+			}
 			currentFrame++;
 			if(currentFrame == compImages.size()) {
 				currentFrame = 0;

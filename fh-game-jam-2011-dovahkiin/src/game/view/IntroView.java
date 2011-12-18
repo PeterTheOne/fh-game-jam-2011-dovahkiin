@@ -22,6 +22,9 @@ import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SpriteHandle;
 import org.cogaen.java2d.SpriteVisual;
 import org.cogaen.resource.ResourceManager;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 import org.cogaen.view.AbstractView;
 
 public class IntroView extends AbstractView implements EventListener{
@@ -43,6 +46,10 @@ public class IntroView extends AbstractView implements EventListener{
 		SceneManager scnMngr = SceneManager.getInstance(this.getCore());
 		scnMngr.destroyAll();
 		EventManager.getInstance(this.getCore()).removeListener(this);
+		
+		SoundHandle soundHandle = new SoundHandle("eoChars_handle", "eoChars.wav");
+		soundHandle.load(this.getCore());
+		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override
@@ -110,6 +117,11 @@ public class IntroView extends AbstractView implements EventListener{
 		character.addVisual(v);
 		character.setPosition(512, 384);
 		
+
+		SoundHandle soundHandle = new SoundHandle("changeChar_handle", "changeChar.wav");
+		soundHandle.load(this.getCore());
+		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
+		
 	}
 
 	private void handleKeyPressed(KeyPressedEvent event) {
@@ -118,6 +130,7 @@ public class IntroView extends AbstractView implements EventListener{
 		case KeyEvent.VK_ENTER:
 			EventManager.getInstance(this.getCore()).enqueueEvent(new SelectItemEvent(selectedItem));
 			EventManager.getInstance(getCore()).enqueueEvent(new LoadMenueEvent(entities[selectedItem]));
+			EventManager.getInstance(this.getCore()).enqueueEvent(new SimpleEvent(IntroState.INTRO_TO_INTRO2));
 			break;
 		case KeyEvent.VK_LEFT:
 		case KeyEvent.VK_UP:

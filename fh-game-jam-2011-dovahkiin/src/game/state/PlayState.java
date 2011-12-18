@@ -17,6 +17,7 @@ import game.view.PlayView;
 import game.view.IntroView.MainEntity;
 
 import org.cogaen.core.Core;
+import org.cogaen.entity.Entity;
 import org.cogaen.entity.EntityManager;
 import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
@@ -34,11 +35,14 @@ public class PlayState implements GameState, EventListener{
 	private Core core;
 	private View view;
 	private EntityManager entMngr;
+	private Entity character;
 	
 	public PlayState(Core core) {
 		this.core = core;
 		this.view = new PlayView(core);
 		this.view.registerResources(NAME);
+
+		EventManager.getInstance(core).addListener(this, LoadMenueEvent.TYPE);
 	}
 
 	@Override
@@ -53,6 +57,8 @@ public class PlayState implements GameState, EventListener{
 		
 		this.entMngr = EntityManager.getInstance(this.core);
 		EntityManager entMngr = EntityManager.getInstance(this.core);
+		
+		entMngr.addEntity(this.character);
 		
 		LevelManager lvlMngr = new LevelManager(core);
 		
@@ -77,8 +83,8 @@ public class PlayState implements GameState, EventListener{
 		
 		lvlMngr.setCurrentLevel(startLevel.getName());
 
-		EventManager.getInstance(core).addListener(this, LoadMenueEvent.TYPE);
 		EventManager.getInstance(core).addListener(this, DestroyEntityEvent.TYPE);
+		EventManager.getInstance(core).addListener(this, LoadMenueEvent.TYPE);
 	}
 
 	private StudentEntity createStudent(StudentState state, int positionX, int positionY) {
@@ -128,13 +134,13 @@ public class PlayState implements GameState, EventListener{
 	}
 
 	private void handleLoadEvent(LoadMenueEvent event) {
-		EntityManager entMngr = EntityManager.getInstance(this.core);
+		//EntityManager entMngr = EntityManager.getInstance(this.core);
 		if(event.getSelected().equals(MainEntity.HOCHI)){
-			entMngr.addEntity(new HochiEntity(core, "Hochi"));
+			this.character = new HochiEntity(core, "Hochi");
 		}else if(event.getSelected().equals(MainEntity.SHAUFI)){
-			entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
+			this.character = new SchaufiEntity(core, "Schaufi");
 		}else if(event.getSelected().equals(MainEntity.RUDI)){
-			entMngr.addEntity(new RudiEntity(core, "Rudi"));
+			this.character = new RudiEntity(core, "Rudi");
 		}
 	}
 	

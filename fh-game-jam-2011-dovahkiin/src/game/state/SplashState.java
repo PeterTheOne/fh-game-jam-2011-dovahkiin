@@ -37,7 +37,7 @@ public class SplashState implements GameState {
 		ResourceManager.getInstance(this.core).loadGroup(NAME);
 		this.view.engage();
 		
-		TaskManager.getInstance(core).attachTask(new FireEventTask(core, new SimpleEvent(END_OF_SPLASH), 5.0));
+		TaskManager.getInstance(core).attachTask(new FireEventTask(core, new SimpleEvent(END_OF_SPLASH), 15.0));
 		
 		//TODO: do stuff here
 	}

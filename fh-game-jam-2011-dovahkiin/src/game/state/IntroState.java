@@ -23,7 +23,7 @@ public class IntroState implements GameState, EventListener{
 
 	public static final String NAME = "Intro";
 	
-	public static final EventType INTRO_TO_PLAY = new EventType("IntroToPlay");
+	public static final EventType INTRO_TO_INTRO2 = new EventType("IntroToIntro2");
 	private static final int CHARACTERS = 3;
 	private int selectedItem;
 	private Core core;

@@ -11,6 +11,9 @@ import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.logging.LoggingService;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 
 public class LevelManager implements EventListener{
 
@@ -81,6 +84,10 @@ public class LevelManager implements EventListener{
 		
 		if (event.isOfType(LeaveScreenEvent.TYPE)) {
 			handleLeaveScreenEvent((LeaveScreenEvent) event);
+
+			SoundHandle soundHandle = new SoundHandle("nextLevel_handle", "nextLevel.wav");
+			soundHandle.load(this.core);
+			SoundService.getInstance(this.core).play((SoundEffect)soundHandle.getResource());
 		}
 		
 	}

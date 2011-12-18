@@ -39,6 +39,9 @@ import org.cogaen.java2d.SpriteVisual;
 import org.cogaen.java2d.Visual;
 import org.cogaen.logging.LoggingService;
 import org.cogaen.resource.ResourceManager;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 import org.cogaen.view.AbstractView;
 
 public class PlayView extends AbstractView implements EventListener {
@@ -87,6 +90,10 @@ public class PlayView extends AbstractView implements EventListener {
 		this.scnMngr.destroyAll();
 		
 		this.keyboardSrc.disengage();
+
+		SoundHandle soundHandle = new SoundHandle("eoPlay_handle", "eoPlay.wav");
+		soundHandle.load(this.getCore());
+		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override
@@ -392,6 +399,10 @@ public class PlayView extends AbstractView implements EventListener {
 			bgVisual = this.scnMngr.createSpriteVisual("level1_3_spr");
 		}
 		scnNode.addVisual(bgVisual);
+		
+		SoundHandle soundHandle = new SoundHandle("students_handle", "students.wav");
+		soundHandle.load(this.getCore());
+		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 }
