@@ -57,7 +57,7 @@ public class Intro2View extends AbstractView implements EventListener{
 	public void registerResources(String group) {
 		ResourceManager resMngr = ResourceManager.getInstance(this.getCore());
 		
-		resMngr.addResource(new ImageHandle( "intro_background_img", "intro-background.png") );
+		resMngr.addResource(new ImageHandle( "intro_background_img", "intro1.png") );
 		resMngr.addResource(new SpriteHandle( "intro_background_spr", "intro_background_img", 1024, 768) );
 	}
 
