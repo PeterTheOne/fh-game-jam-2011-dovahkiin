@@ -2,18 +2,26 @@ package game.entity;
 
 import game.motion.Body;
 import game.motion.MotionManager;
+import game.motion.Rectangle;
 
 import org.cogaen.core.Core;
 import org.cogaen.entity.Entity;
 
-public class EnemyEntity extends Entity{
-
-	public static final String TYPE = "Enemy";
-	private Body body;
+public class StudentEntity extends Entity{
 	
-	public EnemyEntity(Core core, String name, Body body) {
+	public enum StudentState {
+		STAND, DEFEATED
+	}
+
+	public static final String TYPE = "Student";
+	
+	private Body body;
+	private StudentState studentState;
+	
+	public StudentEntity(Core core, String name, StudentState studentState) {
 		super(core, name);
-		this.body = body;
+		this.studentState = studentState;
+		this.body = new Rectangle(name, 90, 400);
 	}
 	
 	public String getType() {
@@ -28,6 +36,8 @@ public class EnemyEntity extends Entity{
 		MotionManager.getInstance(getCore()).removeBody(body);
 	}
 
-	public void update() {}
+	public void update() {
+		//emtpy
+	}
 
 }

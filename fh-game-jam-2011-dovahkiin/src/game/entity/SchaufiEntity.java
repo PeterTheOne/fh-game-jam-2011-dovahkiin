@@ -36,7 +36,7 @@ public class SchaufiEntity extends PlayerEntity implements EventListener {
 		this.evtMngr = EventManager.getInstance(getCore());
 		this.entMngr = EntityManager.getInstance(getCore());
 		this.ctrl = new TwoAxisController(core, "PlayerOne", 2);
-		this.body = new Rectangle(name, 250, 548);
+		this.body = new Rectangle(name, 90, 400);
 		this.body.setCollisionFlag(0x0001);
 		this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 	}
