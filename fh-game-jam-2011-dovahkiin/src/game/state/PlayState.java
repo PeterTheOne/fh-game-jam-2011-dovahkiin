@@ -105,7 +105,7 @@ public class PlayState implements GameState, EventListener{
 		level3_1.setNextLevel(level3_2.getName());
 		level3_2.setNextLevel(level3_3.getName());
 		
-		lvlMngr.setCurrentLevel(level3_2.getName());
+		lvlMngr.setCurrentLevel(level1_1.getName());
 		
 		level3_3.setSwitchToEnd(true);
 
