@@ -107,11 +107,6 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 						this.body.getPositionX() + 150, 
 						this.body.getPositionY(), 
 						400));
-			} else {
-				entMngr.addEntity(new ExEntity(getCore(), 
-						this.body.getPositionX() - 150, 
-						this.body.getPositionY(), 
-						- 400));
 			}
 		}else if(!this.ctrl.isAction(0) && !isFighting && this.body.getVelocityY() != 0){
 			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.JUMP, this.side, getName(), getType()));

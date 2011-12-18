@@ -1,5 +1,6 @@
 package game.entity;
 
+import game.entity.PlayerEntity.Side;
 import game.event.ChangeVisualEvent;
 import game.event.EndFightEvent;
 import game.event.LeaveScreenEvent;
@@ -45,6 +46,7 @@ public class SchaufiEntity extends PlayerEntity implements EventListener{
 		this.ctrl = new TwoAxisController(core, "PlayerOne", 2);
 		this.body = new Rectangle(name, 90, 400);
 		this.body.setCollisionFlag(0x0001);
+		this.body.setCollisionMask(0x000C);
 		this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 		this.visualstate = VisualState.STAND;
 		this.side = Side.RIGHT;
@@ -102,6 +104,12 @@ public class SchaufiEntity extends PlayerEntity implements EventListener{
 		if(this.ctrl.isAction(1) && !isFighting){
 			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.FIGHT, this.side, getName(), getType()));
 			this.isFighting = true;
+			if (this.side == Side.RIGHT) {
+				entMngr.addEntity(new SchallEntity(getCore(), 
+						this.body.getPositionX() + 150, 
+						this.body.getPositionY(), 
+						400));
+			}
 		}else if(!this.ctrl.isAction(0) && !isFighting && this.body.getVelocityY() != 0){
 			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.JUMP, this.side, getName(), getType()));
 		}else if(!isFighting && this.body.getVelocityX() == 0){

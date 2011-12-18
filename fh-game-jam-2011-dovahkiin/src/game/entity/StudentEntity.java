@@ -66,7 +66,8 @@ public abstract class StudentEntity extends Entity implements EventListener{
 		if (oppEntity == null) {
 			return;
 		}
-		if (oppEntity.getType().equals(ExEntity.TYPE)) {
+		if (oppEntity.getType().equals(ExEntity.TYPE) || 
+				oppEntity.getType().equals(SchallEntity.TYPE)) {
 			//entMngr.removeEntity(this);
 			entMngr.removeEntity(oppEntity);
 			//TODO: change img when studen shot

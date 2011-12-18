@@ -5,6 +5,7 @@ import game.event.ChangeVisualEvent;
 import game.event.EndFightEvent;
 import game.entity.ExEntity;
 import game.entity.RudiEntity;
+import game.entity.SchallEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
 import game.entity.PlayerEntity.Side;
@@ -150,7 +151,9 @@ public class PlayView extends AbstractView implements EventListener {
 		
 		// bullets
 		this.resMngr.addResource(new ImageHandle("x_img", "x.png"));
+		this.resMngr.addResource(new ImageHandle("schall_img", "schall.png"));
 		this.resMngr.addResource(new SpriteHandle("x_spr", "x_img", 50, 50));
+		this.resMngr.addResource(new SpriteHandle("schall_spr", "schall_img", 50, 50));
 	}
 
 	@Override
@@ -286,6 +289,8 @@ public class PlayView extends AbstractView implements EventListener {
 			createStudent3(event.getEntityName(), (StudentEntity)(EntityManager.getInstance(getCore()).getEntity(event.getEntityName())));
 		} else if (event.getEntityType().equals(ExEntity.TYPE)) {
 			createEx(event.getEntityName());
+		} else if (event.getEntityType().equals(SchallEntity.TYPE)) {
+			createSchall(event.getEntityName());
 		}
 	}
 
@@ -363,6 +368,13 @@ public class PlayView extends AbstractView implements EventListener {
 	private void createEx(String entityName) {
 		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
 		SpriteVisual vis = this.scnMngr.createSpriteVisual("x_spr");
+		scnNode.addVisual(vis);
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
+	private void createSchall(String entityName) {
+		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
+		SpriteVisual vis = this.scnMngr.createSpriteVisual("schall_spr");
 		scnNode.addVisual(vis);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
 	}
