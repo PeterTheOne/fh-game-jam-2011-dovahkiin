@@ -46,9 +46,6 @@ public class IntroView extends AbstractView implements EventListener{
 		scnMngr.destroyAll();
 		EventManager.getInstance(this.getCore()).removeListener(this);
 		
-		SoundHandle soundHandle = new SoundHandle("eoChars_handle", "eoChars.wav");
-		soundHandle.load(this.getCore());
-		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override

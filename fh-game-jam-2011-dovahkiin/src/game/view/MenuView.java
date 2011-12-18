@@ -69,9 +69,6 @@ public class MenuView extends AbstractView implements EventListener{
 		EventManager.getInstance(this.getCore()).removeListener(this);
 		
 
-		SoundHandle soundHandle = new SoundHandle("eoMenu_handle", "eoMenu.wav");
-		soundHandle.load(this.getCore());
-		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	public void handleEvent(Event event) {

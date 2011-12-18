@@ -33,9 +33,6 @@ public class SplashView extends AbstractView implements EventListener{
 		scnMngr.destroyAll();
 		EventManager.getInstance(this.getCore()).removeListener(this);
 		
-		SoundHandle soundHandle = new SoundHandle("eoSplash_handle", "eoSplash.wav");
-		soundHandle.load(this.getCore());
-		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override

@@ -32,10 +32,6 @@ public class OutroView extends AbstractView implements EventListener{
 		SceneManager scnMngr = SceneManager.getInstance(this.getCore());
 		scnMngr.destroyAll();
 		EventManager.getInstance(this.getCore()).removeListener(this);
-		SoundHandle soundHandle = new SoundHandle("music_handle", "music.wav");
-		soundHandle.load(this.getCore());
-		SoundService.getInstance(this.getCore()).stopBackgroundMusic();
-		SoundService.getInstance(this.getCore()).playBackgroundMusic((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override
@@ -51,8 +47,7 @@ public class OutroView extends AbstractView implements EventListener{
 		bg.setPosition(512, 384);
 		SoundHandle soundHandle = new SoundHandle("outro_handle", "outro.wav");
 		soundHandle.load(this.getCore());
-		SoundService.getInstance(this.getCore()).stopBackgroundMusic();
-		SoundService.getInstance(this.getCore()).playBackgroundMusic((SoundEffect)soundHandle.getResource());
+		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override
