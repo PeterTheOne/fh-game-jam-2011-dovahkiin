@@ -19,6 +19,8 @@ public class StudentEntity1 extends StudentEntity implements EventListener{
 	public StudentEntity1(Core core, String name, StudentState state, double x, double y) {
 		super(core, name, state, x, y);
 		this.evtMngr = EventManager.getInstance(core);
+		super.body.setCollisionFlag(0x0004);
+		super.body.setCollisionMask(0x0003);
 	}
 	
 	public String getType() {
