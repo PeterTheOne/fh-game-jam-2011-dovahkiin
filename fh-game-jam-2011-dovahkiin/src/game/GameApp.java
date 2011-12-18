@@ -2,8 +2,10 @@ package game;
 
 import game.event.LoadMenueEvent;
 import game.motion.MotionManager;
+import game.state.Intro2State;
 import game.state.IntroState;
 import game.state.MenuState;
+import game.state.OutroState;
 import game.state.PlayState;
 import game.state.SplashState;
 
@@ -17,6 +19,8 @@ import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
 import org.cogaen.logging.LoggingService;
 import org.cogaen.resource.ResourceManager;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
 import org.cogaen.sound.SoundService;
 import org.cogaen.state.GameStateManager;
 import org.cogaen.time.Clock;
@@ -46,18 +50,27 @@ public class GameApp implements EventListener{
 		stateManager.addState(new SplashState(this.core));
 		stateManager.addState(new MenuState(this.core));
 		stateManager.addState(new IntroState(this.core));
+		stateManager.addState(new Intro2State(this.core));
 		stateManager.addState(new PlayState(this.core));
+		stateManager.addState(new OutroState(this.core));
 		stateManager.setCurrentState(SplashState.NAME);
 		
 		stateManager.addTransition(SplashState.NAME, MenuState.NAME, SplashState.END_OF_SPLASH);
 		stateManager.addTransition(MenuState.NAME, SplashState.NAME, MenuState.MENU_TO_CREDITS);
 		stateManager.addTransition(MenuState.NAME, IntroState.NAME, MenuState.MENU_TO_INTRO);
-		stateManager.addTransition(IntroState.NAME, PlayState.NAME, LoadMenueEvent.TYPE);
+		stateManager.addTransition(IntroState.NAME, Intro2State.NAME, IntroState.INTRO_TO_INTRO2);
+		stateManager.addTransition(Intro2State.NAME, PlayState.NAME, Intro2State.INTRO2_TO_PLAY);
+		stateManager.addTransition(PlayState.NAME, OutroState.NAME, PlayState.END_OF_PLAY);
+		stateManager.addTransition(OutroState.NAME, MenuState.NAME, OutroState.END_OF_OUTRO);
 	}
 
 	public void runGameLoop() throws InterruptedException {
 		Clock clock = new Clock();
 		SceneManager scnMngr = SceneManager.getInstance(this.core);
+		
+		SoundHandle musicHandle = new SoundHandle("music_handle", "music.wav");
+		musicHandle.load(this.core);
+		//SoundService.getInstance(this.core).playBackgroundMusic((SoundEffect)musicHandle.getResource());
 		
 		while (running) {
 			clock.tick();

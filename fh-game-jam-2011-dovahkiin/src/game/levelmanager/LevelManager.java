@@ -3,6 +3,7 @@ package game.levelmanager;
 import game.event.LeaveScreenEvent;
 import game.event.LoadLevelEvent;
 import game.event.LeaveScreenEvent.LeaveScreen;
+import game.state.PlayState;
 
 import java.util.Vector;
 
@@ -10,7 +11,11 @@ import org.cogaen.core.Core;
 import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
+import org.cogaen.event.SimpleEvent;
 import org.cogaen.logging.LoggingService;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 
 public class LevelManager implements EventListener{
 
@@ -81,6 +86,10 @@ public class LevelManager implements EventListener{
 		
 		if (event.isOfType(LeaveScreenEvent.TYPE)) {
 			handleLeaveScreenEvent((LeaveScreenEvent) event);
+
+			SoundHandle soundHandle = new SoundHandle("nextLevel_handle", "nextLevel.wav");
+			soundHandle.load(this.core);
+			SoundService.getInstance(this.core).play((SoundEffect)soundHandle.getResource());
 		}
 		
 	}
@@ -88,6 +97,9 @@ public class LevelManager implements EventListener{
 	private void handleLeaveScreenEvent(LeaveScreenEvent event) {
 		String newLevelName;
 		if (event.getSide().equals(LeaveScreen.RIGHT)) {
+			if (this.currentLevel.getSwitchToEnd()) {
+				EventManager.getInstance(this.core).enqueueEvent(new SimpleEvent(PlayState.END_OF_PLAY));
+			}
 			newLevelName = this.currentLevel.getNextLevel();
 		} else {
 			return;

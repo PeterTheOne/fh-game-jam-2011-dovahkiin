@@ -18,6 +18,9 @@ import org.cogaen.event.EventManager;
 import org.cogaen.input.TwoAxisController;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 
 public class HochiEntity extends PlayerEntity implements EventListener{
 	
@@ -79,6 +82,9 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 			if (this.body.getVelocityY() == 0) {
 				this.body.setVelocity(this.body.getVelocityX(), JUMP_POWER);
 				this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
+				SoundHandle soundHandle = new SoundHandle("hochiJump_handle", "jump.wav");
+				soundHandle.load(this.getCore());
+				SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 			}
 			//this.body.setVelocity(this.body.getVelocityX(), this.body.getVelocityY() + JUMP_HOLD);
 		}

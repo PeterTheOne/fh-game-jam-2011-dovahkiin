@@ -24,10 +24,12 @@ public class Level implements EventListener {
 	private String name;
 	//private String prevLevel = null;
 	private String nextLevel = null;
+	private boolean switchToEnd;
 	
 	public Level(Core core, String name){
 		this.core = core;
 		this.name = name;
+		this.switchToEnd = false;
 		//EventManager.getInstance(this.core).addListener(this, LoadLevelEvent.TYPE);
 	}
 	
@@ -86,6 +88,10 @@ public class Level implements EventListener {
 		return this.prevLevel;
 	}*/
 	
+	public void setSwitchToEnd(boolean switchToEnd) {
+		this.switchToEnd = switchToEnd;
+	}
+	
 	public String getNextLevel() {
 		return this.nextLevel;
 	}
@@ -120,6 +126,10 @@ public class Level implements EventListener {
 		for (StudentEntity stud: toRemove) {
 			enemies.remove(stud);
 		}
+	}
+
+	public boolean getSwitchToEnd() {
+		return this.switchToEnd;
 	}
 
 	/*public void handleEvent(Event event) {

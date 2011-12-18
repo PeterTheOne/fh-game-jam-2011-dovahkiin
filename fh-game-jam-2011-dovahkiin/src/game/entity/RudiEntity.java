@@ -19,6 +19,9 @@ import org.cogaen.event.EventManager;
 import org.cogaen.input.TwoAxisController;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 
 public class RudiEntity extends PlayerEntity implements EventListener{
 	
@@ -47,6 +50,7 @@ public class RudiEntity extends PlayerEntity implements EventListener{
 		this.ctrl = new TwoAxisController(core, "PlayerOne", 3);
 		this.body = new Rectangle(name, 90, 400);
 		this.body.setCollisionFlag(0x0001);
+		this.body.setCollisionMask(0x000C);
 		this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 		this.visualstate = VisualState.STAND;
 		this.side = Side.RIGHT;
@@ -79,6 +83,9 @@ public class RudiEntity extends PlayerEntity implements EventListener{
 			if (this.body.getVelocityY() == 0) {
 				this.body.setVelocity(this.body.getVelocityX(), JUMP_POWER);
 				this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
+				SoundHandle soundHandle = new SoundHandle("rudiJump_handle", "jump.wav");
+				soundHandle.load(this.getCore());
+				SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 			}
 			this.body.setVelocity(this.body.getVelocityX(), this.body.getVelocityY() + JUMP_HOLD);
 		}

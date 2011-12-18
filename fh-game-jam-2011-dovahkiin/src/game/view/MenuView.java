@@ -21,6 +21,9 @@ import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SpriteHandle;
 import org.cogaen.java2d.SpriteVisual;
 import org.cogaen.resource.ResourceManager;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 import org.cogaen.view.AbstractView;
 
 public class MenuView extends AbstractView implements EventListener{
@@ -64,6 +67,11 @@ public class MenuView extends AbstractView implements EventListener{
 		SceneManager scnMngr = SceneManager.getInstance(this.getCore());
 		scnMngr.destroyAll();
 		EventManager.getInstance(this.getCore()).removeListener(this);
+		
+
+		SoundHandle soundHandle = new SoundHandle("eoMenu_handle", "eoMenu.wav");
+		soundHandle.load(this.getCore());
+		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	public void handleEvent(Event event) {
@@ -72,6 +80,11 @@ public class MenuView extends AbstractView implements EventListener{
 		} else if(event.isOfType(MenuStateEvent.TYPE)){
 			this.selectedItem = ((MenuStateEvent)event).getSelectedItem();
 			door.setPosition(207 + 300 * this.selectedItem, 477);
+			
+
+			SoundHandle soundHandle = new SoundHandle("changeMenu_handle", "changeMenu.wav");
+			soundHandle.load(this.getCore());
+			SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 		}
 	}
 	
