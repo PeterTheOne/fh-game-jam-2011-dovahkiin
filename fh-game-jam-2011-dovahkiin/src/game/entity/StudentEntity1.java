@@ -1,13 +1,9 @@
 package game.entity;
 
-import game.entity.StudentEntity.StudentState;
-import game.motion.Body;
 import game.motion.CollisionEvent;
 import game.motion.MotionManager;
-import game.motion.Rectangle;
 
 import org.cogaen.core.Core;
-import org.cogaen.entity.Entity;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 

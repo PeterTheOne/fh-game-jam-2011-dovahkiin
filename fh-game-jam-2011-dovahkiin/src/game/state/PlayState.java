@@ -56,26 +56,53 @@ public class PlayState implements GameState, EventListener{
 		
 		LevelManager lvlMngr = new LevelManager(core);
 		
-		Level startLevel = new Level(this.core, "level1_1");
-		startLevel.addFloor();
-		lvlMngr.addLevel(startLevel);
+		Level level1_1 = new Level(this.core, "level1_1");
+		level1_1.addFloor();
+		lvlMngr.addLevel(level1_1);
 
-		Level secondLevel = new Level(this.core, "level1_2");
-		secondLevel.addFloor();
-		secondLevel.addEnemy(createStudent(StudentState.MIDDLE, 300, -50));
-		lvlMngr.addLevel(secondLevel);
+		Level level1_2 = new Level(this.core, "level1_2");
+		level1_2.addFloor();
+		level1_2.addEnemy(createStudent(StudentState.MIDDLE, 300, -50));
+		lvlMngr.addLevel(level1_2);
 		
-		Level thirdLevel = new Level(this.core, "level1_3");
-		thirdLevel.addFloor();
-		lvlMngr.addLevel(thirdLevel);
+		Level level1_3 = new Level(this.core, "level1_3");
+		level1_3.addFloor();
+		lvlMngr.addLevel(level1_3);
 		
-		startLevel.setNextLevel(secondLevel.getName());
-		secondLevel.setNextLevel(thirdLevel.getName());
+		Level level2_1 = new Level(this.core, "level2_1");
+		level2_1.addFloor();
+		lvlMngr.addLevel(level2_1);
 		
-		//thirdLevel.setPrevLevel(secondLevel.getName());
-		//secondLevel.setPrevLevel(startLevel.getName());
+		Level level2_2 = new Level(this.core, "level2_2");
+		level2_2.addFloor();
+		lvlMngr.addLevel(level2_2);
 		
-		lvlMngr.setCurrentLevel(startLevel.getName());
+		Level level2_3 = new Level(this.core, "level2_3");
+		level2_3.addFloor();
+		lvlMngr.addLevel(level2_3);
+		
+		Level level3_1 = new Level(this.core, "level3_1");
+		level3_1.addFloor();
+		lvlMngr.addLevel(level3_1);
+		
+		Level level3_2 = new Level(this.core, "level3_2");
+		level3_2.addFloor();
+		lvlMngr.addLevel(level3_2);
+		
+		Level level3_3 = new Level(this.core, "level3_3");
+		level3_3.addFloor();
+		lvlMngr.addLevel(level3_3);
+		
+		level1_1.setNextLevel(level1_2.getName());
+		level1_2.setNextLevel(level1_3.getName());
+		level1_3.setNextLevel(level2_1.getName());
+		level2_1.setNextLevel(level2_2.getName());
+		level2_2.setNextLevel(level2_3.getName());
+		level2_3.setNextLevel(level3_1.getName());
+		level3_1.setNextLevel(level3_2.getName());
+		level3_2.setNextLevel(level3_3.getName());
+		
+		lvlMngr.setCurrentLevel(level1_1.getName());
 
 		EventManager.getInstance(core).addListener(this, LoadMenueEvent.TYPE);
 		EventManager.getInstance(core).addListener(this, DestroyEntityEvent.TYPE);
