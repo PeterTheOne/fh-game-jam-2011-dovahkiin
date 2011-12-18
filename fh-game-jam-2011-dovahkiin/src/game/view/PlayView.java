@@ -77,14 +77,14 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new SpriteHandle( "level1_1_spr", "level1_1_img", 1024, 768));
 
 		// character
-		this.resMngr.addResource(new ImageHandle( "hochi-walk_img_right", "hochi-walk_spr_right.png") );
-		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr_right", "hochi-walk_img_right", 8, 186, 400) );
-		this.resMngr.addResource(new ImageHandle( "hochi-walk_img_left", "hochi-walk_spr_left.png") );
-		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr_left", "hochi-walk_img_left", 8, 186, 400) );
-		this.resMngr.addResource(new ImageHandle( "hochi-fight_left", "hochi-fight_left.png") );
-		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_right", "hochi-fight_left", 8, 186, 400) );
-		this.resMngr.addResource(new ImageHandle( "hochi-fight_right", "hochi-fight_right.png") );
-		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_right", "hochi-fight_right", 8, 186, 400) );
+		this.resMngr.addResource(new ImageHandle( "hochi-walk_right_img", "hochi-walk_spr_right.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_right_spr", "hochi-walk_right_img", 8, 186, 400) );
+		this.resMngr.addResource(new ImageHandle( "hochi-walk_left_img", "hochi-walk_spr_left.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_left_spr", "hochi-walk_left_img", 8, 186, 400) );
+		this.resMngr.addResource(new ImageHandle( "hochi-fight_left_img", "hochi-fight_left.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_left_spr", "hochi-fight_left_img", 8, 186, 400) );
+		this.resMngr.addResource(new ImageHandle( "hochi-fight_right_img", "hochi-fight_right.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_right_spr", "hochi-fight_right_img", 8, 186, 400) );
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class PlayView extends AbstractView implements EventListener {
 
 	private void createHochi(String entityName) {
 		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
-		this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_right");
+		this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
 		this.playerVisual.play();
 		scnNode.addVisual(this.playerVisual);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
@@ -129,12 +129,12 @@ public class PlayView extends AbstractView implements EventListener {
 		if (event.getEntityName().equals("Hochi")) {
 			if(event.getVelocityX() > 0){
 				node.removeVisual(playerVisual);
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_right");
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
 				this.playerVisual.play();
 				node.addVisual(playerVisual);
 			}else if(event.getVelocityX() < 0){
 				node.removeVisual(playerVisual);
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_left");
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
 				node.addVisual(playerVisual);
 				this.playerVisual.play();
 			}else{
