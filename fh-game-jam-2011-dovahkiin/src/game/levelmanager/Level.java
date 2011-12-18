@@ -1,22 +1,14 @@
 package game.levelmanager;
 
 import game.entity.StudentEntity;
-import game.event.LeaveScreenEvent;
-import game.event.LevelDisengagedEvent;
 import game.event.LevelEngagedEvent;
-import game.event.LoadLevelEvent;
-import game.event.LeaveScreenEvent.LeaveScreen;
 import game.motion.MotionManager;
 import game.motion.Rectangle;
 
 import java.util.Vector;
 
 import org.cogaen.core.Core;
-import org.cogaen.event.Event;
-import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
-import org.cogaen.java2d.SceneManager;
-import org.cogaen.java2d.SceneNode;
 
 
 public class Level {
@@ -51,7 +43,6 @@ public class Level {
 	}
 	
 	public void disenage(){
-		EventManager.getInstance(this.core).enqueueEvent(new LevelDisengagedEvent(this.name));
 		for(Rectangle struct : structures){
 			MotionManager.getInstance(core).removeBody(struct);
 		}

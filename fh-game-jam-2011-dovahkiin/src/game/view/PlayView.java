@@ -3,7 +3,6 @@ package game.view;
 import game.entity.HochiEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
-import game.event.LevelDisengagedEvent;
 import game.event.LevelEngagedEvent;
 import game.event.LoadLevelEvent;
 import game.java2d.AnimatedSpriteHandle;
@@ -26,6 +25,7 @@ import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SceneNode;
 import org.cogaen.java2d.SpriteHandle;
 import org.cogaen.java2d.SpriteVisual;
+import org.cogaen.java2d.Visual;
 import org.cogaen.logging.LoggingService;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.view.AbstractView;
@@ -60,10 +60,12 @@ public class PlayView extends AbstractView implements EventListener {
 		evtMngr.addListener(this, EntityDestroyedEvent.TYPE);
 		evtMngr.addListener(this, EntityMovedEvent.TYPE);
 		evtMngr.addListener(this, LevelEngagedEvent.TYPE);
-		evtMngr.addListener(this, LevelDisengagedEvent.TYPE);
 		evtMngr.addListener(this, LoadLevelEvent.TYPE);
 		
 		this.keyboardSrc.engage();
+		
+		SceneNode scnNode = this.scnMngr.createSceneNode("level_bg");
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
 	}
 	
 	@Override
@@ -124,8 +126,6 @@ public class PlayView extends AbstractView implements EventListener {
 			handleEntityMovedEvent((EntityMovedEvent) event);
 		} else if (event.isOfType(LevelEngagedEvent.TYPE)) {
 			handleLevelEngagedEvent((LevelEngagedEvent) event);
-		} else if (event.isOfType(LevelDisengagedEvent.TYPE)) {
-			handleLevelDisengagedEvent((LevelDisengagedEvent) event);
 		} else if(event.isOfType(LoadLevelEvent.TYPE)){
 			//empty
 		}
@@ -195,14 +195,10 @@ public class PlayView extends AbstractView implements EventListener {
 	}
 
 	private void handleLevelEngagedEvent(LevelEngagedEvent event) {
-		SceneNode scnNode = this.scnMngr.createSceneNode(event.getLevelName());
+		SceneNode scnNode = this.scnMngr.getSceneNode("level_bg");
+		scnNode.getVisuals().clear();
 		SpriteVisual bgVisual = this.scnMngr.createSpriteVisual("level1_1_spr");
 		scnNode.addVisual(bgVisual);
-		this.scnMngr.getRootSceneNode().addChild(scnNode);
-	}
-
-	private void handleLevelDisengagedEvent(LevelDisengagedEvent event) {
-		this.scnMngr.destroySceneNode(event.getLevelName());
 	}
 
 }
