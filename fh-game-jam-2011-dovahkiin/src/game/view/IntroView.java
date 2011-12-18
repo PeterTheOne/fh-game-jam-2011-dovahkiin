@@ -3,7 +3,6 @@ package game.view;
 import game.event.ChangeItemEvent;
 import game.event.CharacterStateEvent;
 import game.event.LoadMenueEvent;
-import game.event.MenuStateEvent;
 import game.event.SelectItemEvent;
 import game.event.ChangeItemEvent.ChangeDirection;
 import game.state.IntroState;
