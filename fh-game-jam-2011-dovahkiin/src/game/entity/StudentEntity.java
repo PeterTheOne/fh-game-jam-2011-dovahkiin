@@ -13,6 +13,9 @@ import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.logging.LoggingService;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 
 public abstract class StudentEntity extends Entity implements EventListener{
 	
@@ -68,12 +71,33 @@ public abstract class StudentEntity extends Entity implements EventListener{
 				this instanceof StudentEntity3) {
 			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName()));
 			this.body.setCollisionFlag(0x0010);
-		} else if (oppEntity.getType().equals(ExEntity.TYPE) || 
-				oppEntity.getType().equals(SchallEntity.TYPE)) {
+			SoundHandle soundHandle = new SoundHandle("koC_handle", "koC.wav");
+			soundHandle.load(this.getCore());
+			SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
+		} else if (oppEntity.getType().equals(ExEntity.TYPE)) {
 			//entMngr.removeEntity(this);
 			entMngr.removeEntity(oppEntity);
 			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName()));
 			this.body.setCollisionFlag(0x0010);
+			SoundHandle soundHandle = new SoundHandle("hitA_handle", "hitA.wav");
+			soundHandle.load(this.getCore());
+			SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
+			SoundHandle soundHandle2 = new SoundHandle("koA_handle", "koA.wav");
+			soundHandle2.load(this.getCore());
+			SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle2.getResource());
+		} else if (oppEntity.getType().equals(SchallEntity.TYPE)) {
+			//entMngr.removeEntity(this);
+			entMngr.removeEntity(oppEntity);
+			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName()));
+			this.body.setCollisionFlag(0x0010);
+			SoundHandle soundHandle = new SoundHandle("hitB_handle", "hitB.wav");
+			soundHandle.load(this.getCore());
+			SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
+			SoundHandle soundHandle2 = new SoundHandle("koB_handle", "koB.wav");
+			soundHandle2.load(this.getCore());
+			SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle2.getResource());
 		}
+		
+		
 	}
 }

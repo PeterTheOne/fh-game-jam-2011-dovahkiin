@@ -8,6 +8,9 @@ import game.motion.Rectangle;
 import org.cogaen.core.Core;
 import org.cogaen.entity.Entity;
 import org.cogaen.name.NameService;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 import org.cogaen.task.FireEventTask;
 import org.cogaen.task.TaskManager;
 
@@ -44,6 +47,9 @@ public class SchallEntity extends Entity {
 	@Override
 	protected void setUp() {
 		MotionManager.getInstance(getCore()).addBody(this.body);
+		SoundHandle soundHandle = new SoundHandle("attackB_handle", "attackB.wav");
+		soundHandle.load(this.getCore());
+		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override

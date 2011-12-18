@@ -16,6 +16,9 @@ import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SpriteHandle;
 import org.cogaen.java2d.SpriteVisual;
 import org.cogaen.resource.ResourceManager;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 import org.cogaen.view.AbstractView;
 
 public class OutroView extends AbstractView implements EventListener{
@@ -29,6 +32,10 @@ public class OutroView extends AbstractView implements EventListener{
 		SceneManager scnMngr = SceneManager.getInstance(this.getCore());
 		scnMngr.destroyAll();
 		EventManager.getInstance(this.getCore()).removeListener(this);
+		SoundHandle soundHandle = new SoundHandle("music_handle", "music.wav");
+		soundHandle.load(this.getCore());
+		SoundService.getInstance(this.getCore()).stopBackgroundMusic();
+		SoundService.getInstance(this.getCore()).playBackgroundMusic((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override
@@ -42,6 +49,10 @@ public class OutroView extends AbstractView implements EventListener{
 		SpriteVisual bgSpr = scnMngr.createSpriteVisual("outro_spr");
 		bg.addVisual(bgSpr);
 		bg.setPosition(512, 384);
+		SoundHandle soundHandle = new SoundHandle("outro_handle", "outro.wav");
+		soundHandle.load(this.getCore());
+		SoundService.getInstance(this.getCore()).stopBackgroundMusic();
+		SoundService.getInstance(this.getCore()).playBackgroundMusic((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override
