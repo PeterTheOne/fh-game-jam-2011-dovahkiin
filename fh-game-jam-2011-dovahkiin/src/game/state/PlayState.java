@@ -1,6 +1,7 @@
 package game.state;
 
 import game.entity.HochiEntity;
+import game.entity.SchaufiEntity;
 import game.levelmanager.Level;
 import game.levelmanager.LevelManager;
 import game.motion.Rectangle;
@@ -36,7 +37,8 @@ public class PlayState implements GameState {
 		this.view.engage();
 		
 		EntityManager entMngr = EntityManager.getInstance(this.core);
-		entMngr.addEntity(new HochiEntity(core, "Hochi"));
+		//entMngr.addEntity(new HochiEntity(core, "Hochi"));
+		entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
 		
 		LevelManager lvlMngr = new LevelManager(core);
 		

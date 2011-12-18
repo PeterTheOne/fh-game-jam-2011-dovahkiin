@@ -1,6 +1,7 @@
 package game.view;
 
 import game.entity.HochiEntity;
+import game.entity.SchaufiEntity;
 import game.event.LevelDisengagedEvent;
 import game.event.LevelEngagedEvent;
 import game.event.LoadLevelEvent;
@@ -80,6 +81,7 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new SpriteHandle( "level1_1_spr", "level1_1_img", 1024, 768));
 
 		// character
+		// hochi
 		this.resMngr.addResource(new ImageHandle( "hochi-walk_right_img", "hochi-walk_spr_right.png") );
 		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_right_spr", "hochi-walk_right_img", 8, 186, 400) );
 		this.resMngr.addResource(new ImageHandle( "hochi-walk_left_img", "hochi-walk_spr_left.png") );
@@ -88,6 +90,13 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_left_spr", "hochi-fight_left_img", 8, 186, 400) );
 		this.resMngr.addResource(new ImageHandle( "hochi-fight_right_img", "hochi-fight_right.png") );
 		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_right_spr", "hochi-fight_right_img", 8, 186, 400) );
+		
+		// schaufi
+		this.resMngr.addResource(new ImageHandle( "schaufi-walk_right_img", "schaufi-walk_spr_right.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "schaufi-walk_right_spr", "schaufi-walk_right_img", 8, 186, 400));
+		this.resMngr.addResource(new ImageHandle( "schaufi-walk_left_img", "schaufi-walk_spr_left.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "schaufi-walk_left_spr", "schaufi-walk_left_img", 8, 186, 400));
+		
 	}
 
 	@Override
@@ -110,12 +119,22 @@ public class PlayView extends AbstractView implements EventListener {
 	private void handleEntityCreated(EntityCreatedEvent event) {
 		if (event.getEntityType().equals(HochiEntity.TYPE)) {
 			createHochi(event.getEntityName());
+		} else if (event.getEntityType().equals(SchaufiEntity.TYPE)) {
+			createSchaufi(event.getEntityName());
 		}
 	}
 
 	private void createHochi(String entityName) {
 		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
 		this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+		this.playerVisual.play();
+		scnNode.addVisual(this.playerVisual);
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
+	private void createSchaufi(String entityName) {
+		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
+		this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("schaufi-walk_right_spr");
 		this.playerVisual.play();
 		scnNode.addVisual(this.playerVisual);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
