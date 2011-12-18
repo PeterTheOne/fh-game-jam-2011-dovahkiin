@@ -21,6 +21,7 @@ import org.cogaen.entity.EntityManager;
 import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
+import org.cogaen.event.EventType;
 import org.cogaen.logging.LoggingService;
 import org.cogaen.name.NameService;
 import org.cogaen.resource.ResourceManager;
@@ -30,6 +31,8 @@ import org.cogaen.view.View;
 public class PlayState implements GameState, EventListener{
 
 	public static final String NAME = "Play";
+
+	public static final EventType END_OF_PLAY = new EventType("EndOfPlay");
 	
 	private Core core;
 	private View view;
@@ -102,7 +105,9 @@ public class PlayState implements GameState, EventListener{
 		level3_1.setNextLevel(level3_2.getName());
 		level3_2.setNextLevel(level3_3.getName());
 		
-		lvlMngr.setCurrentLevel(level1_1.getName());
+		lvlMngr.setCurrentLevel(level3_2.getName());
+		
+		level3_3.setSwitchToEnd(true);
 
 		EventManager.getInstance(core).addListener(this, LoadMenueEvent.TYPE);
 		EventManager.getInstance(core).addListener(this, DestroyEntityEvent.TYPE);

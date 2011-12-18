@@ -4,6 +4,7 @@ import game.event.LoadMenueEvent;
 import game.motion.MotionManager;
 import game.state.IntroState;
 import game.state.MenuState;
+import game.state.OutroState;
 import game.state.PlayState;
 import game.state.SplashState;
 
@@ -47,12 +48,15 @@ public class GameApp implements EventListener{
 		stateManager.addState(new MenuState(this.core));
 		stateManager.addState(new IntroState(this.core));
 		stateManager.addState(new PlayState(this.core));
+		stateManager.addState(new OutroState(this.core));
 		stateManager.setCurrentState(SplashState.NAME);
 		
 		stateManager.addTransition(SplashState.NAME, MenuState.NAME, SplashState.END_OF_SPLASH);
 		stateManager.addTransition(MenuState.NAME, SplashState.NAME, MenuState.MENU_TO_CREDITS);
 		stateManager.addTransition(MenuState.NAME, IntroState.NAME, MenuState.MENU_TO_INTRO);
 		stateManager.addTransition(IntroState.NAME, PlayState.NAME, LoadMenueEvent.TYPE);
+		stateManager.addTransition(PlayState.NAME, OutroState.NAME, PlayState.END_OF_PLAY);
+		stateManager.addTransition(OutroState.NAME, MenuState.NAME, OutroState.END_OF_OUTRO);
 	}
 
 	public void runGameLoop() throws InterruptedException {
