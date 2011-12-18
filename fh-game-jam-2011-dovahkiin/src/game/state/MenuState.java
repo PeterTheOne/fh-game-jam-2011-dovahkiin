@@ -1,5 +1,7 @@
 package game.state;
 
+import javax.sound.sampled.AudioInputStream;
+
 import game.GameApp;
 import game.event.ChangeItemEvent;
 import game.event.MenuStateEvent;
@@ -12,6 +14,10 @@ import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.event.EventType;
 import org.cogaen.event.SimpleEvent;
+import org.cogaen.sound.LoopingByteInputStream;
+import org.cogaen.sound.SoundEffect;
+import org.cogaen.sound.SoundHandle;
+import org.cogaen.sound.SoundService;
 import org.cogaen.state.GameState;
 import org.cogaen.view.View;
 
@@ -39,7 +45,12 @@ public class MenuState implements GameState, EventListener {
 		this.view.engage();
 		EventManager.getInstance(this.core).addListener(this, ChangeItemEvent.TYPE);
 		EventManager.getInstance(this.core).addListener(this, SelectItemEvent.TYPE);
-		
+		SoundHandle musicHandle = new SoundHandle("music_handle", "sound.wav");
+		musicHandle.load(this.core);
+		SoundHandle soundHandle = new SoundHandle("sound_handle", "sound2.wav");
+		soundHandle.load(this.core);
+		SoundService.getInstance(this.core).playBackgroundMusic((SoundEffect)musicHandle.getResource());
+		SoundService.getInstance(this.core).play((SoundEffect)soundHandle.getResource());
 	}
 
 	public void onExit() {

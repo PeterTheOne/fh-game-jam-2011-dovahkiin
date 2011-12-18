@@ -1,6 +1,6 @@
 package game.levelmanager;
 
-import game.entity.EnemyEntity;
+import game.entity.StudentEntity;
 import game.event.LeaveScreenEvent;
 import game.event.LevelDisengagedEvent;
 import game.event.LevelEngagedEvent;
@@ -22,7 +22,7 @@ import org.cogaen.java2d.SceneNode;
 public class Level {
 
 	private Vector<Rectangle> structures = new Vector<Rectangle>();
-	private Vector<EnemyEntity> enemies = new Vector<EnemyEntity>();
+	private Vector<StudentEntity> enemies = new Vector<StudentEntity>();
 	private Core core;
 	private String name;
 	private String prevLevel;
@@ -62,7 +62,7 @@ public class Level {
 		MotionManager.getInstance(this.core).addBody(structure);
 	}
 	
-	public void addEnemy(EnemyEntity enemy){
+	public void addEnemy(StudentEntity enemy){
 		enemies.add(enemy);
 	}
 	
