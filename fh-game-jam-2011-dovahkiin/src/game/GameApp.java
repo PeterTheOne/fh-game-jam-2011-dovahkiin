@@ -16,6 +16,7 @@ import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
 import org.cogaen.logging.LoggingService;
 import org.cogaen.resource.ResourceManager;
+import org.cogaen.sound.SoundService;
 import org.cogaen.state.GameStateManager;
 import org.cogaen.time.Clock;
 
@@ -31,6 +32,7 @@ public class GameApp implements EventListener{
 		this.core.installService(new InputManager(screen.getComponent()));
 		this.core.installService(new ResourceManager());
 		this.core.installService(new MotionManager());
+		this.core.installService(new SoundService());
 		
 		EventManager.getInstance(this.core).addListener(this, QUIT_GAME);
 		
