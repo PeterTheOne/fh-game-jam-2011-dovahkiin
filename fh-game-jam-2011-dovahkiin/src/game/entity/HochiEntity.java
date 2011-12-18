@@ -1,5 +1,7 @@
 package game.entity;
 
+import game.event.ChangeVisualEvent;
+import game.event.EndFightEvent;
 import game.event.LeaveScreenEvent;
 import game.event.LeaveScreenEvent.LeaveScreen;
 import game.motion.Body;
@@ -15,8 +17,9 @@ import org.cogaen.event.EventManager;
 import org.cogaen.input.TwoAxisController;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
+import org.cogaen.logging.LoggingService;
 
-public class HochiEntity extends PlayerEntity implements EventListener {
+public class HochiEntity extends PlayerEntity implements EventListener{
 	
 	public static final String TYPE = "Hochi";
 
@@ -30,6 +33,17 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 	private EntityManager entMngr;
 	private Body body;
 	private TwoAxisController ctrl;
+	private boolean isFighting = false;
+	
+	public enum VisualState{
+		FIGHT, JUMP, STAND, WALK
+	}
+	public enum Side{
+		LEFT, RIGHT
+	}
+	
+	private VisualState visualstate;
+	private Side side;
 
 	public HochiEntity(Core core, String name) {
 		super(core, name);
@@ -39,6 +53,8 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 		this.body = new Rectangle(name, 90, 400);
 		this.body.setCollisionFlag(0x0001);
 		this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
+		this.visualstate = VisualState.STAND;
+		this.side = Side.RIGHT;
 	}
 
 	@Override
@@ -52,6 +68,7 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 		this.ctrl.engage();
 		this.evtMngr.addListener(this, CollisionEvent.TYPE);
 		this.evtMngr.addListener(this, LeaveScreenEvent.TYPE);
+		evtMngr.addListener(this, EndFightEvent.TYPE);
 	}
 
 	@Override
@@ -71,17 +88,34 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 			this.body.setVelocity(this.body.getVelocityX(), this.body.getVelocityY() + JUMP_HOLD);
 		}
 		
-		this.body.setVelocity(WALK_SPEED * this.ctrl.getHorizontalPosition(), 
-				this.body.getVelocityY());
-		
-		if(this.ctrl.isAction(1)){
-			//TODO Schlagen
-		}
+		//leaveScreen
 		Screen screen = SceneManager.getInstance(getCore()).getScreen();
 		if(this.body.getPositionX() > screen.getWidth()/2){
 			EventManager.getInstance(getCore()).enqueueEvent(new LeaveScreenEvent(LeaveScreen.RIGHT));
 		}else if(this.body.getPositionX() < -screen.getWidth()/2){
 			EventManager.getInstance(getCore()).enqueueEvent(new LeaveScreenEvent(LeaveScreen.LEFT));
+		}
+		
+		
+		this.body.setVelocity(WALK_SPEED * this.ctrl.getHorizontalPosition(), 
+				this.body.getVelocityY());
+		//set horizontal Position of Player
+		if(this.ctrl.getHorizontalPosition() < 0){
+			this.side = Side.LEFT;
+		}else if(this.ctrl.getHorizontalPosition() > 0){
+			this.side = Side.RIGHT;
+		}
+		
+			
+		if(this.ctrl.isAction(1) && !isFighting){
+			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.FIGHT, this.side, this.getName()));
+			this.isFighting = true;
+		}else if(!this.ctrl.isAction(0) && !isFighting && this.body.getVelocityY() != 0){
+			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.JUMP, this.side, this.getName()));
+		}else if(!isFighting && this.body.getVelocityX() == 0){
+			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.STAND, this.side, this.getName()));
+		}else if(!isFighting){
+			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.WALK, this.side, this.getName()));
 		}
 	}
 
@@ -91,6 +125,8 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 			handleCollision((CollisionEvent) event);
 		}else if(event.isOfType(LeaveScreenEvent.TYPE)){
 			handleLeaveScreenEvent((LeaveScreenEvent)(event));
+		}else if(event.isOfType(EndFightEvent.TYPE)){
+			this.isFighting = false;
 		}
 	}
 

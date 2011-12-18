@@ -1,6 +1,10 @@
 package game.view;
 
 import game.entity.HochiEntity;
+import game.entity.HochiEntity.Side;
+import game.entity.HochiEntity.VisualState;
+import game.event.ChangeVisualEvent;
+import game.event.EndFightEvent;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
 import game.event.LevelEngagedEvent;
@@ -61,6 +65,7 @@ public class PlayView extends AbstractView implements EventListener {
 		evtMngr.addListener(this, EntityMovedEvent.TYPE);
 		evtMngr.addListener(this, LevelEngagedEvent.TYPE);
 		evtMngr.addListener(this, LoadLevelEvent.TYPE);
+		evtMngr.addListener(this, ChangeVisualEvent.TYPE);
 		
 		this.keyboardSrc.engage();
 		
@@ -91,8 +96,8 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new ImageHandle("hochi-fight_right_img", "hochi-fight_right.png"));
 		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-walk_right_spr", "hochi-walk_right_img", 8, 186, 400));
 		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-walk_left_spr", "hochi-walk_left_img", 8, 186, 400));
-		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-fight_left_spr", "hochi-fight_left_img", 8, 186, 400));
-		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-fight_right_spr", "hochi-fight_right_img", 8, 186, 400));
+		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-fight_left_spr", "hochi-fight_left_img", 5, 260, 400));
+		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-fight_right_spr", "hochi-fight_right_img", 5, 260, 400));
 		
 		// schaufi
 		this.resMngr.addResource(new ImageHandle("schaufi-walk_right_img", "schaufi-walk_spr_right.png"));
@@ -128,7 +133,48 @@ public class PlayView extends AbstractView implements EventListener {
 			handleLevelEngagedEvent((LevelEngagedEvent) event);
 		} else if(event.isOfType(LoadLevelEvent.TYPE)){
 			//empty
+		}else if(event.isOfType(ChangeVisualEvent.TYPE)){
+			handleChangeVisualEvent((ChangeVisualEvent)event);
 		}
+	}
+
+
+	private void handleChangeVisualEvent(ChangeVisualEvent event) {
+		SceneNode s = scnMngr.getSceneNode(event.getEntitiyName());
+		s.removeVisual(playerVisual);
+		if(event.getSide() == Side.LEFT){
+			if(event.getVisualState().equals(VisualState.FIGHT)){
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_left_spr");
+				this.playerVisual.playNStop();
+			}else if(event.getVisualState().equals(VisualState.STAND)){
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
+				this.playerVisual.stop();
+			}else if(event.getVisualState().equals(VisualState.WALK)){
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
+				this.playerVisual.play();
+			}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
+				this.playerVisual.stop();
+			}
+		}else if(event.getSide().equals(Side.RIGHT)){
+			if(event.getVisualState().equals(VisualState.FIGHT)){
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_right_spr");
+				this.playerVisual.playNStop();
+			}else if(event.getVisualState().equals(VisualState.STAND)){
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+				this.playerVisual.stop();
+			}else if(event.getVisualState().equals(VisualState.WALK)){
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+				this.playerVisual.play();
+			}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+				this.playerVisual.stop();
+			}
+		}
+		if(event.getVisualState().equals(VisualState.JUMP)){
+			this.playerVisual.stop();
+		}
+		s.addVisual(playerVisual);
 	}
 
 	private void handleEntityCreated(EntityCreatedEvent event) {
@@ -173,24 +219,6 @@ public class PlayView extends AbstractView implements EventListener {
 		SceneNode node = this.scnMngr.getSceneNode(event.getEntityName());
 		if (node != null) {
 			node.setPose(event.getX(), event.getY(), event.getAngle());
-		}
-		//TODO: change this to HochiEntity state changes
-		if (event.getEntityName().equals("Hochi")) {
-			if(event.getVelocityX() > 0){
-				node.removeVisual(playerVisual);
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
-				this.playerVisual.play();
-				node.addVisual(playerVisual);
-			} else if(event.getVelocityX() < 0) {
-				node.removeVisual(playerVisual);
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
-				node.addVisual(playerVisual);
-			}
-			if (Math.abs(event.getVelocityY()) < 60 && event.getVelocityX() != 0) {
-				this.playerVisual.play();
-			} else {
-				this.playerVisual.stop();
-			}
 		}
 	}
 
