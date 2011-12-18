@@ -5,6 +5,7 @@ import game.event.ChangeVisualEvent;
 import game.event.EndFightEvent;
 import game.entity.ExEntity;
 import game.entity.RudiEntity;
+import game.entity.SchallEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
 import game.entity.PlayerEntity.Side;
@@ -102,9 +103,21 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new ImageHandle("level1_1_img", "level1_1.png"));
 		this.resMngr.addResource(new ImageHandle("level1_2_img", "level1_2.png"));
 		this.resMngr.addResource(new ImageHandle("level1_3_img", "level1_3.png"));
+		this.resMngr.addResource(new ImageHandle("level2_1_img", "level2_1.png"));
+		this.resMngr.addResource(new ImageHandle("level2_2_img", "level2_2.png"));
+		this.resMngr.addResource(new ImageHandle("level2_3_img", "level2_3.png"));
+		this.resMngr.addResource(new ImageHandle("level3_1_img", "level3_1.png"));
+		this.resMngr.addResource(new ImageHandle("level3_2_img", "level3_2.png"));
+		this.resMngr.addResource(new ImageHandle("level3_3_img", "level3_3.png"));
 		this.resMngr.addResource(new SpriteHandle( "level1_1_spr", "level1_1_img", 1024, 768));
 		this.resMngr.addResource(new SpriteHandle( "level1_2_spr", "level1_2_img", 1024, 768));
 		this.resMngr.addResource(new SpriteHandle( "level1_3_spr", "level1_3_img", 1024, 768));
+		this.resMngr.addResource(new SpriteHandle( "level2_1_spr", "level2_1_img", 1024, 768));
+		this.resMngr.addResource(new SpriteHandle( "level2_2_spr", "level2_2_img", 1024, 768));
+		this.resMngr.addResource(new SpriteHandle( "level2_3_spr", "level2_3_img", 1024, 768));
+		this.resMngr.addResource(new SpriteHandle( "level3_1_spr", "level3_1_img", 1024, 768));
+		this.resMngr.addResource(new SpriteHandle( "level3_2_spr", "level3_2_img", 1024, 768));
+		this.resMngr.addResource(new SpriteHandle( "level3_3_spr", "level3_3_img", 1024, 768));
 
 		// character
 		// hochi
@@ -157,7 +170,9 @@ public class PlayView extends AbstractView implements EventListener {
 		
 		// bullets
 		this.resMngr.addResource(new ImageHandle("x_img", "x.png"));
+		this.resMngr.addResource(new ImageHandle("schall_img", "schall.png"));
 		this.resMngr.addResource(new SpriteHandle("x_spr", "x_img", 50, 50));
+		this.resMngr.addResource(new SpriteHandle("schall_spr", "schall_img", 50, 50));
 	}
 
 	@Override
@@ -293,6 +308,8 @@ public class PlayView extends AbstractView implements EventListener {
 			createStudent3(event.getEntityName(), (StudentEntity)(EntityManager.getInstance(getCore()).getEntity(event.getEntityName())));
 		} else if (event.getEntityType().equals(ExEntity.TYPE)) {
 			createEx(event.getEntityName());
+		} else if (event.getEntityType().equals(SchallEntity.TYPE)) {
+			createSchall(event.getEntityName());
 		}
 	}
 
@@ -374,6 +391,13 @@ public class PlayView extends AbstractView implements EventListener {
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
 	}
 
+	private void createSchall(String entityName) {
+		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
+		SpriteVisual vis = this.scnMngr.createSpriteVisual("schall_spr");
+		scnNode.addVisual(vis);
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
 	private void handleEntityDestroyedEvent(EntityDestroyedEvent event) {
 		this.scnMngr.destroySceneNode(event.getEntityName());
 	}
@@ -395,6 +419,18 @@ public class PlayView extends AbstractView implements EventListener {
 			bgVisual = this.scnMngr.createSpriteVisual("level1_2_spr");
 		} else if (event.getLevelName() == "level1_3") {
 			bgVisual = this.scnMngr.createSpriteVisual("level1_3_spr");
+		} else if (event.getLevelName() == "level2_1") {
+			bgVisual = this.scnMngr.createSpriteVisual("level2_1_spr");
+		} else if (event.getLevelName() == "level2_2") {
+			bgVisual = this.scnMngr.createSpriteVisual("level2_2_spr");
+		} else if (event.getLevelName() == "level2_3") {
+			bgVisual = this.scnMngr.createSpriteVisual("level2_3_spr");
+		} else if (event.getLevelName() == "level3_1") {
+			bgVisual = this.scnMngr.createSpriteVisual("level3_1_spr");
+		} else if (event.getLevelName() == "level3_2") {
+			bgVisual = this.scnMngr.createSpriteVisual("level3_2_spr");
+		} else if (event.getLevelName() == "level3_3") {
+			bgVisual = this.scnMngr.createSpriteVisual("level3_3_spr");
 		} else {
 			bgVisual = this.scnMngr.createSpriteVisual("level1_3_spr");
 		}

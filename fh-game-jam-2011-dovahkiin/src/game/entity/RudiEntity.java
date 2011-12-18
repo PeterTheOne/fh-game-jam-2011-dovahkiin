@@ -47,6 +47,7 @@ public class RudiEntity extends PlayerEntity implements EventListener{
 		this.ctrl = new TwoAxisController(core, "PlayerOne", 2);
 		this.body = new Rectangle(name, 90, 400);
 		this.body.setCollisionFlag(0x0001);
+		this.body.setCollisionMask(0x000C);
 		this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 		this.visualstate = VisualState.STAND;
 		this.side = Side.RIGHT;

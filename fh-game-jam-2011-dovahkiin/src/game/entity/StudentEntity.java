@@ -23,7 +23,7 @@ public abstract class StudentEntity extends Entity implements EventListener{
 	public static final String TYPE = "Student";
 
 	private EventManager evtMngr;
-	private Body body;
+	protected Body body;
 	private StudentState studentState;
 	
 	public StudentEntity(Core core, String name, StudentState studentState, double x, double y) {
@@ -32,8 +32,6 @@ public abstract class StudentEntity extends Entity implements EventListener{
 		this.studentState = studentState;
 		this.body = new Rectangle(name, 90, 400);
 		this.body.setPosition(x, y);
-		this.body.setCollisionFlag(0x0004);
-		this.body.setCollisionMask(0x0003);
 	}
 	
 	protected abstract void setUp();
@@ -66,10 +64,14 @@ public abstract class StudentEntity extends Entity implements EventListener{
 		if (oppEntity == null) {
 			return;
 		}
-		if (oppEntity.getType().equals(ExEntity.TYPE)) {
+		if (oppEntity.getType().equals(RudiEntity.TYPE) && 
+				this instanceof StudentEntity3) {
+			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName()));
+			this.body.setCollisionFlag(0x0010);
+		} else if (oppEntity.getType().equals(ExEntity.TYPE) || 
+				oppEntity.getType().equals(SchallEntity.TYPE)) {
 			//entMngr.removeEntity(this);
 			entMngr.removeEntity(oppEntity);
-			//TODO: change img when studen shot
 			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName()));
 			this.body.setCollisionFlag(0x0010);
 		}

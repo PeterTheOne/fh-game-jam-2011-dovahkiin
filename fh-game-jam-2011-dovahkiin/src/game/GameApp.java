@@ -5,6 +5,7 @@ import game.motion.MotionManager;
 import game.state.Intro2State;
 import game.state.IntroState;
 import game.state.MenuState;
+import game.state.OutroState;
 import game.state.PlayState;
 import game.state.SplashState;
 
@@ -51,6 +52,7 @@ public class GameApp implements EventListener{
 		stateManager.addState(new IntroState(this.core));
 		stateManager.addState(new Intro2State(this.core));
 		stateManager.addState(new PlayState(this.core));
+		stateManager.addState(new OutroState(this.core));
 		stateManager.setCurrentState(SplashState.NAME);
 		
 		stateManager.addTransition(SplashState.NAME, MenuState.NAME, SplashState.END_OF_SPLASH);
@@ -58,6 +60,8 @@ public class GameApp implements EventListener{
 		stateManager.addTransition(MenuState.NAME, IntroState.NAME, MenuState.MENU_TO_INTRO);
 		stateManager.addTransition(IntroState.NAME, Intro2State.NAME, IntroState.INTRO_TO_INTRO2);
 		stateManager.addTransition(Intro2State.NAME, PlayState.NAME, Intro2State.INTRO2_TO_PLAY);
+		stateManager.addTransition(PlayState.NAME, OutroState.NAME, PlayState.END_OF_PLAY);
+		stateManager.addTransition(OutroState.NAME, MenuState.NAME, OutroState.END_OF_OUTRO);
 	}
 
 	public void runGameLoop() throws InterruptedException {
