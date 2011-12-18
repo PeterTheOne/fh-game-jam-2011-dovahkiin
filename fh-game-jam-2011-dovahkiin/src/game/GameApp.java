@@ -1,5 +1,6 @@
 package game;
 
+import game.event.LoadMenueEvent;
 import game.motion.MotionManager;
 import game.state.IntroState;
 import game.state.MenuState;
@@ -51,7 +52,7 @@ public class GameApp implements EventListener{
 		stateManager.addTransition(SplashState.NAME, MenuState.NAME, SplashState.END_OF_SPLASH);
 		stateManager.addTransition(MenuState.NAME, SplashState.NAME, MenuState.MENU_TO_CREDITS);
 		stateManager.addTransition(MenuState.NAME, IntroState.NAME, MenuState.MENU_TO_INTRO);
-		stateManager.addTransition(IntroState.NAME, PlayState.NAME, IntroState.INTRO_TO_PLAY);
+		stateManager.addTransition(IntroState.NAME, PlayState.NAME, LoadMenueEvent.TYPE);
 	}
 
 	public void runGameLoop() throws InterruptedException {
