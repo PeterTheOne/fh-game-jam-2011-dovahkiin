@@ -5,18 +5,23 @@ import game.entity.RudiEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
 import game.entity.StudentEntity.StudentState;
+import game.event.LoadMenueEvent;
 import game.levelmanager.Level;
 import game.levelmanager.LevelManager;
 import game.motion.Rectangle;
 import game.view.PlayView;
+import game.view.IntroView.MainEntity;
 
 import org.cogaen.core.Core;
 import org.cogaen.entity.EntityManager;
+import org.cogaen.event.Event;
+import org.cogaen.event.EventListener;
+import org.cogaen.event.EventManager;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.state.GameState;
 import org.cogaen.view.View;
 
-public class PlayState implements GameState {
+public class PlayState implements GameState, EventListener{
 
 	public static final String NAME = "Play";
 	
@@ -27,6 +32,7 @@ public class PlayState implements GameState {
 		this.core = core;
 		this.view = new PlayView(core);
 		this.view.registerResources(NAME);
+		EventManager.getInstance(core).addListener(this, LoadMenueEvent.TYPE);
 	}
 
 	@Override
@@ -38,9 +44,7 @@ public class PlayState implements GameState {
 	public void onEnter() {
 		ResourceManager.getInstance(this.core).loadGroup(NAME);
 		this.view.engage();
-		
 		EntityManager entMngr = EntityManager.getInstance(this.core);
-		entMngr.addEntity(new HochiEntity(core, "Hochi"));
 		//entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
 		//entMngr.addEntity(new RudiEntity(this.core, "Rudi"));
 		entMngr.addEntity(new StudentEntity(this.core, "Student01", StudentState.STAND, 300, -50));
@@ -69,6 +73,25 @@ public class PlayState implements GameState {
 		
 		this.view.disengage();
 		ResourceManager.getInstance(this.core).unloadGroup(NAME);
+	}
+
+	@Override
+	public void handleEvent(Event event) {
+		// TODO Auto-generated method stub
+		if(event.isOfType(LoadMenueEvent.TYPE)){
+			handleLoadEvent((LoadMenueEvent) event);
+		}
+	}
+	
+	private void handleLoadEvent(LoadMenueEvent event) {
+		EntityManager entMngr = EntityManager.getInstance(this.core);
+		if(event.getSelected().equals(MainEntity.HOCHI)){
+			entMngr.addEntity(new HochiEntity(core, "Hochi"));
+		}else if(event.getSelected().equals(MainEntity.SHAUFI)){
+			entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
+		}else if(event.getSelected().equals(MainEntity.RUDI)){
+			entMngr.addEntity(new RudiEntity(core, "Rudi"));
+		}
 	}
 
 }
