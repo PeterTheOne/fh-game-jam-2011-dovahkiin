@@ -56,7 +56,10 @@ public class MotionManager implements UpdateableService {
 		double dt = this.timer.getDeltaTime();
 		for (Body body : this.bodies) {
 			body.update(dt);
-			this.evtMngr.enqueueEvent(new EntityMovedEvent(body.getName(), body.getPositionX(), body.getPositionY(), body.getAngularPosition(), body.getVelocityX()));
+			this.evtMngr.enqueueEvent(new EntityMovedEvent(body.getName(), 
+					body.getPositionX(), body.getPositionY(), 
+					body.getAngularPosition(), body.getVelocityX(), 
+					body.getVelocityY()));
 		}
 		doCollisionTest();
 	}

@@ -41,6 +41,7 @@ public class PlayState implements GameState {
 		
 		LevelManager lvlMngr = new LevelManager(core);
 		Level startLevel = new Level(core, "startLevel");
+		//TODO: replace magic numbers
 		startLevel.addStructure(new Rectangle("plaform", 1024, 50, 0, -400));
 		lvlMngr.addLevel(startLevel);
 		lvlMngr.setCurrentLevel(startLevel.getName());

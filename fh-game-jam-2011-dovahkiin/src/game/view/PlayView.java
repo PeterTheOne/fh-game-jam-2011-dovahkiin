@@ -23,6 +23,7 @@ import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SceneNode;
 import org.cogaen.java2d.SpriteHandle;
 import org.cogaen.java2d.SpriteVisual;
+import org.cogaen.logging.LoggingService;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.view.AbstractView;
 
@@ -130,14 +131,15 @@ public class PlayView extends AbstractView implements EventListener {
 			if(event.getVelocityX() > 0){
 				node.removeVisual(playerVisual);
 				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_right");
-				this.playerVisual.play();
 				node.addVisual(playerVisual);
-			}else if(event.getVelocityX() < 0){
+			} else if(event.getVelocityX() < 0) {
 				node.removeVisual(playerVisual);
 				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_spr_left");
 				node.addVisual(playerVisual);
+			}
+			if (Math.abs(event.getVelocityY()) < 60 && event.getVelocityX() != 0) {
 				this.playerVisual.play();
-			}else{
+			} else {
 				this.playerVisual.stop();
 			}
 		}

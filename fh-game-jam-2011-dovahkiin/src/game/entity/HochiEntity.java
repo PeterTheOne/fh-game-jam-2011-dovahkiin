@@ -1,7 +1,5 @@
 package game.entity;
 
-import java.awt.event.KeyEvent;
-
 import game.event.LeaveScreenEvent;
 import game.event.LeaveScreenEvent.LeaveScreen;
 import game.motion.Body;
@@ -17,15 +15,15 @@ import org.cogaen.event.EventManager;
 import org.cogaen.input.TwoAxisController;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
-import org.cogaen.logging.LoggingService;
 
 public class HochiEntity extends PlayerEntity implements EventListener {
 	
 	public static final String TYPE = "Hochi";
 
-	private static final double JUMP_POWER = 500;
+	private static final double JUMP_POWER = 800;
+	private static final int JUMP_HOLD = 20;
 	//TODO: jump hold power and jump init power
-	private static final int GRAVITY_STRENGTH = 1000;
+	private static final int GRAVITY_STRENGTH = 1800;
 	private static final double WALK_SPEED = 400;
 	
 	private EventManager evtMngr;
@@ -65,10 +63,12 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 
 	@Override
 	public void update() {
-		// TODO: can only jump when on object
-		if (this.ctrl.isAction(0) && this.body.getVelocityY() == 0) {
-			this.body.setVelocity(0, JUMP_POWER);
-			this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
+		if (this.ctrl.isAction(0)) {
+			if (this.body.getVelocityY() == 0) {
+				this.body.setVelocity(this.body.getVelocityX(), JUMP_POWER);
+				this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
+			}
+			this.body.setVelocity(this.body.getVelocityX(), this.body.getVelocityY() + JUMP_HOLD);
 		}
 		
 		this.body.setVelocity(WALK_SPEED * this.ctrl.getHorizontalPosition(), 
