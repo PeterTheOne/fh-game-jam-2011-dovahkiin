@@ -98,10 +98,8 @@ public class RudiEntity extends PlayerEntity implements EventListener{
 			this.side = Side.RIGHT;
 		}
 		
-		if(this.ctrl.isAction(1) && !isFighting){
-			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.FIGHT, this.side, getName(), getType()));
-			this.isFighting = true;
-		}else if(!this.ctrl.isAction(0) && !isFighting && this.body.getVelocityY() != 0){
+		
+		if(!this.ctrl.isAction(0) && !isFighting && this.body.getVelocityY() != 0){
 			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.JUMP, this.side, getName(), getType()));
 		}else if(!isFighting && this.body.getVelocityX() == 0){
 			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.STAND, this.side, getName(), getType()));

@@ -113,8 +113,12 @@ public class PlayView extends AbstractView implements EventListener {
 		// schaufi
 		this.resMngr.addResource(new ImageHandle("schaufi-walk_right_img", "schaufi-walk_spr_right.png"));
 		this.resMngr.addResource(new ImageHandle("schaufi-walk_left_img", "schaufi-walk_spr_left.png"));
+		this.resMngr.addResource(new ImageHandle("schaufi-fight_right_img", "schaufi-fight_spr_right.png"));
+		this.resMngr.addResource(new ImageHandle("schaufi-fight_left_img", "schaufi-fight_spr_left.png"));
 		this.resMngr.addResource(new AnimatedSpriteHandle("schaufi-walk_right_spr", "schaufi-walk_right_img", 8, 186, 400));
 		this.resMngr.addResource(new AnimatedSpriteHandle("schaufi-walk_left_spr", "schaufi-walk_left_img", 8, 186, 400));
+		this.resMngr.addResource(new AnimatedSpriteHandle("schaufi-fight_right_spr", "schaufi-fight_right_img", 5, 260, 400));
+		this.resMngr.addResource(new AnimatedSpriteHandle("schaufi-fight_left_spr", "schaufi-fight_left_img", 5, 260, 400));
 
 		// rudi
 		this.resMngr.addResource(new ImageHandle("rudi-walk_right_img", "rudi-walk_spr_right.png"));
