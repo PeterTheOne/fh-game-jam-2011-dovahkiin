@@ -59,6 +59,7 @@ public class PlayView extends AbstractView implements EventListener {
 		this.keyboardSrc.setAxisKeys(KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_UP, -1);
 		this.keyboardSrc.addAction(KeyEvent.VK_SPACE);
 		this.keyboardSrc.addAction(KeyEvent.VK_S);
+		this.keyboardSrc.addAction(KeyEvent.VK_A);
 		this.resMngr = ResourceManager.getInstance(this.getCore());
 	}
 
