@@ -3,6 +3,7 @@ package game.view;
 import game.entity.HochiEntity;
 import game.event.ChangeVisualEvent;
 import game.event.EndFightEvent;
+import game.event.StudentShotEvent;
 import game.entity.ExEntity;
 import game.entity.RudiEntity;
 import game.entity.SchallEntity;
@@ -78,6 +79,7 @@ public class PlayView extends AbstractView implements EventListener {
 		evtMngr.addListener(this, LevelEngagedEvent.TYPE);
 		evtMngr.addListener(this, LoadLevelEvent.TYPE);
 		evtMngr.addListener(this, ChangeVisualEvent.TYPE);
+		evtMngr.addListener(this, StudentShotEvent.TYPE);
 		
 		this.keyboardSrc.engage();
 		
@@ -148,23 +150,29 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new ImageHandle("student1_img", "student1.png"));
 		this.resMngr.addResource(new ImageHandle("student1_right_img", "student1_right.png"));
 		this.resMngr.addResource(new ImageHandle("student1_left_img", "student1_left.png"));
+		this.resMngr.addResource(new ImageHandle("student1_side_defeated_img", "student1_side_defeated.png"));
 		this.resMngr.addResource(new SpriteHandle( "student1_spr", "student1_img", 96, 350));
 		this.resMngr.addResource(new SpriteHandle( "student1_right_spr", "student1_right_img", 96, 350));
 		this.resMngr.addResource(new SpriteHandle( "student1_left_spr", "student1_left_img", 96, 350));
+		this.resMngr.addResource(new SpriteHandle( "student1_side_defeated_spr", "student1_side_defeated_img", 96, 350));
 		
 		this.resMngr.addResource(new ImageHandle("student2_img", "student2.png"));
 		this.resMngr.addResource(new ImageHandle("student2_right_img", "student2_right.png"));
 		this.resMngr.addResource(new ImageHandle("student2_left_img", "student2_left.png"));
+		this.resMngr.addResource(new ImageHandle("student2_side_defeated_img", "student2_side_defeated.png"));
 		this.resMngr.addResource(new SpriteHandle( "student2_spr", "student2_img", 96, 350));
 		this.resMngr.addResource(new SpriteHandle( "student2_right_spr", "student2_right_img", 96, 350));
 		this.resMngr.addResource(new SpriteHandle( "student2_left_spr", "student2_left_img", 96, 350));
+		this.resMngr.addResource(new SpriteHandle( "student2_side_defeated_spr", "student2_side_defeated_img", 96, 350));
 		
 		this.resMngr.addResource(new ImageHandle("student3_img", "student3.png"));
 		this.resMngr.addResource(new ImageHandle("student3_right_img", "student3_right.png"));
 		this.resMngr.addResource(new ImageHandle("student3_left_img", "student3_left.png"));
+		this.resMngr.addResource(new ImageHandle("student3_side_defeated_img", "student3_side_asleep.png"));
 		this.resMngr.addResource(new SpriteHandle( "student3_spr", "student3_img", 96, 350));
 		this.resMngr.addResource(new SpriteHandle( "student3_right_spr", "student3_right_img", 96, 350));
 		this.resMngr.addResource(new SpriteHandle( "student3_left_spr", "student3_left_img", 96, 350));
+		this.resMngr.addResource(new SpriteHandle( "student3_side_defeated_spr", "student3_side_defeated_img", 96, 350));
 		
 		// bullets
 		this.resMngr.addResource(new ImageHandle("x_img", "x.png"));
@@ -187,9 +195,31 @@ public class PlayView extends AbstractView implements EventListener {
 			//empty
 		}else if(event.isOfType(ChangeVisualEvent.TYPE)){
 			handleChangeVisualEvent((ChangeVisualEvent)event);
+		} else if (event.isOfType(StudentShotEvent.TYPE)) {
+			handleStudentShotEvent((StudentShotEvent) event);
 		}
 	}
 
+
+	private void handleStudentShotEvent(StudentShotEvent event) {
+		LoggingService.getInstance(getCore()).logAlert("view", "testdefeated" + event.getStudentType());
+		if (event.getStudentType().equals(StudentEntity1.TYPE)) {
+			SceneNode s = scnMngr.getSceneNode(event.getStudentName());
+			s.clearVisuals();
+			SpriteVisual vis = this.scnMngr.createSpriteVisual("student1_side_defeated_spr");
+			s.addVisual(vis);
+		} else if (event.getStudentType().equals(StudentEntity2.TYPE)) {
+			SceneNode s = scnMngr.getSceneNode(event.getStudentName());
+			s.clearVisuals();
+			SpriteVisual vis = this.scnMngr.createSpriteVisual("student2_side_defeated_spr");
+			s.addVisual(vis);
+		} else if (event.getStudentType().equals(StudentEntity3.TYPE)) {
+			SceneNode s = scnMngr.getSceneNode(event.getStudentName());
+			s.clearVisuals();
+			SpriteVisual vis = this.scnMngr.createSpriteVisual("student3_side_defeated_spr");
+			s.addVisual(vis);
+		}
+	}
 
 	private void handleChangeVisualEvent(ChangeVisualEvent event) {
 		SceneNode s = scnMngr.getSceneNode(event.getEntitiyName());
@@ -205,7 +235,7 @@ public class PlayView extends AbstractView implements EventListener {
 				}else if(event.getVisualState().equals(VisualState.WALK)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
 					this.playerVisual.play();
-				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+				}else if(event.getVisualState().equals(VisualState.JUMP)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
 					this.playerVisual.stop();
 				}
@@ -219,7 +249,7 @@ public class PlayView extends AbstractView implements EventListener {
 				}else if(event.getVisualState().equals(VisualState.WALK)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
 					this.playerVisual.play();
-				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+				}else if(event.getVisualState().equals(VisualState.JUMP)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
 					this.playerVisual.stop();
 				}
@@ -235,7 +265,7 @@ public class PlayView extends AbstractView implements EventListener {
 				}else if(event.getVisualState().equals(VisualState.WALK)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("schaufi-walk_left_spr");
 					this.playerVisual.play();
-				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+				}else if(event.getVisualState().equals(VisualState.JUMP)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("schaufi-walk_left_spr");
 					this.playerVisual.stop();
 				}
@@ -249,7 +279,7 @@ public class PlayView extends AbstractView implements EventListener {
 				}else if(event.getVisualState().equals(VisualState.WALK)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("schaufi-walk_right_spr");
 					this.playerVisual.play();
-				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+				}else if(event.getVisualState().equals(VisualState.JUMP)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("schaufi-walk_right_spr");
 					this.playerVisual.stop();
 				}
@@ -265,7 +295,7 @@ public class PlayView extends AbstractView implements EventListener {
 				}else if(event.getVisualState().equals(VisualState.WALK)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("rudi-walk_left_spr");
 					this.playerVisual.play();
-				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+				}else if(event.getVisualState().equals(VisualState.JUMP)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("rudi-walk_left_spr");
 					this.playerVisual.stop();
 				}
@@ -279,7 +309,7 @@ public class PlayView extends AbstractView implements EventListener {
 				}else if(event.getVisualState().equals(VisualState.WALK)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("rudi-walk_right_spr");
 					this.playerVisual.play();
-				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+				}else if(event.getVisualState().equals(VisualState.JUMP)){
 					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("rudi-walk_right_spr");
 					this.playerVisual.stop();
 				}

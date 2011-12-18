@@ -83,22 +83,46 @@ public class PlayState implements GameState, EventListener{
 		
 		Level level1_3 = new Level(this.core, "level1_3");
 		level1_3.addFloor();
+		level1_3.addEnemy(createStudent(StudentState.RIGHT, 200, -150));
+		level1_3.addEnemy(createStudent(StudentState.LEFT, 240, -200));
+		level1_3.addEnemy(createStudent(StudentState.MIDDLE, 270, -150));
+		level1_3.addEnemy(createStudent(StudentState.RIGHT, 230, -250));
 		lvlMngr.addLevel(level1_3);
 		
 		Level level2_1 = new Level(this.core, "level2_1");
 		level2_1.addFloor();
+		level2_1.addEnemy(createStudent(StudentState.LEFT, -100, -150));
+		level2_1.addEnemy(createStudent(StudentState.MIDDLE, -240, -200));
+		level2_1.addEnemy(createStudent(StudentState.RIGHT, -270, -150));
+		level2_1.addEnemy(createStudent(StudentState.LEFT, -230, -250));
 		lvlMngr.addLevel(level2_1);
 		
 		Level level2_2 = new Level(this.core, "level2_2");
 		level2_2.addFloor();
+		level2_2.addEnemy(createStudent(StudentState.LEFT, 100, -150));
+		level2_2.addEnemy(createStudent(StudentState.MIDDLE, 240, -200));
+		level2_2.addEnemy(createStudent(StudentState.RIGHT, 370, -150));
+		level2_2.addEnemy(createStudent(StudentState.LEFT, 190, -250));
 		lvlMngr.addLevel(level2_2);
 		
 		Level level2_3 = new Level(this.core, "level2_3");
 		level2_3.addFloor();
+		level2_3.addEnemy(createStudent(StudentState.LEFT, 145, -300));
+		level2_3.addEnemy(createStudent(StudentState.MIDDLE, 323, -203));
+		level2_3.addEnemy(createStudent(StudentState.RIGHT, 223, -200));
+		level2_3.addEnemy(createStudent(StudentState.LEFT, 186, -250));
 		lvlMngr.addLevel(level2_3);
 		
 		Level level3_1 = new Level(this.core, "level3_1");
 		level3_1.addFloor();
+		level3_1.addEnemy(createStudent(StudentState.LEFT, 145, -330));
+		level3_1.addEnemy(createStudent(StudentState.MIDDLE, 323, -203));
+		level3_1.addEnemy(createStudent(StudentState.RIGHT, -223, -340));
+		level3_1.addEnemy(createStudent(StudentState.LEFT, -186, -250));
+		level3_1.addEnemy(createStudent(StudentState.LEFT, 145, -300));
+		level3_1.addEnemy(createStudent(StudentState.MIDDLE, -323, -203));
+		level3_1.addEnemy(createStudent(StudentState.RIGHT, 223, -250));
+		level3_1.addEnemy(createStudent(StudentState.LEFT, -300, -350));
 		lvlMngr.addLevel(level3_1);
 		
 		Level level3_2 = new Level(this.core, "level3_2");
@@ -107,6 +131,14 @@ public class PlayState implements GameState, EventListener{
 		
 		Level level3_3 = new Level(this.core, "level3_3");
 		level3_3.addFloor();
+		level3_3.addEnemy(createStudent(StudentState.LEFT, 145, -330));
+		level3_3.addEnemy(createStudent(StudentState.LEFT, 342, -303));
+		level3_3.addEnemy(createStudent(StudentState.RIGHT, -223, -340));
+		level3_3.addEnemy(createStudent(StudentState.LEFT, -386, -250));
+		level3_3.addEnemy(createStudent(StudentState.LEFT, 455, -200));
+		level3_3.addEnemy(createStudent(StudentState.MIDDLE, -323, -153));
+		level3_3.addEnemy(createStudent(StudentState.MIDDLE, 223, -150));
+		level3_3.addEnemy(createStudent(StudentState.LEFT, -300, -350));
 		lvlMngr.addLevel(level3_3);
 		
 		level1_1.setNextLevel(level1_2.getName());

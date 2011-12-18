@@ -69,7 +69,7 @@ public abstract class StudentEntity extends Entity implements EventListener{
 		}
 		if (oppEntity.getType().equals(RudiEntity.TYPE) && 
 				this instanceof StudentEntity3) {
-			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName()));
+			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName(), getType()));
 			this.body.setCollisionFlag(0x0010);
 			SoundHandle soundHandle = new SoundHandle("koC_handle", "koC.wav");
 			soundHandle.load(this.getCore());
@@ -77,7 +77,7 @@ public abstract class StudentEntity extends Entity implements EventListener{
 		} else if (oppEntity.getType().equals(ExEntity.TYPE)) {
 			//entMngr.removeEntity(this);
 			entMngr.removeEntity(oppEntity);
-			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName()));
+			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName(), getType()));
 			this.body.setCollisionFlag(0x0010);
 			SoundHandle soundHandle = new SoundHandle("hitA_handle", "hitA.wav");
 			soundHandle.load(this.getCore());
@@ -88,7 +88,7 @@ public abstract class StudentEntity extends Entity implements EventListener{
 		} else if (oppEntity.getType().equals(SchallEntity.TYPE)) {
 			//entMngr.removeEntity(this);
 			entMngr.removeEntity(oppEntity);
-			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName()));
+			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName(), getType()));
 			this.body.setCollisionFlag(0x0010);
 			SoundHandle soundHandle = new SoundHandle("hitB_handle", "hitB.wav");
 			soundHandle.load(this.getCore());
