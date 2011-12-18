@@ -14,10 +14,10 @@ import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 import org.cogaen.logging.LoggingService;
 
-public class StudentEntity extends Entity implements EventListener {
+public abstract class StudentEntity extends Entity implements EventListener{
 	
 	public enum StudentState {
-		STAND, DEFEATED
+		LEFT, MIDDLE, RIGHT
 	}
 
 	public static final String TYPE = "Student";
@@ -36,24 +36,19 @@ public class StudentEntity extends Entity implements EventListener {
 		this.body.setCollisionMask(0x0003);
 	}
 	
-	public String getType() {
-		return TYPE;
-	}
+	protected abstract void setUp();
 
-	protected void setUp() {
-		MotionManager.getInstance(getCore()).addBody(body);
-		this.evtMngr.addListener(this, CollisionEvent.TYPE);
-	}
+	protected abstract void tearDown();
 
-	protected void tearDown() {
-		this.evtMngr.removeListener(this);
-		MotionManager.getInstance(getCore()).removeBody(body);
-	}
+	public abstract void update();
 
-	public void update() {
-		//emtpy
+	public Body getBody(){
+		return this.body;
 	}
-
+	
+	public StudentState getStudentState(){
+		return this.studentState;
+	}
 	@Override
 	public void handleEvent(Event event) {
 		if (event.isOfType(CollisionEvent.TYPE)) {
@@ -79,5 +74,4 @@ public class StudentEntity extends Entity implements EventListener {
 			this.body.setCollisionFlag(0x0010);
 		}
 	}
-
 }

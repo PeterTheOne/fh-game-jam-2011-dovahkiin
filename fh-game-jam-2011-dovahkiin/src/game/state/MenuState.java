@@ -4,8 +4,10 @@ import javax.sound.sampled.AudioInputStream;
 
 import game.GameApp;
 import game.event.ChangeItemEvent;
+import game.event.LoadMenueEvent;
 import game.event.MenuStateEvent;
 import game.event.SelectItemEvent;
+import game.view.IntroView.MainEntity;
 import game.view.MenuView;
 
 import org.cogaen.core.Core;
@@ -30,6 +32,7 @@ public class MenuState implements GameState, EventListener {
 	private int selectedItem;
 	private Core core;
 	private View view;
+	private MainEntity entity;
 	
 	public MenuState(Core core) {
 		this.core = core;
