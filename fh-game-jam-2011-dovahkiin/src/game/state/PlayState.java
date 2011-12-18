@@ -5,6 +5,9 @@ import game.entity.RudiEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
 import game.entity.StudentEntity.StudentState;
+import game.entity.StudentEntity1;
+import game.entity.StudentEntity2;
+import game.entity.StudentEntity3;
 import game.event.LoadMenueEvent;
 import game.levelmanager.Level;
 import game.levelmanager.LevelManager;
@@ -21,12 +24,15 @@ import org.cogaen.resource.ResourceManager;
 import org.cogaen.state.GameState;
 import org.cogaen.view.View;
 
+import com.sun.corba.se.impl.naming.pcosnaming.NameService;
+
 public class PlayState implements GameState, EventListener{
 
 	public static final String NAME = "Play";
 	
 	private Core core;
 	private View view;
+	private EntityManager entMngr;
 	
 	public PlayState(Core core) {
 		this.core = core;
@@ -44,10 +50,7 @@ public class PlayState implements GameState, EventListener{
 	public void onEnter() {
 		ResourceManager.getInstance(this.core).loadGroup(NAME);
 		this.view.engage();
-		EntityManager entMngr = EntityManager.getInstance(this.core);
-		//entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
-		//entMngr.addEntity(new RudiEntity(this.core, "Rudi"));
-		entMngr.addEntity(new StudentEntity(this.core, "Student01", StudentState.STAND, 500, -100));
+		this.entMngr = EntityManager.getInstance(this.core);
 		
 		LevelManager lvlMngr = new LevelManager(core);
 		
@@ -63,6 +66,35 @@ public class PlayState implements GameState, EventListener{
 		startLevel.setNextLevel(secondLevel.getName());
 		
 		lvlMngr.setCurrentLevel(startLevel.getName());
+	}
+
+	private void createStudent(StudentState state, int positionX, int positionY) {
+		// TODO Auto-generated method stub
+		String name = org.cogaen.name.NameService.getInstance(core).generateName();
+		int rand = (int)(Math.random() * IntroState.getCharacters());
+		switch(rand){
+		case 1:
+			createStudent1(state, name, positionX, positionY);
+			break;
+		case 2:
+			createStudent2(state, name, positionX, positionY);
+			break;
+		case 3:
+			createStudent3(state, name, positionX, positionY);
+			break;
+		}
+	}
+
+	private void createStudent1(StudentState state, String name, int positionX, int positionY) {
+		this.entMngr.addEntity(new StudentEntity1(core, name , state, positionX, positionY));
+	}
+	
+	private void createStudent2(StudentState state, String name, int positionX, int positionY) {
+		this.entMngr.addEntity(new StudentEntity2(core, name , state, positionX, positionY));
+	}
+	
+	private void createStudent3(StudentState state, String name, int positionX, int positionY) {
+		this.entMngr.addEntity(new StudentEntity3(core, name , state, positionX, positionY));
 	}
 
 	@Override

@@ -7,13 +7,11 @@ import game.motion.Rectangle;
 import org.cogaen.core.Core;
 import org.cogaen.entity.Entity;
 
-public class StudentEntity extends Entity{
+public abstract class StudentEntity extends Entity{
 	
 	public enum StudentState {
-		STAND, DEFEATED
+		LEFT, MIDDLE, RIGHT
 	}
-
-	public static final String TYPE = "Student";
 	
 	private Body body;
 	private StudentState studentState;
@@ -25,20 +23,18 @@ public class StudentEntity extends Entity{
 		this.body.setPosition(x, y);
 	}
 	
-	public String getType() {
-		return TYPE;
-	}
 
-	protected void setUp() {
-		MotionManager.getInstance(getCore()).addBody(body);
-	}
+	protected abstract void setUp();
 
-	protected void tearDown() {
-		MotionManager.getInstance(getCore()).removeBody(body);
-	}
+	protected abstract void tearDown();
 
-	public void update() {
-		//emtpy
-	}
+	public abstract void update();
 
+	public Body getBody(){
+		return this.body;
+	}
+	
+	public StudentState getStudentState(){
+		return this.studentState;
+	}
 }
