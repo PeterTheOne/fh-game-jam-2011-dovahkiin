@@ -110,16 +110,12 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 		if(this.ctrl.isAction(1) && !isFighting){
 			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.FIGHT, this.side, this.getName()));
 			this.isFighting = true;
-			LoggingService.getInstance(getCore()).logAlert("ALERT", "fight");
 		}else if(!this.ctrl.isAction(0) && !isFighting && this.body.getVelocityY() != 0){
 			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.JUMP, this.side, this.getName()));
-			LoggingService.getInstance(getCore()).logAlert("ALERT", "jump");
 		}else if(!isFighting && this.body.getVelocityX() == 0){
 			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.STAND, this.side, this.getName()));
-			LoggingService.getInstance(getCore()).logAlert("ALERT", "stand");
 		}else if(!isFighting){
 			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.WALK, this.side, this.getName()));
-			LoggingService.getInstance(getCore()).logAlert("ALERT", "walk");
 		}
 	}
 
