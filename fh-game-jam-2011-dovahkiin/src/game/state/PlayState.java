@@ -117,12 +117,11 @@ public class PlayState implements GameState, EventListener{
 		level3_1.addFloor();
 		level3_1.addEnemy(createStudent(StudentState.LEFT, 145, -330));
 		level3_1.addEnemy(createStudent(StudentState.MIDDLE, 323, -203));
-		level3_1.addEnemy(createStudent(StudentState.RIGHT, -223, -340));
+		level3_1.addEnemy(createStudent(StudentState.RIGHT, 223, -340));
 		level3_1.addEnemy(createStudent(StudentState.LEFT, -186, -250));
 		level3_1.addEnemy(createStudent(StudentState.LEFT, 145, -300));
-		level3_1.addEnemy(createStudent(StudentState.MIDDLE, -323, -203));
+		level3_1.addEnemy(createStudent(StudentState.MIDDLE, -200, -203));
 		level3_1.addEnemy(createStudent(StudentState.RIGHT, 223, -250));
-		level3_1.addEnemy(createStudent(StudentState.LEFT, -300, -350));
 		lvlMngr.addLevel(level3_1);
 		
 		Level level3_2 = new Level(this.core, "level3_2");
@@ -131,14 +130,14 @@ public class PlayState implements GameState, EventListener{
 		
 		Level level3_3 = new Level(this.core, "level3_3");
 		level3_3.addFloor();
-		level3_3.addEnemy(createStudent(StudentState.LEFT, 145, -330));
-		level3_3.addEnemy(createStudent(StudentState.LEFT, 342, -303));
-		level3_3.addEnemy(createStudent(StudentState.RIGHT, -223, -340));
-		level3_3.addEnemy(createStudent(StudentState.LEFT, -386, -250));
+		level3_3.addEnemy(createStudent(StudentState.LEFT, 145, -230));
+		level3_3.addEnemy(createStudent(StudentState.LEFT, 342, -203));
+		level3_3.addEnemy(createStudent(StudentState.RIGHT, -223, -140));
+		level3_3.addEnemy(createStudent(StudentState.LEFT, -286, -250));
 		level3_3.addEnemy(createStudent(StudentState.LEFT, 455, -200));
-		level3_3.addEnemy(createStudent(StudentState.MIDDLE, -323, -153));
+		level3_3.addEnemy(createStudent(StudentState.MIDDLE, -223, -153));
 		level3_3.addEnemy(createStudent(StudentState.MIDDLE, 223, -150));
-		level3_3.addEnemy(createStudent(StudentState.LEFT, -300, -350));
+		level3_3.addEnemy(createStudent(StudentState.LEFT, -150, -250));
 		lvlMngr.addLevel(level3_3);
 		
 		level1_1.setNextLevel(level1_2.getName());

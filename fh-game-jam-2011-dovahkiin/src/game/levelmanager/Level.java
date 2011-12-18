@@ -102,7 +102,7 @@ public class Level implements EventListener {
 
 	public void addFloor() {
 		//TODO: replace magic numbers
-		Rectangle rec = new Rectangle("plaform", 1024, 50, 0, -400);
+		Rectangle rec = new Rectangle("plaform", 4096, 50, 0, -400);
 		rec.setCollisionFlag(0x0008);
 		rec.setCollisionMask(0x0001);
 		addStructure(rec);

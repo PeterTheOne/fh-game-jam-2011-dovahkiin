@@ -78,7 +78,7 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 
 	@Override
 	public void update() {
-		if (this.ctrl.isAction(0)) {
+		/*if (this.ctrl.isAction(0)) {
 			if (this.body.getVelocityY() == 0) {
 				this.body.setVelocity(this.body.getVelocityX(), JUMP_POWER);
 				this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
@@ -87,7 +87,7 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 				SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 			}
 			//this.body.setVelocity(this.body.getVelocityX(), this.body.getVelocityY() + JUMP_HOLD);
-		}
+		}*/
 		
 		//leaveScreen
 		Screen screen = SceneManager.getInstance(getCore()).getScreen();
