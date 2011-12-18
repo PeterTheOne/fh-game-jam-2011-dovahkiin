@@ -70,7 +70,7 @@ public class GameApp implements EventListener{
 		
 		SoundHandle musicHandle = new SoundHandle("music_handle", "music.wav");
 		musicHandle.load(this.core);
-		//SoundService.getInstance(this.core).playBackgroundMusic((SoundEffect)musicHandle.getResource());
+		SoundService.getInstance(this.core).playBackgroundMusic((SoundEffect)musicHandle.getResource());
 		
 		while (running) {
 			clock.tick();
