@@ -22,8 +22,8 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 	
 	public static final String TYPE = "Hochi";
 
-	private static final double JUMP_POWER = 800;
-	private static final int JUMP_HOLD = 20;
+	private static final double JUMP_POWER = 1000;
+	//private static final int JUMP_HOLD = 0;
 	//TODO: jump hold power and jump init power
 	private static final int GRAVITY_STRENGTH = 1800;
 	private static final double WALK_SPEED = 400;
@@ -44,6 +44,7 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 		this.ctrl = new TwoAxisController(core, "PlayerOne", 2);
 		this.body = new Rectangle(name, 90, 400);
 		this.body.setCollisionFlag(0x0001);
+		this.body.setCollisionMask(0x000C);
 		this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 		this.visualstate = VisualState.STAND;
 		this.side = Side.RIGHT;
@@ -77,7 +78,7 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 				this.body.setVelocity(this.body.getVelocityX(), JUMP_POWER);
 				this.body.setAcceleration(0, - GRAVITY_STRENGTH);	//gravity
 			}
-			this.body.setVelocity(this.body.getVelocityX(), this.body.getVelocityY() + JUMP_HOLD);
+			//this.body.setVelocity(this.body.getVelocityX(), this.body.getVelocityY() + JUMP_HOLD);
 		}
 		
 		//leaveScreen
@@ -105,12 +106,12 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 				entMngr.addEntity(new ExEntity(getCore(), 
 						this.body.getPositionX() + 150, 
 						this.body.getPositionY(), 
-						200));
+						400));
 			} else {
 				entMngr.addEntity(new ExEntity(getCore(), 
 						this.body.getPositionX() - 150, 
 						this.body.getPositionY(), 
-						- 200));
+						- 400));
 			}
 		}else if(!this.ctrl.isAction(0) && !isFighting && this.body.getVelocityY() != 0){
 			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.JUMP, this.side, getName(), getType()));
@@ -135,7 +136,7 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 	private void handleLeaveScreenEvent(LeaveScreenEvent leaveScreenEvent) {
 		Screen screen = SceneManager.getInstance(getCore()).getScreen();
 		if(leaveScreenEvent.getSide().equals(LeaveScreen.LEFT)){
-			this.body.setPositionX(screen.getWidth()/2);
+			this.body.setPositionX(-screen.getWidth()/2);
 		}else if(leaveScreenEvent.getSide().equals(LeaveScreen.RIGHT)){
 			this.body.setPositionX(-screen.getWidth()/2);
 		}

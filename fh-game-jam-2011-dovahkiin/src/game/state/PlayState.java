@@ -44,23 +44,27 @@ public class PlayState implements GameState, EventListener{
 	public void onEnter() {
 		ResourceManager.getInstance(this.core).loadGroup(NAME);
 		this.view.engage();
-		EntityManager entMngr = EntityManager.getInstance(this.core);
-		//entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
-		//entMngr.addEntity(new RudiEntity(this.core, "Rudi"));
-		entMngr.addEntity(new StudentEntity(this.core, "Student01", StudentState.STAND, 300, -50));
 		
 		LevelManager lvlMngr = new LevelManager(core);
 		
-		Level startLevel = new Level(this.core, "startLevel");
+		Level startLevel = new Level(this.core, "level1_1");
 		startLevel.addFloor();
 		lvlMngr.addLevel(startLevel);
-		
-		Level secondLevel = new Level(this.core, "secondLevel");
+
+		Level secondLevel = new Level(this.core, "level1_2");
 		secondLevel.addFloor();
+		secondLevel.addEnemy(new StudentEntity(this.core, "Student01", StudentState.STAND, 300, -50));
 		lvlMngr.addLevel(secondLevel);
 		
-		secondLevel.setPrevLevel(startLevel.getName());
+		Level thirdLevel = new Level(this.core, "level1_3");
+		thirdLevel.addFloor();
+		lvlMngr.addLevel(thirdLevel);
+		
 		startLevel.setNextLevel(secondLevel.getName());
+		secondLevel.setNextLevel(thirdLevel.getName());
+		
+		//thirdLevel.setPrevLevel(secondLevel.getName());
+		//secondLevel.setPrevLevel(startLevel.getName());
 		
 		lvlMngr.setCurrentLevel(startLevel.getName());
 

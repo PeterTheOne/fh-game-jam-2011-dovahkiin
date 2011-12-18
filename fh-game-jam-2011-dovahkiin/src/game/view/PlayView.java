@@ -88,7 +88,11 @@ public class PlayView extends AbstractView implements EventListener {
 	public void registerResources(String group) {
 		// level backgrounds
 		this.resMngr.addResource(new ImageHandle("level1_1_img", "level1_1.png"));
+		this.resMngr.addResource(new ImageHandle("level1_2_img", "level1_2.png"));
+		this.resMngr.addResource(new ImageHandle("level1_3_img", "level1_3.png"));
 		this.resMngr.addResource(new SpriteHandle( "level1_1_spr", "level1_1_img", 1024, 768));
+		this.resMngr.addResource(new SpriteHandle( "level1_2_spr", "level1_2_img", 1024, 768));
+		this.resMngr.addResource(new SpriteHandle( "level1_3_spr", "level1_3_img", 1024, 768));
 
 		// character
 		// hochi
@@ -260,8 +264,17 @@ public class PlayView extends AbstractView implements EventListener {
 
 	private void handleLevelEngagedEvent(LevelEngagedEvent event) {
 		SceneNode scnNode = this.scnMngr.getSceneNode("level_bg");
-		scnNode.getVisuals().clear();
-		SpriteVisual bgVisual = this.scnMngr.createSpriteVisual("level1_1_spr");
+		scnNode.clearVisuals();
+		SpriteVisual bgVisual;
+		if (event.getLevelName() == "level1_1") {
+			bgVisual = this.scnMngr.createSpriteVisual("level1_1_spr");
+		} else if (event.getLevelName() == "level1_2") {
+			bgVisual = this.scnMngr.createSpriteVisual("level1_2_spr");
+		} else if (event.getLevelName() == "level1_3") {
+			bgVisual = this.scnMngr.createSpriteVisual("level1_3_spr");
+		} else {
+			bgVisual = this.scnMngr.createSpriteVisual("level1_3_spr");
+		}
 		scnNode.addVisual(bgVisual);
 	}
 

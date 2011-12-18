@@ -1,5 +1,6 @@
 package game.entity;
 
+import game.event.StudentShotEvent;
 import game.motion.Body;
 import game.motion.CollisionEvent;
 import game.motion.MotionManager;
@@ -32,6 +33,7 @@ public class StudentEntity extends Entity implements EventListener {
 		this.body = new Rectangle(name, 90, 400);
 		this.body.setPosition(x, y);
 		this.body.setCollisionFlag(0x0004);
+		this.body.setCollisionMask(0x0003);
 	}
 	
 	public String getType() {
@@ -69,10 +71,12 @@ public class StudentEntity extends Entity implements EventListener {
 		if (oppEntity == null) {
 			return;
 		}
-		LoggingService.getInstance(getCore()).logAlert("Student", "collision");
 		if (oppEntity.getType().equals(ExEntity.TYPE)) {
-			entMngr.removeEntity(this);
+			//entMngr.removeEntity(this);
 			entMngr.removeEntity(oppEntity);
+			//TODO: change img when studen shot
+			EventManager.getInstance(getCore()).enqueueEvent(new StudentShotEvent(getName()));
+			this.body.setCollisionFlag(0x0010);
 		}
 	}
 

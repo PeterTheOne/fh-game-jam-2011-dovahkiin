@@ -90,10 +90,10 @@ public class LevelManager implements EventListener{
 		if (event.getSide().equals(LeaveScreen.RIGHT)) {
 			newLevelName = this.currentLevel.getNextLevel();
 		} else {
-			newLevelName = this.currentLevel.getPrevLevel();
+			return;
+			//newLevelName = this.currentLevel.getPrevLevel();
 		}
 		if (getLevel(newLevelName) != null) {
-			this.currentLevel.disenage();
 			setCurrentLevel(newLevelName);
 		} else {
 			LoggingService.getInstance(this.core).logError("LevelManager", "newLevel not found");

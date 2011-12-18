@@ -28,11 +28,11 @@ public class ExEntity extends Entity {
 		this.body = new Rectangle(name, 10, 10);
 		this.body.setPosition(x, y);
 		this.body.setVelocity(velocityX, 0);
-		this.body.setCollisionFlag(0x0001);
+		this.body.setCollisionFlag(0x0002);
 		this.body.setCollisionMask(0x0004);
 		
 		TaskManager tskMngr = TaskManager.getInstance(getCore());
-		tskMngr.attachTask(new FireEventTask(getCore(), new DestroyEntityEvent(getName()), 4));
+		tskMngr.attachTask(new FireEventTask(getCore(), new DestroyEntityEvent(getName()), 2));
 		//TODO: self destroy task
 	}
 

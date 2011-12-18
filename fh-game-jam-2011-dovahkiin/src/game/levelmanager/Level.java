@@ -2,23 +2,28 @@ package game.levelmanager;
 
 import game.entity.StudentEntity;
 import game.event.LevelEngagedEvent;
+import game.event.StudentShotEvent;
 import game.motion.MotionManager;
 import game.motion.Rectangle;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import org.cogaen.core.Core;
+import org.cogaen.entity.EntityManager;
+import org.cogaen.event.Event;
+import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
 
 
-public class Level {
+public class Level implements EventListener {
 
 	private Vector<Rectangle> structures = new Vector<Rectangle>();
 	private Vector<StudentEntity> enemies = new Vector<StudentEntity>();
 	private Core core;
 	private String name;
-	private String prevLevel;
-	private String nextLevel;
+	//private String prevLevel = null;
+	private String nextLevel = null;
 	
 	public Level(Core core, String name){
 		this.core = core;
@@ -39,13 +44,25 @@ public class Level {
 	}*/
 	
 	public void engage() {
-		EventManager.getInstance(this.core).enqueueEvent(new LevelEngagedEvent(this.name));
+		EventManager evtMngr = EventManager.getInstance(this.core);
+		evtMngr.enqueueEvent(new LevelEngagedEvent(this.name));
+		evtMngr.addListener(this, StudentShotEvent.TYPE);
+		EntityManager entMngr = EntityManager.getInstance(this.core);
+		for (StudentEntity student : enemies) {
+			entMngr.addEntity(student);
+		}
 	}
 	
 	public void disenage(){
 		for(Rectangle struct : structures){
 			MotionManager.getInstance(core).removeBody(struct);
 		}
+		EntityManager entMngr = EntityManager.getInstance(this.core);
+		for (StudentEntity student : enemies) {
+			entMngr.removeEntity(student);
+		}
+		EventManager evtMngr = EventManager.getInstance(this.core);
+		evtMngr.removeListener(this);
 	}
 	
 	public void addStructure(Rectangle structure){
@@ -57,17 +74,17 @@ public class Level {
 		enemies.add(enemy);
 	}
 	
-	public void setPrevLevel(String prevLevel){
+	/*public void setPrevLevel(String prevLevel){
 		this.prevLevel = prevLevel;
-	}
+	}*/
 	
 	public void setNextLevel(String nextLevel){
 		this.nextLevel = nextLevel;
 	}
 	
-	public String getPrevLevel() {
+	/*public String getPrevLevel() {
 		return this.prevLevel;
-	}
+	}*/
 	
 	public String getNextLevel() {
 		return this.nextLevel;
@@ -79,7 +96,30 @@ public class Level {
 
 	public void addFloor() {
 		//TODO: replace magic numbers
-		addStructure(new Rectangle("plaform", 1024, 50, 0, -400));
+		Rectangle rec = new Rectangle("plaform", 1024, 50, 0, -400);
+		rec.setCollisionFlag(0x0008);
+		rec.setCollisionMask(0x0001);
+		addStructure(rec);
+		
+	}
+
+	@Override
+	public void handleEvent(Event event) {
+		if (event.isOfType(StudentShotEvent.TYPE)) {
+			//handleStudentShotEvent((StudentShotEvent) event);
+		}
+	}
+
+	private void handleStudentShotEvent(StudentShotEvent event) {
+		ArrayList<StudentEntity> toRemove = new ArrayList<StudentEntity>();
+		for (StudentEntity stud : enemies) {
+			if (stud.getName().equals(event.getStudentName())) {
+				toRemove.add(stud);
+			}
+		}
+		for (StudentEntity stud: toRemove) {
+			enemies.remove(stud);
+		}
 	}
 
 	/*public void handleEvent(Event event) {
