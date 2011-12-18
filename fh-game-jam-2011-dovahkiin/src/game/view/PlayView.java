@@ -81,10 +81,10 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr_right", "hochi-walk_img_right", 8, 186, 400) );
 		this.resMngr.addResource(new ImageHandle( "hochi-walk_img_left", "hochi-walk_spr_left.png") );
 		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-walk_spr_left", "hochi-walk_img_left", 8, 186, 400) );
-		this.resMngr.addResource(new ImageHandle( "hochi-fight_left", "hochi-fight_left.png") );
-		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_right", "hochi-fight_left", 8, 186, 400) );
-		this.resMngr.addResource(new ImageHandle( "hochi-fight_right", "hochi-fight_right.png") );
-		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_right", "hochi-fight_right", 8, 186, 400) );
+		this.resMngr.addResource(new ImageHandle( "hochi-fight_img_left", "hochi-fight_left.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_spr_left", "hochi-fight_img_left", 8, 186, 400) );
+		this.resMngr.addResource(new ImageHandle( "hochi-fight_img_right", "hochi-fight_right.png") );
+		this.resMngr.addResource(new AnimatedSpriteHandle( "hochi-fight_spr_right", "hochi-fight_img_right", 8, 186, 400) );
 	}
 
 	@Override
