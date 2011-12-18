@@ -75,7 +75,10 @@ public class PlayState implements GameState, EventListener{
 
 		Level level1_2 = new Level(this.core, "level1_2");
 		level1_2.addFloor();
-		level1_2.addEnemy(createStudent(StudentState.MIDDLE, 300, -50));
+		level1_2.addEnemy(createStudent(StudentState.MIDDLE, 300, -150));
+		level1_2.addEnemy(createStudent(StudentState.RIGHT, 340, -200));
+		level1_2.addEnemy(createStudent(StudentState.LEFT, 270, -150));
+		level1_2.addEnemy(createStudent(StudentState.RIGHT, 230, -250));
 		lvlMngr.addLevel(level1_2);
 		
 		Level level1_3 = new Level(this.core, "level1_3");
