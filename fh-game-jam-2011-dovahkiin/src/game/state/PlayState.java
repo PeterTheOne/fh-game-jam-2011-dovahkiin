@@ -1,6 +1,7 @@
 package game.state;
 
 import game.entity.HochiEntity;
+import game.entity.RudiEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
 import game.entity.StudentEntity.StudentState;
@@ -39,8 +40,9 @@ public class PlayState implements GameState {
 		this.view.engage();
 		
 		EntityManager entMngr = EntityManager.getInstance(this.core);
-		entMngr.addEntity(new HochiEntity(core, "Hochi"));
+		//entMngr.addEntity(new HochiEntity(core, "Hochi"));
 		//entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
+		entMngr.addEntity(new RudiEntity(this.core, "Rudi"));
 		entMngr.addEntity(new StudentEntity(this.core, "Student01", StudentState.STAND));
 		
 		LevelManager lvlMngr = new LevelManager(core);

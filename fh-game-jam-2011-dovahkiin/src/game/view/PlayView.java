@@ -5,6 +5,7 @@ import game.entity.HochiEntity.Side;
 import game.entity.HochiEntity.VisualState;
 import game.event.ChangeVisualEvent;
 import game.event.EndFightEvent;
+import game.entity.RudiEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
 import game.event.LevelEngagedEvent;
@@ -98,12 +99,18 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-walk_left_spr", "hochi-walk_left_img", 8, 186, 400));
 		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-fight_left_spr", "hochi-fight_left_img", 5, 260, 400));
 		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-fight_right_spr", "hochi-fight_right_img", 5, 260, 400));
-		
+
 		// schaufi
 		this.resMngr.addResource(new ImageHandle("schaufi-walk_right_img", "schaufi-walk_spr_right.png"));
 		this.resMngr.addResource(new ImageHandle("schaufi-walk_left_img", "schaufi-walk_spr_left.png"));
 		this.resMngr.addResource(new AnimatedSpriteHandle("schaufi-walk_right_spr", "schaufi-walk_right_img", 8, 186, 400));
 		this.resMngr.addResource(new AnimatedSpriteHandle("schaufi-walk_left_spr", "schaufi-walk_left_img", 8, 186, 400));
+
+		// rudi
+		this.resMngr.addResource(new ImageHandle("rudi-walk_right_img", "rudi-walk_spr_right.png"));
+		//this.resMngr.addResource(new ImageHandle("rudi-walk_left_img", "rudi-walk_spr_left.png"));
+		this.resMngr.addResource(new AnimatedSpriteHandle("rudi-walk_right_spr", "rudi-walk_right_img", 8, 186, 400));
+		//this.resMngr.addResource(new AnimatedSpriteHandle("rudi-walk_left_spr", "rudi-walk_left_img", 8, 186, 400));
 		
 		// students
 		this.resMngr.addResource(new ImageHandle("student_img", "student.png"));
@@ -182,6 +189,8 @@ public class PlayView extends AbstractView implements EventListener {
 			createHochi(event.getEntityName());
 		} else if (event.getEntityType().equals(SchaufiEntity.TYPE)) {
 			createSchaufi(event.getEntityName());
+		} else if (event.getEntityType().equals(RudiEntity.TYPE)) {
+			createRudi(event.getEntityName());
 		} else if (event.getEntityType().equals(StudentEntity.TYPE)) {
 			createStudent(event.getEntityName());
 		}
@@ -198,6 +207,14 @@ public class PlayView extends AbstractView implements EventListener {
 	private void createSchaufi(String entityName) {
 		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
 		this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("schaufi-walk_right_spr");
+		this.playerVisual.play();
+		scnNode.addVisual(this.playerVisual);
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
+	private void createRudi(String entityName) {
+		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
+		this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("rudi-walk_right_spr");
 		this.playerVisual.play();
 		scnNode.addVisual(this.playerVisual);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
