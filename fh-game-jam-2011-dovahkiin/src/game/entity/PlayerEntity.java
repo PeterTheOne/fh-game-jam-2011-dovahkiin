@@ -4,6 +4,13 @@ import org.cogaen.core.Core;
 import org.cogaen.entity.Entity;
 
 public abstract class PlayerEntity extends Entity {
+	
+	public enum VisualState{
+		FIGHT, JUMP, STAND, WALK
+	}
+	public enum Side{
+		LEFT, RIGHT
+	}
 
 	public PlayerEntity(Core core, String name) {
 		super(core, name);

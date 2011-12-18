@@ -1,12 +1,14 @@
 package game.view;
 
 import game.entity.HochiEntity;
-import game.entity.HochiEntity.Side;
-import game.entity.HochiEntity.VisualState;
 import game.event.ChangeVisualEvent;
 import game.event.EndFightEvent;
+import game.entity.ExEntity;
+import game.entity.RudiEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
+import game.entity.PlayerEntity.Side;
+import game.entity.PlayerEntity.VisualState;
 import game.event.LevelEngagedEvent;
 import game.event.LoadLevelEvent;
 import game.java2d.AnimatedSpriteHandle;
@@ -98,12 +100,18 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-walk_left_spr", "hochi-walk_left_img", 8, 186, 400));
 		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-fight_left_spr", "hochi-fight_left_img", 5, 260, 400));
 		this.resMngr.addResource(new AnimatedSpriteHandle("hochi-fight_right_spr", "hochi-fight_right_img", 5, 260, 400));
-		
+
 		// schaufi
 		this.resMngr.addResource(new ImageHandle("schaufi-walk_right_img", "schaufi-walk_spr_right.png"));
 		this.resMngr.addResource(new ImageHandle("schaufi-walk_left_img", "schaufi-walk_spr_left.png"));
 		this.resMngr.addResource(new AnimatedSpriteHandle("schaufi-walk_right_spr", "schaufi-walk_right_img", 8, 186, 400));
 		this.resMngr.addResource(new AnimatedSpriteHandle("schaufi-walk_left_spr", "schaufi-walk_left_img", 8, 186, 400));
+
+		// rudi
+		this.resMngr.addResource(new ImageHandle("rudi-walk_right_img", "rudi-walk_spr_right.png"));
+		//this.resMngr.addResource(new ImageHandle("rudi-walk_left_img", "rudi-walk_spr_left.png"));
+		this.resMngr.addResource(new AnimatedSpriteHandle("rudi-walk_right_spr", "rudi-walk_right_img", 8, 186, 400));
+		//this.resMngr.addResource(new AnimatedSpriteHandle("rudi-walk_left_spr", "rudi-walk_left_img", 8, 186, 400));
 		
 		// students
 		this.resMngr.addResource(new ImageHandle("student_img", "student.png"));
@@ -119,6 +127,9 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new SpriteHandle("studentin_side_spr", "studentin_side_img", 182, 400));
 		this.resMngr.addResource(new SpriteHandle("studentin_defeated_spr", "studentin_defeated_img", 182, 400));
 		
+		// bullets
+		this.resMngr.addResource(new ImageHandle("x_img", "x.png"));
+		this.resMngr.addResource(new SpriteHandle("x_spr", "x_img", 50, 50));
 	}
 
 	@Override
@@ -142,34 +153,40 @@ public class PlayView extends AbstractView implements EventListener {
 	private void handleChangeVisualEvent(ChangeVisualEvent event) {
 		SceneNode s = scnMngr.getSceneNode(event.getEntitiyName());
 		s.removeVisual(playerVisual);
-		if(event.getSide() == Side.LEFT){
-			if(event.getVisualState().equals(VisualState.FIGHT)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_left_spr");
-				this.playerVisual.playNStop();
-			}else if(event.getVisualState().equals(VisualState.STAND)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
-				this.playerVisual.stop();
-			}else if(event.getVisualState().equals(VisualState.WALK)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
-				this.playerVisual.play();
-			}else if(event.getEntitiyName().equals(VisualState.JUMP)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
-				this.playerVisual.stop();
+		if (event.getEntitiyType().equals(HochiEntity.TYPE)) {
+			if(event.getSide() == Side.LEFT){
+				if(event.getVisualState().equals(VisualState.FIGHT)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_left_spr");
+					this.playerVisual.playNStop();
+				}else if(event.getVisualState().equals(VisualState.STAND)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
+					this.playerVisual.stop();
+				}else if(event.getVisualState().equals(VisualState.WALK)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
+					this.playerVisual.play();
+				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
+					this.playerVisual.stop();
+				}
+			}else if(event.getSide().equals(Side.RIGHT)){
+				if(event.getVisualState().equals(VisualState.FIGHT)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_right_spr");
+					this.playerVisual.playNStop();
+				}else if(event.getVisualState().equals(VisualState.STAND)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+					this.playerVisual.stop();
+				}else if(event.getVisualState().equals(VisualState.WALK)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+					this.playerVisual.play();
+				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+					this.playerVisual.stop();
+				}
 			}
-		}else if(event.getSide().equals(Side.RIGHT)){
-			if(event.getVisualState().equals(VisualState.FIGHT)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_right_spr");
-				this.playerVisual.playNStop();
-			}else if(event.getVisualState().equals(VisualState.STAND)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
-				this.playerVisual.stop();
-			}else if(event.getVisualState().equals(VisualState.WALK)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
-				this.playerVisual.play();
-			}else if(event.getEntitiyName().equals(VisualState.JUMP)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
-				this.playerVisual.stop();
-			}
+		} else if (event.getEntitiyType().equals(SchaufiEntity.TYPE)) {
+			//TODO
+		} else if (event.getEntitiyType().equals(RudiEntity.TYPE)) {
+			//TODO
 		}
 		if(event.getVisualState().equals(VisualState.JUMP)){
 			this.playerVisual.stop();
@@ -182,8 +199,12 @@ public class PlayView extends AbstractView implements EventListener {
 			createHochi(event.getEntityName());
 		} else if (event.getEntityType().equals(SchaufiEntity.TYPE)) {
 			createSchaufi(event.getEntityName());
+		} else if (event.getEntityType().equals(RudiEntity.TYPE)) {
+			createRudi(event.getEntityName());
 		} else if (event.getEntityType().equals(StudentEntity.TYPE)) {
 			createStudent(event.getEntityName());
+		} else if (event.getEntityType().equals(ExEntity.TYPE)) {
+			createEx(event.getEntityName());
 		}
 	}
 
@@ -203,10 +224,25 @@ public class PlayView extends AbstractView implements EventListener {
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
 	}
 
+	private void createRudi(String entityName) {
+		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
+		this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("rudi-walk_right_spr");
+		this.playerVisual.play();
+		scnNode.addVisual(this.playerVisual);
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
 	private void createStudent(String entityName) {
 		//TODO: use different sprites
 		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
 		SpriteVisual vis = this.scnMngr.createSpriteVisual("student_spr");
+		scnNode.addVisual(vis);
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
+	private void createEx(String entityName) {
+		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
+		SpriteVisual vis = this.scnMngr.createSpriteVisual("x_spr");
 		scnNode.addVisual(vis);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
 	}

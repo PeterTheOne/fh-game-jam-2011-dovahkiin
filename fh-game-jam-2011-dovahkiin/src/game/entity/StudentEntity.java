@@ -18,10 +18,11 @@ public class StudentEntity extends Entity{
 	private Body body;
 	private StudentState studentState;
 	
-	public StudentEntity(Core core, String name, StudentState studentState) {
+	public StudentEntity(Core core, String name, StudentState studentState, double x, double y) {
 		super(core, name);
 		this.studentState = studentState;
 		this.body = new Rectangle(name, 90, 400);
+		this.body.setPosition(x, y);
 	}
 	
 	public String getType() {
