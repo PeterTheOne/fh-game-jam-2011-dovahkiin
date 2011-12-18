@@ -72,6 +72,7 @@ public class StudentEntity extends Entity implements EventListener {
 		LoggingService.getInstance(getCore()).logAlert("Student", "collision");
 		if (oppEntity.getType().equals(ExEntity.TYPE)) {
 			entMngr.removeEntity(this);
+			entMngr.removeEntity(oppEntity);
 		}
 	}
 
