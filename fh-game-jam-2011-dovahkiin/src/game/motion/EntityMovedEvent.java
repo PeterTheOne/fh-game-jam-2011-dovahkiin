@@ -11,13 +11,16 @@ public class EntityMovedEvent extends Event {
 	private double angle;
 	private String entityName;
 	private double velocityX;
+	private double velocityY;
 		
-	public EntityMovedEvent(String entityName, double x, double y, double angle, double velocityX) {
+	public EntityMovedEvent(String entityName, double x, 
+			double y, double angle, double velocityX, double velocityY) {
 		this.entityName = entityName;
 		this.x = x;
 		this.y = y;
 		this.angle = angle;
 		this.velocityX = velocityX;
+		this.velocityY = velocityY;
 	}
 	
 	public String getEntityName() {
@@ -38,6 +41,10 @@ public class EntityMovedEvent extends Event {
 	
 	public double getVelocityX(){
 		return this.velocityX;
+	}
+	
+	public double getVelocityY(){
+		return this.velocityY;
 	}
 
 	@Override

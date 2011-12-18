@@ -1,6 +1,7 @@
 package game.view;
 
 import game.entity.HochiEntity;
+import game.event.LevelDisengagedEvent;
 import game.event.LevelEngagedEvent;
 import game.event.LoadLevelEvent;
 import game.java2d.AnimatedSpriteHandle;
@@ -23,6 +24,7 @@ import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.SceneNode;
 import org.cogaen.java2d.SpriteHandle;
 import org.cogaen.java2d.SpriteVisual;
+import org.cogaen.logging.LoggingService;
 import org.cogaen.resource.ResourceManager;
 import org.cogaen.view.AbstractView;
 
@@ -56,6 +58,7 @@ public class PlayView extends AbstractView implements EventListener {
 		evtMngr.addListener(this, EntityDestroyedEvent.TYPE);
 		evtMngr.addListener(this, EntityMovedEvent.TYPE);
 		evtMngr.addListener(this, LevelEngagedEvent.TYPE);
+		evtMngr.addListener(this, LevelDisengagedEvent.TYPE);
 		evtMngr.addListener(this, LoadLevelEvent.TYPE);
 		
 		this.keyboardSrc.engage();
@@ -97,6 +100,8 @@ public class PlayView extends AbstractView implements EventListener {
 			handleEntityMovedEvent((EntityMovedEvent) event);
 		} else if (event.isOfType(LevelEngagedEvent.TYPE)) {
 			handleLevelEngagedEvent((LevelEngagedEvent) event);
+		} else if (event.isOfType(LevelDisengagedEvent.TYPE)) {
+			handleLevelDisengagedEvent((LevelDisengagedEvent) event);
 		} else if(event.isOfType(LoadLevelEvent.TYPE)){
 			//empty
 		}
@@ -132,12 +137,14 @@ public class PlayView extends AbstractView implements EventListener {
 				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
 				this.playerVisual.play();
 				node.addVisual(playerVisual);
-			}else if(event.getVelocityX() < 0){
+			} else if(event.getVelocityX() < 0) {
 				node.removeVisual(playerVisual);
 				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
 				node.addVisual(playerVisual);
+			}
+			if (Math.abs(event.getVelocityY()) < 60 && event.getVelocityX() != 0) {
 				this.playerVisual.play();
-			}else{
+			} else {
 				this.playerVisual.stop();
 			}
 		}
@@ -148,6 +155,10 @@ public class PlayView extends AbstractView implements EventListener {
 		SpriteVisual bgVisual = this.scnMngr.createSpriteVisual("level1_1_spr");
 		scnNode.addVisual(bgVisual);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
+	private void handleLevelDisengagedEvent(LevelDisengagedEvent event) {
+		this.scnMngr.destroySceneNode(event.getLevelName());
 	}
 
 }
