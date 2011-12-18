@@ -34,9 +34,6 @@ public class Intro2View extends AbstractView implements EventListener{
 		scnMngr.destroyAll();
 		EventManager.getInstance(this.getCore()).removeListener(this);
 
-		SoundHandle soundHandle = new SoundHandle("eoIntro_handle", "eoIntro.wav");
-		soundHandle.load(this.getCore());
-		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override
@@ -50,7 +47,9 @@ public class Intro2View extends AbstractView implements EventListener{
 		SpriteVisual bgSpr = scnMngr.createSpriteVisual("intro_background_spr");
 		bg.addVisual(bgSpr);
 		bg.setPosition(512, 384);
-		
+		SoundHandle soundHandle = new SoundHandle("intro_handle", "intro.wav");
+		soundHandle.load(this.getCore());
+		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override

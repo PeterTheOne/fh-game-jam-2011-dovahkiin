@@ -40,7 +40,7 @@ public class Intro2State implements GameState {
 		ResourceManager.getInstance(this.core).loadGroup(NAME);
 		this.view.engage();
 		//TODO: do stuff here
-		TaskManager.getInstance(core).attachTask(new FireEventTask(core, new SimpleEvent(INTRO2_TO_PLAY), 5.0));
+		TaskManager.getInstance(core).attachTask(new FireEventTask(core, new SimpleEvent(INTRO2_TO_PLAY), 15.0));
 
 	}
 

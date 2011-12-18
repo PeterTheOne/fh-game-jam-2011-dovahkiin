@@ -68,9 +68,6 @@ public class GameApp implements EventListener{
 		Clock clock = new Clock();
 		SceneManager scnMngr = SceneManager.getInstance(this.core);
 		
-		SoundHandle musicHandle = new SoundHandle("music_handle", "music.wav");
-		musicHandle.load(this.core);
-		SoundService.getInstance(this.core).playBackgroundMusic((SoundEffect)musicHandle.getResource());
 		
 		while (running) {
 			clock.tick();

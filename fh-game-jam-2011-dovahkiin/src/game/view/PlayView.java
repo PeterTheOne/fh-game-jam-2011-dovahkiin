@@ -93,9 +93,6 @@ public class PlayView extends AbstractView implements EventListener {
 		
 		this.keyboardSrc.disengage();
 
-		SoundHandle soundHandle = new SoundHandle("eoPlay_handle", "eoPlay.wav");
-		soundHandle.load(this.getCore());
-		SoundService.getInstance(this.getCore()).play((SoundEffect)soundHandle.getResource());
 	}
 
 	@Override
