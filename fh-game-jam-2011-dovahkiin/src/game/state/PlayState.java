@@ -8,6 +8,7 @@ import game.entity.StudentEntity.StudentState;
 import game.entity.StudentEntity1;
 import game.entity.StudentEntity2;
 import game.entity.StudentEntity3;
+import game.event.ChangeCharacterEvent;
 import game.event.DestroyEntityEvent;
 import game.event.LoadMenueEvent;
 import game.levelmanager.Level;
@@ -17,10 +18,14 @@ import game.view.PlayView;
 import game.view.IntroView.MainEntity;
 
 import org.cogaen.core.Core;
+import org.cogaen.entity.Entity;
 import org.cogaen.entity.EntityManager;
 import org.cogaen.event.Event;
 import org.cogaen.event.EventListener;
 import org.cogaen.event.EventManager;
+import org.cogaen.java2d.SceneManager;
+import org.cogaen.java2d.SceneNode;
+import org.cogaen.java2d.SpriteVisual;
 import org.cogaen.logging.LoggingService;
 import org.cogaen.name.NameService;
 import org.cogaen.resource.ResourceManager;
@@ -79,6 +84,7 @@ public class PlayState implements GameState, EventListener{
 
 		EventManager.getInstance(core).addListener(this, LoadMenueEvent.TYPE);
 		EventManager.getInstance(core).addListener(this, DestroyEntityEvent.TYPE);
+		EventManager.getInstance(core).addListener(this, ChangeCharacterEvent.TYPE);
 	}
 
 	private StudentEntity createStudent(StudentState state, int positionX, int positionY) {
@@ -124,7 +130,42 @@ public class PlayState implements GameState, EventListener{
 			handleLoadEvent((LoadMenueEvent) event);
 		} else if (event.isOfType(DestroyEntityEvent.TYPE)) {
 			handleDestroyEntityEvent((DestroyEntityEvent) event);
+		}else if(event.isOfType(ChangeCharacterEvent.TYPE)){
+			handleChangeCharacter((ChangeCharacterEvent)event);
 		}
+	}
+
+	private void handleChangeCharacter(ChangeCharacterEvent event) {
+		LoggingService.getInstance(core).logDebug("ALERT", "test");
+		Entity currentChar = entMngr.getInstance(core).getEntity(event.getName());
+		
+		SceneNode s = SceneManager.getInstance(core).getSceneNode(event.getName());
+		s.clearVisuals();
+		//SpriteVisual vis = SceneManager.getInstance(core).createSpriteVisual(event.getNextEntitiy());
+		
+		EntityManager e = EntityManager.getInstance(this.core);
+		e.removeEntity(currentChar);
+		if(event.getNextEntitiy().equals("Hochi")){
+			HochiEntity h = new HochiEntity(this.core, event.getNextEntitiy());
+			h.setPositionX(event.getPositionX());
+			h.setPositionY(event.getPositionY());
+			h.setSide(event.getSide());
+			e.addEntity(h);
+		}else if(event.getNextEntitiy().equals("Schaufi")){
+			SchaufiEntity sc = new SchaufiEntity(this.core, event.getNextEntitiy());
+			sc.setPositionX(event.getPositionX());
+			sc.setPositionY(event.getPositionY());
+			sc.setSide(event.getSide());
+			e.addEntity(sc);
+		}else if(event.getNextEntitiy().equals("Rudi")){
+			RudiEntity r = new RudiEntity(this.core, event.getNextEntitiy());
+			r.setPositionX(event.getPositionX());
+			r.setPositionY(event.getPositionY());
+			r.setSide(event.getSide());
+			e.addEntity(r);
+		}
+		//s.setPose(event.getPositionX(), event.getPositionY(), 0);
+		//s.addVisual(vis);
 	}
 
 	private void handleLoadEvent(LoadMenueEvent event) {

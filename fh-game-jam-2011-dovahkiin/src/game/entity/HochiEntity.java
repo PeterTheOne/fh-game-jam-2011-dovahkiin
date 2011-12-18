@@ -1,5 +1,6 @@
 package game.entity;
 
+import game.event.ChangeCharacterEvent;
 import game.event.ChangeVisualEvent;
 import game.event.EndFightEvent;
 import game.event.LeaveScreenEvent;
@@ -36,12 +37,13 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 	
 	private VisualState visualstate;
 	private Side side;
+	private String nextEntity = "Schaufi";
 
 	public HochiEntity(Core core, String name) {
 		super(core, name);
 		this.evtMngr = EventManager.getInstance(getCore());
 		this.entMngr = EntityManager.getInstance(getCore());
-		this.ctrl = new TwoAxisController(core, "PlayerOne", 2);
+		this.ctrl = new TwoAxisController(core, "PlayerOne", 3);
 		this.body = new Rectangle(name, 90, 400);
 		this.body.setCollisionFlag(0x0001);
 		this.body.setCollisionMask(0x000C);
@@ -115,6 +117,13 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 		}else if(!isFighting){
 			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.WALK, this.side, getName(), getType()));
 		}
+		
+		
+		//change character
+		if(this.ctrl.isAction(2)){
+			evtMngr.enqueueEvent(new ChangeCharacterEvent(this.getName(), this.body.getPositionX(), this.body.getPositionY(), this.nextEntity, this.side));
+			this.tearDown();
+		}
 	}
 
 	@Override
@@ -168,6 +177,18 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 				this.body.setPositionX(newX);
 			}
 		}
+	}
+	
+	public void setPositionX(double positionX){
+		this.body.setPositionX(positionX);
+	}
+	
+	public void setPositionY(double positionY){
+		this.body.setPositionY(positionY);
+	}
+	
+	public void setSide(Side side){
+		this.side = side;
 	}
 
 }
