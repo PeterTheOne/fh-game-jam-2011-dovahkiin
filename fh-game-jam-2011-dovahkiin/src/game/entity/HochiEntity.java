@@ -75,7 +75,7 @@ public class HochiEntity extends PlayerEntity implements EventListener {
 				this.body.getVelocityY());
 		
 		if(this.ctrl.isAction(1)){
-			
+			//TODO Schlagen
 		}
 		Screen screen = SceneManager.getInstance(getCore()).getScreen();
 		if(this.body.getPositionX() > screen.getWidth()/2){
