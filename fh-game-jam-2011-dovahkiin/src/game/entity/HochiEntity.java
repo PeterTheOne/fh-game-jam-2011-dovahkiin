@@ -35,13 +35,6 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 	private TwoAxisController ctrl;
 	private boolean isFighting = false;
 	
-	public enum VisualState{
-		FIGHT, JUMP, STAND, WALK
-	}
-	public enum Side{
-		LEFT, RIGHT
-	}
-	
 	private VisualState visualstate;
 	private Side side;
 
@@ -106,16 +99,15 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 			this.side = Side.RIGHT;
 		}
 		
-			
 		if(this.ctrl.isAction(1) && !isFighting){
-			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.FIGHT, this.side, this.getName()));
+			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.FIGHT, this.side, getName(), getType()));
 			this.isFighting = true;
 		}else if(!this.ctrl.isAction(0) && !isFighting && this.body.getVelocityY() != 0){
-			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.JUMP, this.side, this.getName()));
+			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.JUMP, this.side, getName(), getType()));
 		}else if(!isFighting && this.body.getVelocityX() == 0){
-			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.STAND, this.side, this.getName()));
+			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.STAND, this.side, getName(), getType()));
 		}else if(!isFighting){
-			EventManager.getInstance(getCore()).enqueueEvent(new ChangeVisualEvent(VisualState.WALK, this.side, this.getName()));
+			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.WALK, this.side, getName(), getType()));
 		}
 	}
 

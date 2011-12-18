@@ -1,13 +1,13 @@
 package game.view;
 
 import game.entity.HochiEntity;
-import game.entity.HochiEntity.Side;
-import game.entity.HochiEntity.VisualState;
 import game.event.ChangeVisualEvent;
 import game.event.EndFightEvent;
 import game.entity.RudiEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
+import game.entity.PlayerEntity.Side;
+import game.entity.PlayerEntity.VisualState;
 import game.event.LevelEngagedEvent;
 import game.event.LoadLevelEvent;
 import game.java2d.AnimatedSpriteHandle;
@@ -149,34 +149,40 @@ public class PlayView extends AbstractView implements EventListener {
 	private void handleChangeVisualEvent(ChangeVisualEvent event) {
 		SceneNode s = scnMngr.getSceneNode(event.getEntitiyName());
 		s.removeVisual(playerVisual);
-		if(event.getSide() == Side.LEFT){
-			if(event.getVisualState().equals(VisualState.FIGHT)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_left_spr");
-				this.playerVisual.playNStop();
-			}else if(event.getVisualState().equals(VisualState.STAND)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
-				this.playerVisual.stop();
-			}else if(event.getVisualState().equals(VisualState.WALK)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
-				this.playerVisual.play();
-			}else if(event.getEntitiyName().equals(VisualState.JUMP)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
-				this.playerVisual.stop();
+		if (event.getEntitiyType().equals(HochiEntity.TYPE)) {
+			if(event.getSide() == Side.LEFT){
+				if(event.getVisualState().equals(VisualState.FIGHT)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_left_spr");
+					this.playerVisual.playNStop();
+				}else if(event.getVisualState().equals(VisualState.STAND)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
+					this.playerVisual.stop();
+				}else if(event.getVisualState().equals(VisualState.WALK)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
+					this.playerVisual.play();
+				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_left_spr");
+					this.playerVisual.stop();
+				}
+			}else if(event.getSide().equals(Side.RIGHT)){
+				if(event.getVisualState().equals(VisualState.FIGHT)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_right_spr");
+					this.playerVisual.playNStop();
+				}else if(event.getVisualState().equals(VisualState.STAND)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+					this.playerVisual.stop();
+				}else if(event.getVisualState().equals(VisualState.WALK)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+					this.playerVisual.play();
+				}else if(event.getEntitiyName().equals(VisualState.JUMP)){
+					this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
+					this.playerVisual.stop();
+				}
 			}
-		}else if(event.getSide().equals(Side.RIGHT)){
-			if(event.getVisualState().equals(VisualState.FIGHT)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-fight_right_spr");
-				this.playerVisual.playNStop();
-			}else if(event.getVisualState().equals(VisualState.STAND)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
-				this.playerVisual.stop();
-			}else if(event.getVisualState().equals(VisualState.WALK)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
-				this.playerVisual.play();
-			}else if(event.getEntitiyName().equals(VisualState.JUMP)){
-				this.playerVisual = (AnimatedSpriteVisual) resMngr.getResource("hochi-walk_right_spr");
-				this.playerVisual.stop();
-			}
+		} else if (event.getEntitiyType().equals(SchaufiEntity.TYPE)) {
+			//TODO
+		} else if (event.getEntitiyType().equals(RudiEntity.TYPE)) {
+			//TODO
 		}
 		if(event.getVisualState().equals(VisualState.JUMP)){
 			this.playerVisual.stop();

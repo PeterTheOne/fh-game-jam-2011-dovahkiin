@@ -1,7 +1,7 @@
 package game.event;
 
-import game.entity.HochiEntity.Side;
-import game.entity.HochiEntity.VisualState;
+import game.entity.PlayerEntity.Side;
+import game.entity.PlayerEntity.VisualState;
 
 import org.cogaen.event.Event;
 import org.cogaen.event.EventType;
@@ -13,11 +13,14 @@ public class ChangeVisualEvent extends Event{
 	private VisualState visualstate;
 	private Side side;
 	private String entityName;
+	private String entityType;
 	
-	public ChangeVisualEvent(VisualState visualstate, Side side, String entityName) {
+	public ChangeVisualEvent(VisualState visualstate, Side side, 
+			String entityName, String entityType) {
 		this.visualstate = visualstate;
 		this.side = side;
 		this.entityName = entityName;
+		this.entityType = entityType;
 	}
 	
 	public VisualState getVisualState(){
@@ -30,6 +33,10 @@ public class ChangeVisualEvent extends Event{
 	
 	public String getEntitiyName(){
 		return this.entityName;
+	}
+	
+	public String getEntitiyType(){
+		return this.entityType;
 	}
 	
 	public EventType getType(){
