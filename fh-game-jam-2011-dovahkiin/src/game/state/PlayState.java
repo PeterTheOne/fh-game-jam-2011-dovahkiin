@@ -39,10 +39,18 @@ public class PlayState implements GameState {
 		entMngr.addEntity(new HochiEntity(core, "Hochi"));
 		
 		LevelManager lvlMngr = new LevelManager(core);
-		Level startLevel = new Level(core, "startLevel");
-		//TODO: replace magic numbers
-		startLevel.addStructure(new Rectangle("plaform", 1024, 50, 0, -400));
+		
+		Level startLevel = new Level(this.core, "startLevel");
+		startLevel.addFloor();
 		lvlMngr.addLevel(startLevel);
+		
+		Level secondLevel = new Level(this.core, "secondLevel");
+		secondLevel.addFloor();
+		lvlMngr.addLevel(secondLevel);
+		
+		secondLevel.setPrevLevel(startLevel.getName());
+		startLevel.setNextLevel(secondLevel.getName());
+		
 		lvlMngr.setCurrentLevel(startLevel.getName());
 	}
 

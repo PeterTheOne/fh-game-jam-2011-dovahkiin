@@ -2,6 +2,7 @@ package game.levelmanager;
 
 import game.entity.EnemyEntity;
 import game.event.LeaveScreenEvent;
+import game.event.LevelDisengagedEvent;
 import game.event.LevelEngagedEvent;
 import game.event.LoadLevelEvent;
 import game.event.LeaveScreenEvent.LeaveScreen;
@@ -50,8 +51,7 @@ public class Level {
 	}
 	
 	public void disenage(){
-		/*SceneManager scnMngr = SceneManager.getInstance(core);
-		scnMngr.destroySceneNode(levelName);*/
+		EventManager.getInstance(this.core).enqueueEvent(new LevelDisengagedEvent(this.name));
 		for(Rectangle struct : structures){
 			MotionManager.getInstance(core).removeBody(struct);
 		}
@@ -84,6 +84,11 @@ public class Level {
 	
 	public String getName(){
 		return this.name;
+	}
+
+	public void addFloor() {
+		//TODO: replace magic numbers
+		addStructure(new Rectangle("plaform", 1024, 50, 0, -400));
 	}
 
 	/*public void handleEvent(Event event) {

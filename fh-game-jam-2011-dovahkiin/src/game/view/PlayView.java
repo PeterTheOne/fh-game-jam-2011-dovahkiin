@@ -1,6 +1,7 @@
 package game.view;
 
 import game.entity.HochiEntity;
+import game.event.LevelDisengagedEvent;
 import game.event.LevelEngagedEvent;
 import game.event.LoadLevelEvent;
 import game.java2d.AnimatedSpriteHandle;
@@ -57,6 +58,7 @@ public class PlayView extends AbstractView implements EventListener {
 		evtMngr.addListener(this, EntityDestroyedEvent.TYPE);
 		evtMngr.addListener(this, EntityMovedEvent.TYPE);
 		evtMngr.addListener(this, LevelEngagedEvent.TYPE);
+		evtMngr.addListener(this, LevelDisengagedEvent.TYPE);
 		evtMngr.addListener(this, LoadLevelEvent.TYPE);
 		
 		this.keyboardSrc.engage();
@@ -98,6 +100,8 @@ public class PlayView extends AbstractView implements EventListener {
 			handleEntityMovedEvent((EntityMovedEvent) event);
 		} else if (event.isOfType(LevelEngagedEvent.TYPE)) {
 			handleLevelEngagedEvent((LevelEngagedEvent) event);
+		} else if (event.isOfType(LevelDisengagedEvent.TYPE)) {
+			handleLevelDisengagedEvent((LevelDisengagedEvent) event);
 		} else if(event.isOfType(LoadLevelEvent.TYPE)){
 			//empty
 		}
@@ -150,6 +154,10 @@ public class PlayView extends AbstractView implements EventListener {
 		SpriteVisual bgVisual = this.scnMngr.createSpriteVisual("level1_1_spr");
 		scnNode.addVisual(bgVisual);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
+	private void handleLevelDisengagedEvent(LevelDisengagedEvent event) {
+		this.scnMngr.destroySceneNode(event.getLevelName());
 	}
 
 }
