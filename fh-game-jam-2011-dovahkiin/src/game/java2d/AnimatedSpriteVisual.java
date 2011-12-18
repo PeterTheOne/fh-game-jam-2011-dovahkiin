@@ -1,4 +1,6 @@
 package game.java2d;
+import game.event.EndFightEvent;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cogaen.core.Core;
+import org.cogaen.event.EventManager;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Visual;
 
@@ -68,6 +71,7 @@ public class AnimatedSpriteVisual extends Visual implements Cloneable {
 				currentFrame = 0;
 				if(stopAfterPlay){
 					stop();
+					EventManager.getInstance(this.core).enqueueEvent(new EndFightEvent());
 				}
 			}
 		}
