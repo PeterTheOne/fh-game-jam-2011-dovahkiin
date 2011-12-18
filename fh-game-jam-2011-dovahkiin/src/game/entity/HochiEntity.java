@@ -60,7 +60,7 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 		this.ctrl.engage();
 		this.evtMngr.addListener(this, CollisionEvent.TYPE);
 		this.evtMngr.addListener(this, LeaveScreenEvent.TYPE);
-		evtMngr.addListener(this, EndFightEvent.TYPE);
+		this.evtMngr.addListener(this, EndFightEvent.TYPE);
 	}
 
 	@Override

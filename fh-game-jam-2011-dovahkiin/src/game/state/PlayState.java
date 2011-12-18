@@ -43,7 +43,7 @@ public class PlayState implements GameState {
 		entMngr.addEntity(new HochiEntity(core, "Hochi"));
 		//entMngr.addEntity(new SchaufiEntity(core, "Schaufi"));
 		//entMngr.addEntity(new RudiEntity(this.core, "Rudi"));
-		entMngr.addEntity(new StudentEntity(this.core, "Student01", StudentState.STAND, 500, -100));
+		entMngr.addEntity(new StudentEntity(this.core, "Student01", StudentState.STAND, 300, -50));
 		
 		LevelManager lvlMngr = new LevelManager(core);
 		

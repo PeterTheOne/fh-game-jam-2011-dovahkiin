@@ -17,7 +17,6 @@ import org.cogaen.event.EventManager;
 import org.cogaen.input.TwoAxisController;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
-import org.cogaen.logging.LoggingService;
 
 public class RudiEntity extends PlayerEntity implements EventListener{
 	

@@ -24,8 +24,9 @@ public class ExEntity extends Entity {
 		super(core, name);
 		this.body = new Rectangle(name, 10, 10);
 		this.body.setPosition(x, y);
-		this.body.setCollisionFlag(0x0001);
 		this.body.setVelocity(velocityX, 0);
+		this.body.setCollisionFlag(0x0001);
+		this.body.setCollisionMask(0x0004);
 		
 		//TODO: self destroy task
 	}
