@@ -3,6 +3,7 @@ package game.view;
 import game.entity.HochiEntity;
 import game.event.ChangeVisualEvent;
 import game.event.EndFightEvent;
+import game.entity.ExEntity;
 import game.entity.RudiEntity;
 import game.entity.SchaufiEntity;
 import game.entity.StudentEntity;
@@ -126,6 +127,9 @@ public class PlayView extends AbstractView implements EventListener {
 		this.resMngr.addResource(new SpriteHandle("studentin_side_spr", "studentin_side_img", 182, 400));
 		this.resMngr.addResource(new SpriteHandle("studentin_defeated_spr", "studentin_defeated_img", 182, 400));
 		
+		// bullets
+		this.resMngr.addResource(new ImageHandle("x_img", "x.png"));
+		this.resMngr.addResource(new SpriteHandle("x_spr", "x_img", 50, 50));
 	}
 
 	@Override
@@ -199,6 +203,8 @@ public class PlayView extends AbstractView implements EventListener {
 			createRudi(event.getEntityName());
 		} else if (event.getEntityType().equals(StudentEntity.TYPE)) {
 			createStudent(event.getEntityName());
+		} else if (event.getEntityType().equals(ExEntity.TYPE)) {
+			createEx(event.getEntityName());
 		}
 	}
 
@@ -230,6 +236,13 @@ public class PlayView extends AbstractView implements EventListener {
 		//TODO: use different sprites
 		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
 		SpriteVisual vis = this.scnMngr.createSpriteVisual("student_spr");
+		scnNode.addVisual(vis);
+		this.scnMngr.getRootSceneNode().addChild(scnNode);
+	}
+
+	private void createEx(String entityName) {
+		SceneNode scnNode = this.scnMngr.createSceneNode(entityName);
+		SpriteVisual vis = this.scnMngr.createSpriteVisual("x_spr");
 		scnNode.addVisual(vis);
 		this.scnMngr.getRootSceneNode().addChild(scnNode);
 	}

@@ -17,7 +17,6 @@ import org.cogaen.event.EventManager;
 import org.cogaen.input.TwoAxisController;
 import org.cogaen.java2d.SceneManager;
 import org.cogaen.java2d.Screen;
-import org.cogaen.logging.LoggingService;
 
 public class HochiEntity extends PlayerEntity implements EventListener{
 	
@@ -102,6 +101,17 @@ public class HochiEntity extends PlayerEntity implements EventListener{
 		if(this.ctrl.isAction(1) && !isFighting){
 			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.FIGHT, this.side, getName(), getType()));
 			this.isFighting = true;
+			if (this.side == Side.RIGHT) {
+				entMngr.addEntity(new ExEntity(getCore(), 
+						this.body.getPositionX() + 150, 
+						this.body.getPositionY(), 
+						200));
+			} else {
+				entMngr.addEntity(new ExEntity(getCore(), 
+						this.body.getPositionX() - 150, 
+						this.body.getPositionY(), 
+						- 200));
+			}
 		}else if(!this.ctrl.isAction(0) && !isFighting && this.body.getVelocityY() != 0){
 			evtMngr.enqueueEvent(new ChangeVisualEvent(VisualState.JUMP, this.side, getName(), getType()));
 		}else if(!isFighting && this.body.getVelocityX() == 0){
