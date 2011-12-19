@@ -24,12 +24,12 @@ s		- shoot
 arrows	- move
 
 Team Dovahkiin:
-Programmer:			Peter Grassberger (Peter)
-Programmer, Sound:	Andreas Kasch (Anderl1989)
-Design:				Julia Nebauer
-Programmer, Design:	Martin Staudinger (also used Anderl1989)
+Peter Grassberger (PeterTheOne) - Programming
+Andreas Kasch (Anderl1989) - Programming and Sound
+Julia Nebauer - Character Design
+Martin Staudinger (also used Anderl1989) - Programming and Level Design
 
 Implemented using the cogaen3-java v3.0.0 engine by Roman Divotkey:
-Cogaen-Source: 	link: http://code.google.com/p/cogaen3-java/
+Cogaen-Source: 	http://code.google.com/p/cogaen3-java/
 Cogaen-Website:	http://www.cogaen.org/
 Cogaen-License:	http://www.opensource.org/licenses/mit-license.php
