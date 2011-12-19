@@ -14,7 +14,7 @@ Install:
 	compatible with revision r221
 2. add to build path:
 	add at least: Cogaen Core, Cogaen Java2D and Cogaen Sound
-	in eclipse: inport Projects and add Projects to build path.
+	in eclipse: import Projects and add Projects to build path.
 3. have fun!
 
 Controls:
