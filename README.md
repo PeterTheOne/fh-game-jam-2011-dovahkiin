@@ -36,6 +36,6 @@ Team Dovahkiin:
 
 Implemented using the cogaen3-java v3.0.0 engine by Roman Divotkey:
 ------------------------------------------------------------------------------------------------------
-Cogaen-Source: 	http://code.google.com/p/cogaen3-java/
-Cogaen-Website:	http://www.cogaen.org/
-Cogaen-License:	http://www.opensource.org/licenses/mit-license.php
+- Cogaen-Source: 	http://code.google.com/p/cogaen3-java/
+- Cogaen-Website:	http://www.cogaen.org/
+- Cogaen-License:	http://www.opensource.org/licenses/mit-license.php
